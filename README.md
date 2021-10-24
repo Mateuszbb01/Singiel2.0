@@ -27,7 +27,7 @@ SINGIEL 2.0 to aplikacja pełna możliwości. Możemy zawierać znajomości popr
 
 Aplikacja do łączenia w pary użytkowników
 
-## Podział:
+## Podział: 
 - Bartłomiej Tokarczyk - Project Manager
 - Mateusz Sromek
 - Wojciech Sułowski
