@@ -673,6 +673,132 @@ Testy aplikacji & 15 \\
 
 \section{Implementacja}
 \section{Testy i ich wyniki}
+\subsection{Testy RestAPI za pomocą programu Postman}
+
+\begin{itemize}\itemsep0pt
+\item [\textbf{*}] Rejestracja\\
+\\
+W poniższym przypadku, pomyślnie przetestowana została rejestracja nowych użytkowników, a dokładniej poprawna wersja rejestracji dla użytkownika.
+\begin{figure}[H]
+\centering
+\includegraphics{zdjęcia i skriny/API_rejestracja}
+\caption{Test-API Rejestracja}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics{zdjęcia i skriny/API_rejestracja2}
+\caption{Test-API Rejestracja wynik}
+\end{figure}
+
+\item [\textbf{*}] Rejestracja z istniejącym już w bazie adresem email\\
+\\
+Kolejnym testem była próba, zarejestrowania użytkownika, z istniejącym już kontem w bazie danych. Test pomyślny, został zwrócony odpowiedni komunikat, informujący, że adres e-mail już istnieje w bazie.
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{zdjęcia i skriny/API_rejestracjaError}
+\caption{Test-API Rejestracja z istniejącym już w bazie adresem email }
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{zdjęcia i skriny/API_rejestracjaError2}
+\caption{Test-API Rejestracja z istniejącym już w bazie adresem email wynik}
+\end{figure}
+
+\item [\textbf{*}] Rejestracja bez potwierdzenia hasła\\
+\\
+Kolejnym testem, jest próba stworzenia konta, bez podania potwierdzenia hasła. Test dał wynik pozytywny, czego efektem jest odpowiedź, o niepasujących do siebie hasłach.
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{zdjęcia i skriny/API_rejestracjaErrorPassword}
+\caption{Test-API Rejestracja bez potwierdzenia hasła}
+
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{zdjęcia i skriny/API_rejestracjaErrorPassword2}
+\caption{Test-API Rejestracja bez potwierdzenia hasła wynik}
+\end{figure}
+
+\item [\textbf{*}] Rejestracja z nieidentycznymi hasłami\\
+\\
+Kolejny test wykazał, że nie jest możliwa pomyślna rejestracja bez podania pasujących do siebie haseł tj. identycznych. Zwrócony został komunikat o błędzie. 
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{zdjęcia i skriny/API_rejestracjaErrorPasswordConfirm}
+\caption{Test-API Rejestracja z nieidentycznymi hasłami}
+
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{zdjęcia i skriny/API_rejestracjaErrorPasswordConfirm2}
+\caption{Test-API Rejestracja z nieidentycznymi hasłami wynik}
+\end{figure}
+
+\item [\textbf{*}] Logowanie\\
+\\
+Kolejny test dotyczy logowania, po podaniu poprawnych danych logowania, wygenerowany zostaje token oraz użytkownik pomyślnie zostaje zalogowany czego efekt widzimy na poniższych screenach.
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{zdjęcia i skriny/API_login}
+\caption{Test-API Logowanie}
+
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{zdjęcia i skriny/API_login}
+\caption{Test-API Logowanie}
+\end{figure}
+
+\item [\textbf{*}] Logowanie z niepoprawnym hasłem\\
+\\
+Kolejny test logowania, polegający na próbie zalogowania przy użyciu błędnego hasła został także pozytywnie zakończony – odpowiedni komunikat o błędzie został wyświetlony.
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{zdjęcia i skriny/API_loginError}
+\caption{Test-API Logowanie z niepoprawnym hasłem}
+
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{zdjęcia i skriny/API_loginError2}
+\caption{Test-API Logowanie z niepoprawnym hasłem}
+\end{figure}
+
+\item [\textbf{*}] Logowanie bez wprowadzenia hasła\\
+\\
+Próba logowania z pustym polem hasła – test z wynikiem pozytywnym, wyświetlony zostaje komunikat , że pole z hasłem jest wymagane do tej czynności.
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{zdjęcia i skriny/API_loginErrorPassword}
+\caption{Test-API Logowanie bez wprowadzonego hasła}
+
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{zdjęcia i skriny/API_loginErrorPassword2}
+\caption{Test-API Logowanie  bez wprowadzonego hasła wynik}
+\end{figure}
+
+\item [\textbf{*}] Wylogowanie\\
+\\
+Ostatnim testem jest testowanie operacji wylogowania. Po podaniu tokenu i wysłaniu żądania, otrzymaliśmy odpowiedni komunikat o pomyślnym wylogowaniu użytkownika.
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{zdjęcia i skriny/API_logout}
+\caption{Test-API Wylogowanie}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{zdjęcia i skriny/API_logout2}
+\caption{Test-API Wylogowanie wynik}
+\end{figure}
+\end{itemize}
+
+
 \section{Podsumowanie i bilans}
 (MVP vs rzeczywistość)
 
