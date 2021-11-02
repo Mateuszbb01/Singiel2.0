@@ -28,6 +28,7 @@ Route::group([
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
     Route::post('/user-profile/update-password', [AuthController::class, 'updatePassword'])->middleware('jwtAuth');
+    Route::delete('/user-profile/delete-account', [AuthController::class, 'deleteAccount'])->middleware('jwtAuth');
     Route::get('/preferences/mypreferences', [PreferencesController::class, 'mypreferences'])->middleware('jwtAuth');
     Route::post('/preferences/create', [PreferencesController::class, 'create'])->middleware('jwtAuth');
     Route::post('/preferences/mypreferences/update', [PreferencesController::class, 'updatePreferences'])->middleware('jwtAuth');

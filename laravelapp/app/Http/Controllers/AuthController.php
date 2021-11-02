@@ -132,6 +132,22 @@ class AuthController extends Controller
 
     }
 
+    public function deleteAccount(Request $request)
+    {
+        $user = User::find(Auth::user()->id);
+        $userPassword = $user->password;
+
+        if (!Hash::check($request->password, $userPassword)) {
+            return response()->json(['success'=>false, 'error' => 'Niepoprawne hasło.'], 422);
+        }
+        User::destroy(Auth::user()->id);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Konto zostało usunięte!',
+        ]);
+    }
+
     /**
      * Get the token array structure.
      *

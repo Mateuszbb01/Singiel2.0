@@ -22,21 +22,17 @@ class PreferencesController extends Controller
         $preferences->city = $request->city;
         $preferences->interests = $request->interests;
         //sprawdza czy jest dodane zdjecie
-        if ($request->photo != '') {
-            //unikalna nazwa zdjecia - data+jpg
-            $photo = time() . 'jpg';
-            file_put_contents('storage/' . $photo, base64_decode($request->photo));
-            $preferences->photo = $photo;
-        }
 
-        // if ($request->photo != '')
-        //     {
-        //         $file= $request->file('image');
-        //         $extension = $file->getClientOriginalExtension();
-        //         $filename = time().'.'.$extension;
-        //         $file->move('storage/photo', $filename);
-        //         $preferences->photo = $filename;
-        //     }
+        if ($request->photo != '')
+            {
+                $file= $request->file('photo');
+                $extension = $file->getClientOriginalExtension();
+                $filename = time().'.'.$extension;
+                $file->move('storage/photo', $filename);
+                $preferences->photo = $filename;
+            }
+
+
 
         $preferences->save();
         $preferences->user;
@@ -90,14 +86,16 @@ class PreferencesController extends Controller
 
                 if ($request->photo != '')
                     {
-                        $storage='storage/'.$preferences->photo;
+                        $storage='storage/photo'.$preferences->photo;
                         if(File::exists($storage))
                         {
                             File::delete($storage);
                         }
-                        $photo = time() . 'jpg';
-                        file_put_contents('storage/' . $photo, base64_decode($request->photo));
-                        $preferences->photo = $photo;
+                        $file= $request->file('photo');
+                        $extension = $file->getClientOriginalExtension();
+                        $filename = time().'.'.$extension;
+                        $file->move('storage/photo', $filename);
+                        $preferences->photo = $filename;
                     }
 
                 $preferences->push();
