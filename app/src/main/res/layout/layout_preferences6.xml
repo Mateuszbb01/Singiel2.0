@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="50dp"
+    android:paddingRight="50dp"
+    android:background="@color/cardview_light_background">
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="1dp"
+        android:gravity="center_horizontal"
+        android:text="@string/photo_info"
+        android:textColor="@color/colorBlack"
+        android:textSize="32sp" />
+
+    <ImageView
+        android:id="@+id/addPhoto"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="TODO" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_horizontal"
+        android:text="@string/txt_photo"
+        android:textColor="@color/colorGrey"
+        android:textSize="15sp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtLayoutPreferences6a"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp" />
+
+    <Button
+        android:id="@+id/btnAddPhoto"
+        android:layout_width="600px"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:scaleX="1"
+        android:text="@string/dodaj_zdjecie"
+        android:textColor="#212121"
+        android:textSize="12sp"
+        app:backgroundTint="#B473FF"
+        tools:ignore="DuplicateSpeakableTextCheck" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtLayoutPreferences6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp" />
+
+
+    <Button
+        android:id="@+id/btnConfirmPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/btn_round"
+        android:text="@string/btn_photo"
+        android:textColor="#212121"
+        android:textSize="17sp" />
+
+
+</LinearLayout>
