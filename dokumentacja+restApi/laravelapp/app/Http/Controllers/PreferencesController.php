@@ -23,14 +23,13 @@ class PreferencesController extends Controller
         $preferences->interests = $request->interests;
         //sprawdza czy jest dodane zdjecie
 
-        if ($request->photo != '')
-            {
-                $file= $request->file('photo');
-                $extension = $file->getClientOriginalExtension();
-                $filename = time().'.'.$extension;
-                $file->move('storage/photo', $filename);
-                $preferences->photo = $filename;
-            }
+        if ($request->photo != '') {
+            $file = $request->file('photo');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $file->move('storage/photo', $filename);
+            $preferences->photo = $filename;
+        }
 
 
 
@@ -45,7 +44,7 @@ class PreferencesController extends Controller
 
     public function mypreferences()
     {
-        
+
         $preferences = User::with('preferences')->where('id', Auth::user()->id)->get();
         foreach ($preferences as $preferences) {
             // użytkownik
@@ -58,52 +57,50 @@ class PreferencesController extends Controller
         ]);
     }
 
-    public function updatePreferences(Request $request){
+    public function updatePreferences(Request $request)
+    {
 
 
         $validator = Validator::make($request->all(), [
             'name' => 'min:2|max:150',
-            'bornDate' => 'required|date',
-            'gender' => 'required',
-            'city' => 'required',
-            'interests' => 'required',
+            'bornDate' => 'nullable|date',
+            'gender' => 'nullable',
+            'city' => 'nullable',
+            'interests' => 'nullable',
             'photo' => 'nullable|image'
 
         ]);
 
-        if($validator->fails()){
-            return response()->json(['success'=>false, $validator->errors()], 422);
-        }
-        else{
+        if ($validator->fails()) {
+            return response()->json(['success' => false, $validator->errors()], 422);
+        } else {
 
-                $preferences = Preferences::where('user_id', Auth::user()->id)->firstOrFail();
+            $preferences = Preferences::where('user_id', Auth::user()->id)->firstOrFail();
 
-                $preferences->user->name = $request->name;
-                $preferences->bornDate = $request->bornDate;
-                $preferences->gender = $request->gender;
-                $preferences->city = $request->city;
-                $preferences->interests = $request->interests;
+            $preferences->user->name = $request->name;
+            $preferences->bornDate = $request->bornDate;
+            $preferences->gender = $request->gender;
+            $preferences->city = $request->city;
+            $preferences->interests = $request->interests;
 
-                if ($request->photo != '')
-                    {
-                        $storage='storage/photo'.$preferences->photo;
-                        if(File::exists($storage))
-                        {
-                            File::delete($storage);
-                        }
-                        $file= $request->file('photo');
-                        $extension = $file->getClientOriginalExtension();
-                        $filename = time().'.'.$extension;
-                        $file->move('storage/photo', $filename);
-                        $preferences->photo = $filename;
-                    }
+            if ($request->photo != '') {
+                $storage = 'storage/photo' . $preferences->photo;
+                if (File::exists($storage)) {
+                    File::delete($storage);
+                }
+                $file = $request->file('photo');
+                $extension = $file->getClientOriginalExtension();
+                $filename = time() . '.' . $extension;
+                $file->move('storage/photo', $filename);
+                $preferences->photo = $filename;
+            }
 
-                $preferences->push();
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Zaktualizowano preferencje',
-                    'preferences' => $preferences
-                ]);
+            $preferences->push();
+            return response()->json([
+                'success' => true,
+                'message' => 'Zaktualizowano preferencje',
+                'preferences' => $preferences
+            ]);
         }
     }
 };

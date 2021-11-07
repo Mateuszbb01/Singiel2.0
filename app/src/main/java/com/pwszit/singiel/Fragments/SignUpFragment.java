@@ -2,6 +2,7 @@ package com.pwszit.singiel.Fragments;
 
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -20,9 +21,14 @@ import androidx.fragment.app.Fragment;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.pwszit.singiel.AuthActivity;
 import com.pwszit.singiel.Constant;
+import com.pwszit.singiel.HomeActivity;
+import com.pwszit.singiel.PreferencesActivity;
 import com.pwszit.singiel.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -135,14 +141,13 @@ public class SignUpFragment extends Fragment {
                     editor.putInt("id",user.getInt("id"));
                     editor.putBoolean("isLoggedIn",true);
                     editor.apply();
-                    //if success
-                    Toast.makeText(getContext(), "Rejestracja pomyślna!", Toast.LENGTH_SHORT).show();
+                    //udana rejestracja
+                    startActivity(new Intent(((AuthActivity)getContext()), PreferencesActivity.class));
+                    ((AuthActivity) getContext()).finish();
+                    Toast.makeText(getContext(), "Pomyślna rejs!", Toast.LENGTH_SHORT).show();
 
 
-                    //startActivity(new Intent(((AuthActivity)getContext()), HomeActivity.class));
-                    //((AuthActivity) getContext()).finish();
-                    // Toast.makeText(getContext(), "Login Success", Toast.LENGTH_SHORT).show();
-                }
+               }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -164,7 +169,22 @@ public class SignUpFragment extends Fragment {
                 return map;
             }
         };
+        request.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 30000;
+            }
 
+            @Override
+            public int getCurrentRetryCount() {
+                return 30000;
+            }
+
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+
+            }
+        });
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(request);
     }
