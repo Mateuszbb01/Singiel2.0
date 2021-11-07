@@ -5,4 +5,5 @@ public class Constant {
     public static final String HOME = URL+"api";
     public static final String LOGIN = HOME+"/auth/login";
     public static final String REGISTER = HOME+"/auth/register";
+    public static final String SAVE_NAME = HOME+"/auth/preferences/mypreferences/update";
 }

@@ -11,12 +11,13 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-     /**
+    /**
      * Create a new AuthController instance.
      *
      * @return void
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
@@ -25,8 +26,9 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(Request $request){
-    	$validator = Validator::make($request->all(), [
+    public function login(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string|min:6',
         ]);
@@ -35,7 +37,7 @@ class AuthController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        if (! $token = Auth::attempt($validator->validated())) {
+        if (!$token = Auth::attempt($validator->validated())) {
             return response()->json(['success' => false, 'error' => 'Niepoprawne dane.'], 401);
         }
 
@@ -47,26 +49,28 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function register(Request $request) {
+    public function register(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|between:2,100',
             'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|confirmed|min:6',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
 
-//created in database with encrypted password
+        //created in database with encrypted password
         $user = User::create(array_merge(
-                    $validator->validated(),
-                    ['password' => bcrypt($request->password)]
-                ));
+            $validator->validated(),
+            ['password' => bcrypt($request->password)]
+        ));
 
         return response()->json([
-            'message' => 'Użytkownik został poprawnie zarejestrowany!',
-            'user' => $user
+            'success' => true,
+            'user' => $user,
+            /**dodać tokena!!!!! */
         ], 201);
     }
 
@@ -76,9 +80,10 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function logout() {
-        
-       Auth::logout();
+    public function logout()
+    {
+
+        Auth::logout();
 
         return response()->json(['success' => true, 'message' => 'Użytkownik został poprawnie wylogowany!']);
     }
@@ -88,7 +93,8 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function refresh() {
+    public function refresh()
+    {
         return $this->createNewToken(Auth::refresh());
     }
 
@@ -97,15 +103,17 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function userProfile() {
+    public function userProfile()
+    {
         return response()->json(Auth::user());
     }
 
-    public function updatePassword(Request $request){
+    public function updatePassword(Request $request)
+    {
         $user = User::find(Auth::user()->id);
-    
+
         $userPassword = $user->password;
-        
+
         $validator = Validator::make($request->all(), [
             'current_password' => 'required',
             'password' => 'required|same:confirm_password|min:7',
@@ -113,14 +121,13 @@ class AuthController extends Controller
         ]);
 
         if (!Hash::check($request->current_password, $userPassword)) {
-            return response()->json(['success'=>false, 'error' => 'Niepoprawne obecne hasło.'], 422);
-        }
-        else{
+            return response()->json(['success' => false, 'error' => 'Niepoprawne obecne hasło.'], 422);
+        } else {
 
             if ($validator->fails())
-                return response()->json(['success'=>false, $validator->errors()], 422);
-         }
-    
+                return response()->json(['success' => false, $validator->errors()], 422);
+        }
+
 
         $user->password = Hash::make($request->password);
 
@@ -129,7 +136,6 @@ class AuthController extends Controller
             'success' => true,
             'message' => 'Hasło zostało poprawnie zmienione',
         ]);
-
     }
 
     public function deleteAccount(Request $request)
@@ -138,7 +144,7 @@ class AuthController extends Controller
         $userPassword = $user->password;
 
         if (!Hash::check($request->password, $userPassword)) {
-            return response()->json(['success'=>false, 'error' => 'Niepoprawne hasło.'], 422);
+            return response()->json(['success' => false, 'error' => 'Niepoprawne hasło.'], 422);
         }
         User::destroy(Auth::user()->id);
 
@@ -155,7 +161,8 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function createNewToken($token){
+    protected function createNewToken($token)
+    {
         return response()->json([
 
             'token' => $token,
@@ -164,15 +171,15 @@ class AuthController extends Controller
 
             //‎‎Ciąg tokenu dostępu wystawiony przez serwer autoryzacji.‎
             //'access_token' => $token,
-            
+
             //‎‎Rodzaj tokena to jest, zazwyczaj tylko ciąg "bearer".‎
             //'token_type' => 'bearer',
-            
+
 
             //‎Jeśli token dostępu wygaśnie, serwer powinien odpowiedzieć z czasem, na który token dostępu zostanie przyznany.‎
             //'expires_in' => Auth::factory()->getTTL() * 60,
 
-            
+
         ]);
     }
 }

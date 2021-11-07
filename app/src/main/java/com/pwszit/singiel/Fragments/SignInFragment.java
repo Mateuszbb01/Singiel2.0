@@ -25,6 +25,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.pwszit.singiel.AuthActivity;
 import com.pwszit.singiel.Constant;
+import com.pwszit.singiel.HomeActivity;
 import com.pwszit.singiel.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -61,9 +62,6 @@ public class SignInFragment extends Fragment {
         txtSignUp = view.findViewById(R.id.txtSignUp);
         txtEmail = view.findViewById(R.id.txtEmailSignIn);
         btnSignIn = view.findViewById(R.id.btnSignIn);
-        dialog = new ProgressDialog(getContext());
-        dialog.setCancelable(false);
-
         dialog = new ProgressDialog(getContext());
         dialog.setCancelable(false);
         txtSignUp.setOnClickListener(v -> {
@@ -146,13 +144,13 @@ public class SignInFragment extends Fragment {
                     editor.putInt("id",user.getInt("id"));
                     editor.putBoolean("isLoggedIn",true);
                     editor.apply();
-                    //if success
+                    //udane logowanie
+                    startActivity(new Intent(((AuthActivity)getContext()), HomeActivity.class));
+                    ((AuthActivity) getContext()).finish();
                     Toast.makeText(getContext(), "Logowanie pomyślne!", Toast.LENGTH_SHORT).show();
 
 
-                    //startActivity(new Intent(((AuthActivity)getContext()), HomeActivity.class));
-                    //((AuthActivity) getContext()).finish();
-                   // Toast.makeText(getContext(), "Login Success", Toast.LENGTH_SHORT).show();
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -173,7 +171,7 @@ public class SignInFragment extends Fragment {
                 return map;
             }
         };
-        /*Odkomentować jesli jest problem z połączeniem do restapi (długi okres oczekiwania na żądanie)
+        /*Odkomentować jesli jest problem z połączeniem do restapi (długi okres oczekiwania na żądanie)*/
         request.setRetryPolicy(new RetryPolicy() {
             @Override
             public int getCurrentTimeout() {
@@ -190,7 +188,7 @@ public class SignInFragment extends Fragment {
 
             }
         });
-        */
+
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(request);
