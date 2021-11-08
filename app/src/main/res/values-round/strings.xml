@@ -1,3 +1,5 @@
 <resources>
     <string name="hello_world">Hello Round World!</string>
+    <string name="imie">Imię</string>
+    <string name="txtBornDate">Data urodzenia</string>
 </resources>

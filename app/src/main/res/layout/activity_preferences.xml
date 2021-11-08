@@ -35,15 +35,17 @@
         android:id="@+id/txtLayoutName"
 
 
+
         app:startIconDrawable="@drawable/baseline_badge_20">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
+            android:backgroundTint="#F10000"
 
-             />
+
+            android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
     <TextView

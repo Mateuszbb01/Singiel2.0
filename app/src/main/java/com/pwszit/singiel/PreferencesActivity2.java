@@ -55,7 +55,7 @@ public class PreferencesActivity2 extends AppCompatActivity {
                 editor.putString("BIRTHDATE", birthDate);
                 editor.apply();
 
-                Intent intent = new Intent(PreferencesActivity2.this, PreferencesActivity3.class);
+                Intent intent = new Intent(PreferencesActivity2.this, EditProfileActivity.class);
                 startActivity(intent);
                 finish();
             }
