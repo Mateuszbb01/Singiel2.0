@@ -22,27 +22,15 @@
         android:textSize="32sp" />
 
 
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
+    <DatePicker
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="150dp"
-        android:layout_marginEnd="50dp"
-        android:hint="Data urodzenia"
+        android:id="@+id/txtBirthDate"
+        android:layout_centerHorizontal="true"
+        android:datePickerMode="calendar"
+        android:layout_marginTop="25dp"/>
 
-        app:startIconDrawable="@drawable/baseline_badge_20">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtBirthDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="date"
-            android:maxLength="6" />
-
-    </com.google.android.material.textfield.TextInputLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -65,11 +53,6 @@
         android:textColor="@color/colorWhite"
         android:textSize="17sp" />
 
-    <TextView
-        android:id="@+id/texxxxx"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
 
 
 </LinearLayout>

@@ -22,14 +22,12 @@ public class PreferencesActivity extends AppCompatActivity {
      Button save;
      SharedPreferences sharedPreferences;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
         save  =  findViewById(R.id.btnConfirmName);
         txtName = findViewById(R.id.txtName);
-
 
         sharedPreferences = getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
 
@@ -48,8 +46,6 @@ public class PreferencesActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
 
     }
 

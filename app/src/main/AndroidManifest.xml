@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.pwszit.singiel" >
+    package="com.pwszit.singiel">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,32 +12,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Singiel"
-        android:usesCleartextTraffic="true" >
-        <activity
-            android:name=".EditProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Fragments.EditProfileActivity"
-            android:exported="false" />
+        android:usesCleartextTraffic="true">
+        <activity android:name=".PreferencesActivity7"></activity>
+        <activity android:name=".PreferencesActivity6" />
+        <activity android:name=".PreferencesActivity5" />
+        <activity android:name=".PreferencesActivity4" />
         <activity android:name=".PreferencesActivity3" />
-        <activity
-            android:name=".PreferencesActivity2"
-            android:label="@string/title_activity_preferences2" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".PreferencesActivity2" />
+        <activity android:name=".PreferencesActivity" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
                app to run.
         -->
         <activity android:name=".HomeActivity" />
-        <activity android:name=".PreferencesActivity" />
         <activity android:name=".AuthActivity" />
         <activity android:name=".OnBoardActivity" />
-        <activity android:name=".MainActivity" >
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
