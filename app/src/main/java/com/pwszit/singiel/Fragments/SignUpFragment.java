@@ -136,7 +136,7 @@ public class SignUpFragment extends Fragment {
                     //make shared preference user
                     SharedPreferences userPref = getActivity().getApplicationContext().getSharedPreferences("user",getContext().MODE_PRIVATE);
                     SharedPreferences.Editor editor = userPref.edit();
-                    //editor.putString("token",object.getString("token"));
+                    editor.putString("token",object.getString("token"));
                     editor.putString("name",user.getString("name"));
                     editor.putInt("id",user.getInt("id"));
                     editor.putBoolean("isLoggedIn",true);

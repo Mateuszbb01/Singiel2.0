@@ -40,7 +40,7 @@ public class PreferencesActivity7 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_preferences);
+        setContentView(R.layout.activity_preferences7);
         init();
     }
 
@@ -93,7 +93,7 @@ public class PreferencesActivity7 extends AppCompatActivity {
         String hobbies = preferences.getString("HOBBIES", "");
 
 
-        StringRequest request = new StringRequest(Request.Method.POST, Constant.SAVE_NAME, response -> {
+        StringRequest request = new StringRequest(Request.Method.POST, Constant.REGISTER_PREFERENCES, response -> {
             try {
                 JSONObject object = new JSONObject(response);
                 if (object.getBoolean("success")){
