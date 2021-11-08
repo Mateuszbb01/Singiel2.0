@@ -28,6 +28,11 @@
 
     <string name="accept_reg">Akceptuj</string>
 
+    <string name="whoami">Jestem </string>
+
+    <string name="whereFrom">Skąd jestes?  </string>
+
+
     <string name="accept_reg_info">Zapoznaj się z regulaminem korzystania z serwisu</string>
 
     <string name="regulamin">Phasellus ante ipsum, faucibus ac neque ut.</string>
@@ -52,9 +57,9 @@
 
     <string name="chbox_m">MĘŻCZYZNĄ</string>
 
-    <string name="kobieta">KOBIETĄ</string>
+    <string name="woman">KOBIETĄ</string>
 
-    <string name="meczyzna">MĘŻCZYZNĄ</string>
+    <string name="man">MĘŻCZYZNĄ</string>
 
     <!-- layout_preferences4-->
 
