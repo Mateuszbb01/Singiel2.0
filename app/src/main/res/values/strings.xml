@@ -5,12 +5,15 @@
     <string name="app_name">Singiel2.0</string>
 
     <string name="zarejestruj_sie">Zarejestruj się</string>
+    <string name="zaloguj_sie">Zaloguj</string>
 
     <string name="potwierdz_haslo">Potweirdź hasło</string>
 
     <string name="haslo">Hasło</string>
 
     <string name="email">Email</string>
+
+    <string name="or">LUB</string>
 
     <string name="singiel20">Singiel 2.0</string>
 
