@@ -25,6 +25,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.pwszit.singiel.AuthActivity;
 import com.pwszit.singiel.Constant;
+import com.pwszit.singiel.Fragments.SignUpFragment;
 import com.pwszit.singiel.HomeActivity;
 import com.pwszit.singiel.R;
 import com.google.android.material.textfield.TextInputEditText;

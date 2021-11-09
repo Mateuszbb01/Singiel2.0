@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -32,7 +33,8 @@ public class PreferencesActivity2 extends AppCompatActivity {
 
     TextInputEditText txtBirthDate;
     Button save;
-    TextView txtDate;
+    //TextView txtDate;
+    DatePicker datePicker;
     SharedPreferences sharedPreferences;
 
     @Override
@@ -40,26 +42,35 @@ public class PreferencesActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences2);
         save = findViewById(R.id.btnConfirmBirthDate);
-        txtDate = findViewById(R.id.txtBirthDate);
-
-
+       // txtDate = findViewById(R.id.txtBirthDate);
+        datePicker = findViewById(R.id.txtBirthDate);
         sharedPreferences = getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String birthDate = txtDate.getText().toString();
+                int day=datePicker.getDayOfMonth();
+                int month=datePicker.getMonth();
+                int year=datePicker.getYear();
+
+
+                String birthDate = makeDateString(day, month, year);
+
 
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("BIRTHDATE", birthDate);
                 editor.apply();
 
-                Intent intent = new Intent(PreferencesActivity2.this, EditProfileActivity.class);
+                Intent intent = new Intent(PreferencesActivity2.this, PreferencesActivity3.class);
                 startActivity(intent);
                 finish();
             }
         });
 
+    }
+
+    private String makeDateString(int day, int month, int year) {
+        return year + "-" + month + "-" + day;
     }
 }
