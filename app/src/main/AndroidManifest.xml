@@ -13,14 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Singiel"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PreferencesActivity7"></activity>
+        <activity
+            android:name=".EditProfile"
+            android:exported="false" />
+        <activity android:name=".PreferencesActivity7" />
         <activity android:name=".PreferencesActivity6" />
         <activity android:name=".PreferencesActivity5" />
         <activity android:name=".PreferencesActivity4" />
         <activity android:name=".PreferencesActivity3" />
         <activity android:name=".PreferencesActivity2" />
         <activity android:name=".PreferencesActivity" />
-
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
                app to run.
