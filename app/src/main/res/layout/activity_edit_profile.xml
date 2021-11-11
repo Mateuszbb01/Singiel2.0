@@ -14,24 +14,33 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center_horizontal"
         android:text="@string/edit_profile_info"
         android:textColor="@color/colorBlack"
-        android:textSize="32sp" />
+        android:textSize="28sp" />
 
-
+    <!--PHOTO EDIT-->
     <ImageView
-        android:id="@+id/editPictrue"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginBottom="3dp"
+        android:id="@+id/addPhoto"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_gravity="center_horizontal"
-        android:contentDescription="@string/editPicture" />
-
+        android:contentDescription="TODO" />
 
     <!-- Imie   -->
+    <TextView
+        android:id="@+id/btnEditPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="1dp"
+        android:gravity="center_horizontal"
+        android:text="@string/edit_photo"
+        android:textColor="@color/teal_700"
+        android:textSize="18sp" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,13 +73,13 @@
             tools:ignore="DuplicateSpeakableTextCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
-<!--    -->
+    <!--    -->
 
-<!-- Data urodzenia  -->
+    <!-- Data urodzenia  -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="3dp"
         android:gravity="center_horizontal"
         android:text="@string/txtBornDate"
@@ -94,11 +103,11 @@
             tools:ignore="DuplicateSpeakableTextCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
-<!--    -->
+    <!--    -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="3dp"
         android:gravity="center_horizontal"
         android:text="@string/edit_description_info"
@@ -121,7 +130,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtNewDescription"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="80dp"
 
             android:inputType="text"
 
@@ -135,7 +144,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="3dp"
         android:gravity="center_horizontal"
         android:text="@string/edit_city_profile_info"

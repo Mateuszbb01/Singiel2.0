@@ -23,12 +23,16 @@ class PreferencesController extends Controller
         $preferences->interests = $request->interests;
         //sprawdza czy jest dodane zdjecie
 
+
         if ($request->photo != '') {
-            $file = $request->file('photo');
-            $extension = $file->getClientOriginalExtension();
-            $filename = time() . '.' . $extension;
-            $file->move('storage/photo', $filename);
-            $preferences->photo = $filename;
+            $photo = time().'.jpeg';
+            file_put_contents('storage/photo/'.$photo,base64_decode($request->photo));
+            $preferences->photo = $photo;
+            // $file = $request->file('photo');
+            // $extension = $file->getClientOriginalExtension();
+            //  $filename = time() . '.' . $extension;
+            //  $file->move('storage/photo/', $filename);
+            // $preferences->photo = $filename;
         }
 
 
@@ -88,12 +92,13 @@ class PreferencesController extends Controller
                 if (File::exists($storage)) {
                     File::delete($storage);
                 }
-                $file = $request->file('photo');
-                $extension = $file->getClientOriginalExtension();
-                $filename = time() . '.' . $extension;
-                $file->move('storage/photo', $filename);
-                $preferences->photo = $filename;
+                $photo = time().'.jpeg';
+                file_put_contents('storage/photo/'.$photo,base64_decode($request->photo));
+                $preferences->photo = $photo;
             }
+
+            
+        
 
             $preferences->push();
             return response()->json([
