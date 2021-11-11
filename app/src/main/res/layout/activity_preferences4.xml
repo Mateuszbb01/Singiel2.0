@@ -26,13 +26,15 @@
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:id="@+id/txtLayoutCity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="150dp"
         android:layout_marginEnd="50dp"
         android:hint="Miasto"
-
+        app:counterEnabled="true"
+        app:counterMaxLength="13"
         app:startIconDrawable="@drawable/baseline_badge_20">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -40,7 +42,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-  />
+            android:maxLength="13"
+            />
 
     </com.google.android.material.textfield.TextInputLayout>
 

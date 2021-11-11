@@ -102,22 +102,79 @@ public class SignUpFragment extends Fragment {
 
             }
         });
+        txtPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!txtPassword.getText().toString().isEmpty()) {
+                    layoutPassword.setErrorEnabled(false);
+                }
+
+            }
+
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+
+            }
+        });
+        txtConfirm.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!txtConfirm.getText().toString().isEmpty()) {
+                    layoutConfirm.setErrorEnabled(false);
+                }
+
+            }
+
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+
+            }
+        });
     }
 
     private boolean validate () {
+        String val = txtEmail.getText().toString();
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        //jeśli chcemy walidację do hasła
+        String regex = "^"+
+                "(?=.*[0-9])" //przynajmniej jedna cyfra
+                + "(?=.*[a-z])(?=.*[A-Z])" //przynajmniej jedna mala i jedna duza litera
+                + "(?=.*[@#$%^&+=])" //przynajmniej 1 znak specjalny
+                + "(?=\\S+$).{8,20}$"; //bez spacji i przynajmniej 6 znakow, max 20
         if (txtEmail.getText().toString().isEmpty()) {
             layoutEmail.setErrorEnabled(true);
-            layoutEmail.setError("Email niepoprawny");
+            layoutEmail.setError("Musisz podać email");
             return false;
         }
-        if (txtPassword.getText().toString().length() < 8) {
+        if (!val.matches(emailPattern)) {
+            layoutEmail.setErrorEnabled(true);
+            layoutEmail.setError("Nieprawidłowy mail");
+            return false;
+        }
+        if (txtPassword.getText().toString().length() < 6) {
             layoutPassword.setErrorEnabled(true);
-            layoutPassword.setError("8 znakow");
+            layoutPassword.setError("Min. 6 znakow");
+            layoutConfirm.setError("Min. 6 znakow");
             return false;
         }
         if (!txtConfirm.getText().toString().equals(txtPassword.getText().toString())) {
             layoutConfirm.setErrorEnabled(true);
-            layoutConfirm.setError("Hasło!");
+            layoutConfirm.setError("Hasła musza być identyczne!");
+            layoutPassword.setError("Hasła musza być identyczne!");
             return false;
         }
 

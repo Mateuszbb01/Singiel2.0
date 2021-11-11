@@ -33,6 +33,9 @@ class PreferencesController extends Controller
             //  $file->move('storage/photo/', $filename);
             // $preferences->photo = $filename;
         }
+
+
+
         $preferences->save();
         $preferences->user;
         return response()->json([

@@ -42,7 +42,7 @@ public class PreferencesActivity6 extends AppCompatActivity {
     Button save;
     SharedPreferences sharedPreferences;
     private ImageView imageView;
-    private TextView btnSelectPhoto;
+    private TextView btnSelectPhoto, photoWarning;
     private SharedPreferences preferences, userPref;
     private static final int GALLERY_ADD_PROFILE = 1;
     private Bitmap bitmap = null;
@@ -63,6 +63,7 @@ public class PreferencesActivity6 extends AppCompatActivity {
         save = findViewById(R.id.btnConfirmPhoto);
         imageView = findViewById(R.id.addPhoto);
         btnSelectPhoto = findViewById(R.id.btnSelectPhoto);
+        photoWarning = findViewById(R.id.photoWarning);
         userPref = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
 
 
@@ -73,11 +74,24 @@ public class PreferencesActivity6 extends AppCompatActivity {
         });
 
         save.setOnClickListener(v->{
-            //if(validate()){
+            if(photoValidate()){
             savePreferences();
-            //  }
+            }
         });
 
+
+    }
+    private Boolean photoValidate() {
+        String photoString = bitmapToString(bitmap);
+        String noWhiteSpaces = "(?=\\s+$)";
+        if (photoString.isEmpty()){
+            photoWarning.setText("Zdjęcie jest wymagane");
+            return false;
+        }
+        else{
+            photoWarning.setError(null);
+            return true;
+        }
 
     }
 
@@ -94,13 +108,16 @@ public class PreferencesActivity6 extends AppCompatActivity {
                 } else {
                     ImageDecoder.Source source = ImageDecoder.createSource(getContentResolver(), imgUri);
                     bitmap = ImageDecoder.decodeBitmap(source);
-                }            } catch (Exception e) {
+                }
+            }
+            catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
     private void savePreferences(){
+
         dialog.setMessage("Zapisywanie");
         dialog.show();
         preferences = getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
@@ -115,9 +132,9 @@ public class PreferencesActivity6 extends AppCompatActivity {
             try {
                 JSONObject object = new JSONObject(response);
                 if (object.getBoolean("success")){
-                    //   SharedPreferences.Editor editor = userPref.edit();
-                    //    editor.putString("photo",object.getString("photo"));
-                    // editor.apply();
+                      // SharedPreferences.Editor editor = userPref.edit();
+                       //editor.putString("photo",object.getString("photo"));
+                      // editor.apply();
                     startActivity(new Intent(PreferencesActivity6.this,HomeActivity.class));
                     finish();
                 }
@@ -166,7 +183,7 @@ public class PreferencesActivity6 extends AppCompatActivity {
 
             @Override
             public int getCurrentRetryCount() {
-                return 30000;
+                return 1;
             }
 
             @Override

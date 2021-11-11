@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,17 +40,45 @@ public class PreferencesActivity extends AppCompatActivity {
             }
         });
 
+        txtName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!txtName.getText().toString().isEmpty()) {
+                    txtLayoutName.setErrorEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private Boolean validateName() {
         String val = txtName.getText().toString();
+        String noWhiteSpaces = "\\A\\w{4,20}\\z";
         if (val.isEmpty()){
             txtLayoutName.setError("Imię musi zostać podane!");
             return false;
         }
+        else if(val.length()<=3){
+            txtLayoutName.setError("Imię musi mieć wiecej niż 3 znaki");
+            return false;
+        }
+
+        else if(!val.matches(noWhiteSpaces)){
+            txtLayoutName.setError("Spacja nie jest dozwolona");
+            return false;
+        }
         else{
-            txtName.setError(null);
+            txtLayoutName.setError(null);
+            txtLayoutName.setErrorEnabled(false);
             return true;
         }
 
