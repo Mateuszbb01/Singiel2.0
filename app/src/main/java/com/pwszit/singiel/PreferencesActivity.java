@@ -18,36 +18,60 @@ import com.google.android.material.textfield.TextInputLayout;
 
 public class PreferencesActivity extends AppCompatActivity {
 
-     EditText txtName;
-     Button save;
-     SharedPreferences sharedPreferences;
+    EditText txtName;
+    TextInputLayout txtLayoutName;
+    Button save;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
-        save  =  findViewById(R.id.btnConfirmName);
+        save = findViewById(R.id.btnConfirmName);
         txtName = findViewById(R.id.txtName);
+        txtLayoutName = findViewById(R.id.txtLayoutName);
 
-        sharedPreferences = getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
+        save.setOnClickListener(v -> {
 
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String name = txtName.getText().toString();
-
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("NAME", name);
-                editor.apply();
-
-                Intent intent = new Intent(PreferencesActivity.this, PreferencesActivity2.class);
-                startActivity(intent);
-                finish();
+            if (validateName()) {
+                save();
             }
         });
 
+
     }
 
+    private Boolean validateName() {
+        String val = txtName.getText().toString();
+        if (val.isEmpty()){
+            txtLayoutName.setError("Imię musi zostać podane!");
+            return false;
+        }
+        else{
+            txtName.setError(null);
+            return true;
+        }
+
+    }
+
+    private void save() {
+            sharedPreferences = getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
+            String name = txtName.getText().toString();
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("NAME", name);
+            editor.apply();
+
+            Intent intent = new Intent(PreferencesActivity.this, PreferencesActivity2.class);
+            startActivity(intent);
+            finish();
+        }
+
+    @Override
+    public void onBackPressed() {
+       // super.onBackPressed();
+    }
 }
+
+
 

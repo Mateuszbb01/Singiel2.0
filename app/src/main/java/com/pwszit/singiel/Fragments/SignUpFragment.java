@@ -29,6 +29,7 @@ import com.pwszit.singiel.AuthActivity;
 import com.pwszit.singiel.Constant;
 import com.pwszit.singiel.HomeActivity;
 import com.pwszit.singiel.PreferencesActivity;
+import com.pwszit.singiel.PreferencesActivity7;
 import com.pwszit.singiel.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -142,7 +143,7 @@ public class SignUpFragment extends Fragment {
                     editor.putBoolean("isLoggedIn",true);
                     editor.apply();
                     //udana rejestracja
-                    startActivity(new Intent(((AuthActivity)getContext()), PreferencesActivity.class));
+                    startActivity(new Intent(((AuthActivity)getContext()), PreferencesActivity7.class));
                     ((AuthActivity) getContext()).finish();
                     Toast.makeText(getContext(), "Pomyślna rejs!", Toast.LENGTH_SHORT).show();
 

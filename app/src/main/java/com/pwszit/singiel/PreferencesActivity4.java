@@ -41,4 +41,8 @@ public class PreferencesActivity4 extends AppCompatActivity {
         });
 
     }
+    @Override
+    public void onBackPressed() {
+        // super.onBackPressed();
+    }
 }
