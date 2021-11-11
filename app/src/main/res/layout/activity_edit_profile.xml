@@ -24,8 +24,8 @@
     <!--PHOTO EDIT-->
     <ImageView
         android:id="@+id/addPhoto"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
         android:contentDescription="TODO" />
 
@@ -50,6 +50,16 @@
         android:text="@string/imie"
         android:textColor="@color/colorBlack"
         android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btnSaveProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_round"
+        android:text="@string/save_profile_btn"
+        android:textColor="#311B92"
+        android:textSize="17sp"
+        tools:ignore="TextContrastCheck" />
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -174,17 +184,6 @@
             android:textColor="#000000"
             tools:ignore="DuplicateSpeakableTextCheck" />
     </com.google.android.material.textfield.TextInputLayout>
-
-
-    <Button
-        android:id="@+id/btnSaveProfile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/btn_round"
-        android:text="@string/save_profile_btn"
-        android:textColor="#311B92"
-        android:textSize="17sp"
-        tools:ignore="TextContrastCheck" />
 
 
 </LinearLayout>

@@ -166,7 +166,7 @@ public class PreferencesActivity6 extends AppCompatActivity {
 
             @Override
             public int getCurrentRetryCount() {
-                return 30000;
+                return 1;
             }
 
             @Override

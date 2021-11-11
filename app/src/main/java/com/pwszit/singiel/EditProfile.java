@@ -11,7 +11,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.ImageDecoder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 
@@ -30,6 +32,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -51,7 +54,10 @@ import java.util.Map;
 
 public class EditProfile extends AppCompatActivity {
 
-    private TextView txtBirthDate, txtName, txtNewDescription, txtNewCity, btnEditPhoto;
+    private TextView txtBirthDate;
+    private TextView txtName;
+    private TextView txtNewDescription;
+    private TextView txtNewCity;
     SharedPreferences preferences, userPref, sharedPreferences;
     private Bitmap bitmap = null;
     private Button btnSaveProfile;
@@ -81,9 +87,9 @@ public class EditProfile extends AppCompatActivity {
         String hobbies = preferences.getString("HOBBIES", "");
         String city = preferences.getString("CITY", "");
 
-        String uriPhoto = preferences.getString("URI_PHOTO", "");
-        Uri imageUri = Uri.parse(uriPhoto);
-        imageView.setImageURI(imageUri);
+//        String uriPhoto = preferences.getString("URI_PHOTO", "");
+//        Uri imageUri = Uri.parse(uriPhoto);
+//        imageView.setImageURI(imageUri);
 
         txtName.setText(name);
         txtBirthDate.setText(date);
@@ -107,7 +113,7 @@ public class EditProfile extends AppCompatActivity {
         userPref = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
 
         imageView = findViewById(R.id.addPhoto);
-        btnEditPhoto = findViewById(R.id.btnEditPhoto);
+        TextView btnEditPhoto = findViewById(R.id.btnEditPhoto);
 
 
         btnEditPhoto.setOnClickListener(v -> {
@@ -117,8 +123,8 @@ public class EditProfile extends AppCompatActivity {
         });
 
         btnSaveProfile.setOnClickListener(v -> {
-            Intent i = new Intent(Intent.ACTION_PICK);
-            i.setType("image/*");
+//            Intent i = new Intent(Intent.ACTION_PICK);
+//            i.setType("image/*");
 
             updateProfile();
         });
@@ -128,26 +134,23 @@ public class EditProfile extends AppCompatActivity {
 
 
 
-        @Override
-        protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==GALLERY_ADD_PROFILE && resultCode==RESULT_OK){
+            Uri imgUri = data.getData();
+            imageView.setImageURI(imgUri);
 
-            if (requestCode == GALLERY_ADD_PROFILE && resultCode == RESULT_OK) {
-                Uri imgUri = data.getData();
-                imageView.setImageURI(imgUri);
-
-
-
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("URI_PHOTO", imgUri.toString());
-                editor.apply();
-                try {
+            try {
+                if(Build.VERSION.SDK_INT < 29) {
                     bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imgUri);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                } else {
+                    ImageDecoder.Source source = ImageDecoder.createSource(getContentResolver(), imgUri);
+                    bitmap = ImageDecoder.decodeBitmap(source);
+                }            } catch (Exception e) {
+                e.printStackTrace();
             }
-
+        }
     }
 
     private void updateProfile() {
@@ -220,6 +223,23 @@ public class EditProfile extends AppCompatActivity {
             }
         };
 
+        request.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 30000;
+            }
+
+            @Override
+            public int getCurrentRetryCount() {
+                return 1;
+            }
+
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+
+            }
+        });
+
 
         RequestQueue queue = Volley.newRequestQueue(EditProfile.this);
         queue.add(request);
@@ -228,7 +248,7 @@ public class EditProfile extends AppCompatActivity {
     private String bitmapToString(Bitmap bitmap) {
         if (bitmap != null) {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 30, byteArrayOutputStream);
             byte[] array = byteArrayOutputStream.toByteArray();
             return Base64.encodeToString(array, Base64.DEFAULT);
         }

@@ -84,15 +84,16 @@ class PreferencesController extends Controller
             $preferences->city = $request->city;
             $preferences->interests = $request->interests;
 
-            if ($request->photo != '') {
-                $storage = 'storage/photo' . $preferences->photo;
-                if (File::exists($storage)) {
-                    File::delete($storage);
-                }
+            // if ($request->photo != '') {
+            //     $storage = 'storage/photo' . $preferences->photo;
+            //     if (File::exists($storage)) {
+            //         File::delete($storage);
+            //     }
+            
                 $photo = time().'.jpeg';
                 file_put_contents('storage/photo/'.$photo,base64_decode($request->photo));
                 $preferences->photo = $photo;
-            }
+            // }
 
             
         
