@@ -1,0 +1,127 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[polish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+
+
+\addtolength{\hoffset}{-1.5cm}
+\addtolength{\marginparwidth}{-1.5cm}
+\addtolength{\textwidth}{3cm}
+\addtolength{\voffset}{-1cm}
+\addtolength{\textheight}{2.5cm}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0cm}
+
+\begin{document}
+
+\title{Karta postępu pracy}
+\date{22.10.2021 - 04.11.2021}
+
+\maketitle
+
+
+\section*{Tytuł aplikacji}
+SINGIEL 2.0
+\section*{Nazwa robocza aplikacji}
+Aplikacja randkowa z komunikatorem
+\section*{Cel}
+Stworzenie aplikacji do łączenia się w pary użytkowników z możliwością czatowania.
+\section*{Zespół}
+Bartłomiej Tokarczyk  (project menager), \\
+Wojciech Sułowski, \\
+Mateusz Sromek, \\
+Maciej Więcławek \\
+\newpage
+
+\section{Zaplanowane do zrealizowania zadania:}
+
+\begin{itemize}
+    \item [--] Implementacja preferencji użytkownika w RestApi \textbf{(Mateusz Sromek pomoc - Maciej Więcławek)}
+
+    \item [--] Zakładka edycji profilu (aplikacja mobilna) – layout \textbf{(Bartłomiej Tokarczyk)}
+
+    \item [--] Wdrożenie obsługi profilów użytkownika w RestApi \textbf{(Mateusz Sromek pomoc - Wojciech Sułowski)}
+
+    \item [--] Integracja api z funkcją logowania oraz rejestracji \textbf{(Wojciech Sułowski)}
+    \item [--] Przygotowanie layoutu pod RestApi – logowanie/rejestracja w aplikacji \textbf{(Bartłomiej Tokarczyk)}
+    \item [--] Testy RestApi przy użyciu aplikacji PostMan, wskazanie błędów przy konfiguracji RestApi \textbf{(Bartłomiej Tokarczyk)}
+    \item [--] Diagram przypadków użycia oraz diagram przepływu
+    \item [--] Konfiguracja bazy danych wraz z obsługą POST/GET/PUT/DELETE \textbf{(Maciej Więcławek pomoc – Mateusz Sromek)}
+    \item [--] Instalacja Docker, konfiguracja kontenera z Laravel Api + MySql \textbf{(Mateusz Sromek pomoc – Maciej Więcławek)}
+
+\end{itemize}
+
+\section{Zrealizowane założenia:}
+\begin{itemize}
+    \item [--] Implementacja preferencji użytkownika w RestApi 
+    \item [--] Zakładka edycji profilu (aplikacja mobilna) – layout    
+    \item [--] Wdrożenie obsługi profilów użytkownika w RestApi aplikacji
+    \item [--] Integracja api z funkcją logowania oraz rejestracji
+    \item [--] Przygotowanie layoutu pod RestApi – logowanie/rejestracja w aplikacji
+    \item [--] Testy RestApi przy użyciu aplikacji PostMan, wskazanie błędów przy konfiguracji RestApi
+    \item [--]Konfiguracja bazy danych wraz z obsługą POST/GET/PUT/DELETE
+ 
+\end{itemize}
+
+\section{Poświęcony czas na realizację projektu:}
+\begin{itemize}
+    \item [--] Wojciech Sułowski  - 18h
+    \item [--] Mateusz Sromek  - 24h
+    \item [--] Maciej Więcławek - 32h
+    \item [--] Bartłomiej Tokarczyk - 20h
+\end{itemize}
+Zaplanowany czas na realizację wyznaczonych zadań: \textbf{30h}
+
+\section{ Napotkane problemy podczas realizacji zadań}
+\begin{itemize}
+    \item [--] Błędne wyznaczenie ilości czasu potrzebnego do realizacji poszczególnych  zadań
+    \item [--] Problem z czasem oczekiwania na odpowiedź od Docker do aplikacji mobilnej (wydłużony czas odpowiedzi serwera dla aplikacji, co skutkowało brakiem możliwości rejestracji oraz logowania) \\
+\textbf{Rozwiązanie problemu:} Zmiana podsystemu WSL na V-Hyper
+ \item [--] Problem z wyświetlaniem editboxów po kompilacji programu (ucinany tekst przy wpisywaniu loginu oraz hasła)\\
+ \textbf{Rozwiązanie problemu:} Implementacja biblioteki android material design oraz zmiana   typu editboxów.
+
+
+  \item [--] Niezgodność plików lokalnych w Android Studio co powodowało nie kompilowanie się aplikacji \\
+\textbf{Rozwiązanie problemu:} Ręczna podmiana plików, zignorowanie plików lokalnych przy kolejnych zapisach aplikacji
+   \item [--] Problem z nie generowaniem się tokenu przy rejestracji użytkownika w api  co uniemożliwiało dodawanie preferencji użytkownika \\
+\textbf{Rozwiązanie problemu:} Generowanie tokenu przy rejestracji użytkownika w metodzie POST (Laravel)
+
+    \end{itemize}
+    \\
+    Zadania przeniesione z sprintu 1 do sprintu 2:
+\begin{itemize}
+ \item [--] Rejestracja preferencji użytkownika - plec, zainteresowania, zdjecie, opis.
+ \item [--] Zakładka edycja profilu (aplikacji mobilna)
+  \item [--] Backend do edycji profilu usera 
+\end{itemize}
+    
+\section{Zadania zaplanowane na najbliższy sprint 05.10.2021 - 18.10.2021: }
+\begin{itemize}
+   \item [--] Rejestracja preferencji użytkownika - płeć, zainteresowania, zdjecie, opis. \textbf{(Maciej Więcławek) (wykonane 08.10.2021)}
+ \item [--]Zakładka edycja profilu (aplikacji mobilna) - layout \textbf{(Bartłomiej Tokarczyk) (wykonane 09.10.2021)}
+
+  \item [--]Backend do edycji profilu usera\textbf{ (Mateusz Sromek) (wykonane 08.10.2021)}
+
+   \item [--]Obsługa zakładki przeglądania użytkowników (swipe right/left) z poziomu RestApi. \textbf{(Mateusz Sromek)}
+
+    \item [--]Layout do strony głównej aplikacji; zakładka przeglądania użytkowników w android studio \textbf{(Maciej Więcławek)}
+
+     \item [--]Backend do zakładki przeglądania użytkowników. Obsługa połączenia pomiędzy zakładką a RestApi.\textbf{ (Maciej Więcławek)}
+
+      \item [--]Implementacja technologii socketIO do obsługi czatowania - po stronie RestApi. \textbf{(Mateusz Sromek)}
+      
+      \item [--]Przygotowanie bazy danych, utworzenie routingów/kontrolerów. Dodanie funkcjonalności szyfrowania wiadomości tekstowych.\textbf{ (Bartłomiej Tokarczyk) }
+
+      \item [--]Przygotowanie layoutu pod czat użytkowników\textbf{ (Wojciech Sułowski) }
+
+      \item [--]Backend do wyświetlania sparowanych użytkowników (zakładka czat) \textbf{(Wojciech Sułowski)}
+      
+ \item [--]Backend do konwersacji ze sparowanym użytkownikiem. \textbf{(Bartłomiej Tokarczyk)}
+
+\end{itemize}
+
+Planowany, łączny czas realizacji zadań:\textbf{ 83h}
+
+
+\end{document}

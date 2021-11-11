@@ -73,4 +73,8 @@ public class PreferencesActivity2 extends AppCompatActivity {
     private String makeDateString(int day, int month, int year) {
         return year + "-" + month + "-" + day;
     }
+    @Override
+    public void onBackPressed() {
+        // super.onBackPressed();
+    }
 }

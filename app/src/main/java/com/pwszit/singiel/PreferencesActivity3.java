@@ -34,7 +34,7 @@ public class PreferencesActivity3 extends AppCompatActivity {
                 radioButton = findViewById(radioId);
                 String gender = radioButton.getText().toString();
 
-                if (gender.equals("Kobietą")) {
+                if (gender.equals("KOBIETĄ")) {
                     engGender = "female";
                 }
                 else
@@ -54,6 +54,9 @@ public class PreferencesActivity3 extends AppCompatActivity {
     }
 
 
-
+    @Override
+    public void onBackPressed() {
+        // super.onBackPressed();
+    }
 
 }
