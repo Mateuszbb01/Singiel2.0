@@ -5,12 +5,15 @@
     <string name="app_name">Singiel2.0</string>
 
     <string name="zarejestruj_sie">Zarejestruj się</string>
+    <string name="zaloguj_sie">Zaloguj</string>
 
     <string name="potwierdz_haslo">Potweirdź hasło</string>
 
     <string name="haslo">Hasło</string>
 
     <string name="email">Email</string>
+
+    <string name="or">LUB</string>
 
     <string name="singiel20">Singiel 2.0</string>
 
@@ -137,4 +140,10 @@
     values-round/strings.xml for round devices.
     -->
     <string name="hello_world">Hello Square World!</string>
+    <string name="imie">Imię</string>
+    <string name="EditName">Imię</string>
+    <string name="txtBornDate">Data urodzenia</string>
+    <string name="LayoutBornDate">Data urodzenia</string>
+    <string name="editPicture">EditPicture</string>
+    <string name="txtLayoutCity">txtLayoutCity</string>
 </resources>

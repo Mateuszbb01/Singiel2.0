@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="50dp"
+    android:paddingRight="50dp"
+    android:layout_height="match_parent"
+    android:background="@color/cardview_light_background">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_horizontal"
+        android:text="@string/edit_profile_info"
+        android:textColor="@color/colorBlack"
+        android:textSize="32sp" />
+
+
+    <ImageView
+        android:id="@+id/editPictrue"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="3dp"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="@string/editPicture" />
+
+
+    <!-- Imie   -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="3dp"
+        android:gravity="center_horizontal"
+        android:text="@string/imie"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="10dp"
+        android:hint="@string/EditName"
+        android:id="@+id/txtLayoutNameEdit"
+
+
+        app:startIconDrawable="@drawable/baseline_badge_20">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+
+            android:textColor="#000000"
+            tools:ignore="DuplicateSpeakableTextCheck" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+<!--    -->
+
+<!-- Data urodzenia  -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="3dp"
+        android:gravity="center_horizontal"
+        android:text="@string/txtBornDate"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/LayoutBornDate"
+
+        app:startIconDrawable="@drawable/baseline_badge_20">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtBirthDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:maxLength="6"
+            android:textColor="#000000"
+            tools:ignore="DuplicateSpeakableTextCheck" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+<!--    -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="3dp"
+        android:gravity="center_horizontal"
+        android:text="@string/edit_description_info"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="10dp"
+        android:hint="Opis"
+        android:id="@+id/txtLayoutDescriptionEdit"
+
+
+        app:startIconDrawable="@drawable/baseline_badge_20">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtNewDescription"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+
+            android:inputType="text"
+
+
+            android:textColor="#000000"
+            tools:ignore="DuplicateSpeakableTextCheck" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="3dp"
+        android:gravity="center_horizontal"
+        android:text="@string/edit_city_profile_info"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp" />
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="30dp"
+        android:hint="@string/txtLayoutCity"
+        android:id="@+id/txtLayoutCity"
+
+
+        app:startIconDrawable="@drawable/baseline_badge_20" >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtNewCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+
+            android:textColor="#000000"
+            tools:ignore="DuplicateSpeakableTextCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/btnSaveProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_round"
+        android:text="@string/save_profile_btn"
+        android:textColor="#311B92"
+        android:textSize="17sp"
+        tools:ignore="TextContrastCheck" />
+
+
+</LinearLayout>

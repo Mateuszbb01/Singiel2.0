@@ -66,8 +66,14 @@ class AuthController extends Controller
             $validator->validated(),
             ['password' => bcrypt($request->password)]
         ));
+        if (!$token = Auth::attempt($validator->validated())) {
+            return response()->json(['success' => false, 'error' => 'Niepoprawne dane.'], 401);
+        }
+
 
         return response()->json([
+            'token' => $token,
+
             'success' => true,
             'user' => $user,
             /**dodać tokena!!!!! */
