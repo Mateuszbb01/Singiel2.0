@@ -146,4 +146,5 @@
     <string name="LayoutBornDate">Data urodzenia</string>
     <string name="editPicture">EditPicture</string>
     <string name="txtLayoutCity">txtLayoutCity</string>
+    <string name="edycja_profilu">Edytuj profil</string>
 </resources>
