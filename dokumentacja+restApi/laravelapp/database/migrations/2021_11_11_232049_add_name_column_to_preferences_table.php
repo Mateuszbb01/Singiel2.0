@@ -17,10 +17,6 @@ class AddNameColumnToPreferencesTable extends Migration
             $table->string('name')->after('user_id');
         });
 
-//usunięcie kolumny name  z users 
-          Schema::table('users', function($table) {
-             $table->dropColumn('name');
-          });     
     }
 
     
@@ -36,8 +32,5 @@ class AddNameColumnToPreferencesTable extends Migration
             $table->dropColumn('name');
         });
 
-        Schema::table('users', function($table) {
-            $table->integer('name');
-        });
     }
 }
