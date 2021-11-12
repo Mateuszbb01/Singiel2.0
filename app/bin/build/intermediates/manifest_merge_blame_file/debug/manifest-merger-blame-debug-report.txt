@@ -1,0 +1,103 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.pwszit.singiel"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="23"
+8-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="30" />
+9-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.WAKE_LOCK" />
+11-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:5:5-68
+11-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:5:22-65
+12    <uses-permission android:name="android.permission.INTERNET" />
+12-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:6:5-67
+12-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:6:22-64
+13    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+13-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:7:5-80
+13-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:7:22-77
+14    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+14-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:8:5-81
+14-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:8:22-78
+15
+16    <application
+16-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:10:5-42:19
+17        android:allowBackup="true"
+17-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:11:9-35
+18        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+18-->[androidx.core:core:1.5.0] C:\Users\Sromek\Desktop\Singiel20\.gradle\caches\transforms-2\files-2.1\5c4786bccfbaefa0f187e0e56044e26d\core-1.5.0\AndroidManifest.xml:24:18-86
+19        android:debuggable="true"
+20        android:extractNativeLibs="false"
+21        android:icon="@mipmap/ic_launcher"
+21-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:12:9-43
+22        android:label="@string/app_name"
+22-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:13:9-41
+23        android:roundIcon="@mipmap/ic_launcher_round"
+23-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:14:9-54
+24        android:supportsRtl="true"
+24-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:15:9-35
+25        android:testOnly="true"
+26        android:theme="@style/Theme.Singiel"
+26-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:16:9-45
+27        android:usesCleartextTraffic="true" >
+27-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:17:9-44
+28        <activity
+28-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:18:9-20:40
+29            android:name="com.pwszit.singiel.EditProfile"
+29-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:19:13-40
+30            android:exported="false" />
+30-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:20:13-37
+31        <activity android:name="com.pwszit.singiel.PreferencesActivity7" />
+31-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:21:9-58
+31-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:21:19-55
+32        <activity android:name="com.pwszit.singiel.PreferencesActivity6" />
+32-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:22:9-58
+32-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:22:19-55
+33        <activity android:name="com.pwszit.singiel.PreferencesActivity5" />
+33-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:23:9-58
+33-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:23:19-55
+34        <activity android:name="com.pwszit.singiel.PreferencesActivity4" />
+34-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:24:9-58
+34-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:24:19-55
+35        <activity android:name="com.pwszit.singiel.PreferencesActivity3" />
+35-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:25:9-58
+35-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:25:19-55
+36        <activity android:name="com.pwszit.singiel.PreferencesActivity2" />
+36-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:26:9-58
+36-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:26:19-55
+37        <activity android:name="com.pwszit.singiel.PreferencesActivity" />
+37-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:27:9-57
+37-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:27:19-54
+38        <!--
+39               Set to true if your app is Standalone, that is, it does not require the handheld
+40               app to run.
+41        -->
+42        <activity android:name="com.pwszit.singiel.HomeActivity" />
+42-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:32:9-50
+42-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:32:19-47
+43        <activity android:name="com.pwszit.singiel.AuthActivity" />
+43-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:33:9-50
+43-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:33:19-47
+44        <activity android:name="com.pwszit.singiel.OnBoardActivity" />
+44-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:34:9-53
+44-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:34:19-50
+45        <activity android:name="com.pwszit.singiel.MainActivity" >
+45-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:35:9-41:20
+45-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:35:19-47
+46            <intent-filter>
+46-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:36:13-40:29
+47                <action android:name="android.intent.action.MAIN" />
+47-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:37:17-69
+47-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:37:25-66
+48
+49                <category android:name="android.intent.category.LAUNCHER" />
+49-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:39:17-77
+49-->C:\Users\Sromek\Documents\GitHub\Singiel2.0\app\src\main\AndroidManifest.xml:39:27-74
+50            </intent-filter>
+51        </activity>
+52    </application>
+53
+54</manifest>

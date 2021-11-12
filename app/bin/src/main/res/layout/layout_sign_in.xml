@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="50dp"
+    android:paddingRight="50dp"
+    android:layout_height="match_parent"
+    android:background="@color/cardview_light_background">
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="40dp"
+        android:gravity="center_horizontal"
+        android:text="@string/app_name"
+        android:textColor="@color/colorBlack"
+        android:textSize="32sp" />
+
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="50dp"
+        android:id="@+id/txtLayoutEmailSignIn"
+        android:hint="EMAIL"
+
+        app:startIconDrawable="@drawable/baseline_badge_20">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtEmailSignIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:maxLength="99" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="50dp"
+        android:id="@+id/txtLayoutPasswordSignIn"
+        android:hint="HASŁO"
+
+        app:startIconDrawable="@drawable/baseline_badge_20">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtPasswordSignIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:maxLength="32" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+    <Button
+        android:id="@+id/btnSignIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/btn_round"
+        android:onClick="switchActivity"
+        android:textColor="@color/colorWhite"
+        android:textSize="17sp"
+        android:text="@string/zaloguj_sie"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nie posiadasz konta?"
+            android:layout_marginRight="6dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Zarejestruj się!"
+            android:textColor="@color/black"
+            android:id="@+id/txtSignUp"
+            android:layout_marginRight="6dp"/>
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
