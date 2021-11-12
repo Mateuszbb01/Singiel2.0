@@ -102,6 +102,10 @@ public class PreferencesActivity6 extends AppCompatActivity {
             Uri imgUri = data.getData();
             imageView.setImageURI(imgUri);
 
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("URI_PHOTO", imgUri.toString());
+            editor.apply();
+
             try {
                 if(Build.VERSION.SDK_INT < 28) {
                     bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imgUri);
