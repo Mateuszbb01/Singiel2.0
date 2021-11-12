@@ -35,7 +35,7 @@
         android:hint="Miasto"
         app:counterEnabled="true"
         app:counterMaxLength="13"
-        app:startIconDrawable="@drawable/baseline_badge_20">
+        app:startIconDrawable="@drawable/baseline_location_city_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtCity"

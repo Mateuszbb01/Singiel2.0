@@ -34,7 +34,7 @@
         android:id="@+id/txtLayoutEmailSignUp"
         android:hint="EMAIL"
 
-        app:startIconDrawable="@drawable/baseline_badge_20">
+        app:startIconDrawable="@drawable/baseline_email_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtEmailSignUp"
@@ -57,7 +57,7 @@
         android:id="@+id/txtLayoutPasswordSignUp"
         android:hint="HASŁO"
 
-        app:startIconDrawable="@drawable/baseline_badge_20">
+        app:startIconDrawable="@drawable/baseline_password_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtPasswordSignUp"
@@ -79,7 +79,7 @@
         android:id="@+id/txtLayoutConfirmSignUp"
         android:hint="POTWIERDŹ HASŁO"
 
-        app:startIconDrawable="@drawable/baseline_badge_20">
+        app:startIconDrawable="@drawable/baseline_password_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtConfirmSignUp"

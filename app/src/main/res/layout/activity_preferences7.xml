@@ -41,6 +41,7 @@
         android:background="@drawable/bcg_textarea"
         android:hint="@string/regulamin"
         android:inputType="none"
+        android:editable="false"
         android:textColor="@color/colorBlack"
         android:textSize="15sp" />
 
