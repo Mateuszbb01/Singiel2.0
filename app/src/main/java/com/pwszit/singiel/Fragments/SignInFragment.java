@@ -116,14 +116,21 @@ public class SignInFragment extends Fragment {
     }
 
     private boolean validate() {
+        String val = txtEmail.getText().toString();
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         if (txtEmail.getText().toString().isEmpty()) {
             layoutEmail.setErrorEnabled(true);
             layoutEmail.setError("Email niepoprawny");
             return false;
         }
-        if (txtPassword.getText().toString().length() < 8) {
+        if (!val.matches(emailPattern)) {
+            layoutEmail.setErrorEnabled(true);
+            layoutEmail.setError("Nieprawidłowy mail");
+            return false;
+        }
+        if (txtPassword.getText().toString().length() < 6) {
             layoutPassword.setErrorEnabled(true);
-            layoutPassword.setError("Minimum 8 znakow");
+            layoutPassword.setError("Minimum 6 znakow");
             return false;
         }
         return true;

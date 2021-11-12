@@ -27,13 +27,16 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 
 public class PreferencesActivity2 extends AppCompatActivity {
 
 
     TextInputEditText txtBirthDate;
     Button save;
-    //TextView txtDate;
+    TextView adult;
     DatePicker datePicker;
     SharedPreferences sharedPreferences;
 
@@ -42,34 +45,56 @@ public class PreferencesActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences2);
         save = findViewById(R.id.btnConfirmBirthDate);
-       // txtDate = findViewById(R.id.txtBirthDate);
+        adult = findViewById(R.id.Adult);
         datePicker = findViewById(R.id.txtBirthDate);
         sharedPreferences = getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
 
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                int day=datePicker.getDayOfMonth();
-                int month=datePicker.getMonth();
-                int year=datePicker.getYear();
+        save.setOnClickListener(v -> {
 
-
-                String birthDate = makeDateString(day, month, year);
-
-
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("BIRTHDATE", birthDate);
-                editor.apply();
-
-                Intent intent = new Intent(PreferencesActivity2.this, PreferencesActivity3.class);
-                startActivity(intent);
-                finish();
+            if (validateDate()) {
+                save();
             }
         });
 
-    }
 
+
+    }
+    private Boolean validateDate(){
+        int day=datePicker.getDayOfMonth();
+        int month=datePicker.getMonth();
+        int year=datePicker.getYear();
+        Calendar userAge = new GregorianCalendar(year,month,day);
+        Calendar minAdultAge = new GregorianCalendar();
+        minAdultAge.add(Calendar.YEAR, -18);
+        if (minAdultAge.before(userAge)) {
+            adult.setText("Musisz być pełnoletni, aby używać tej aplikacji");
+            return false;
+
+        }
+        else{
+            adult.setText("");
+            return true;
+
+        }
+    }
+    private void save(){
+        int day=datePicker.getDayOfMonth();
+        int month=datePicker.getMonth();
+        int year=datePicker.getYear();
+
+
+        String birthDate = makeDateString(day, month, year);
+
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("BIRTHDATE", birthDate);
+        editor.apply();
+
+        Intent intent = new Intent(PreferencesActivity2.this, PreferencesActivity3.class);
+        startActivity(intent);
+        finish();
+    }
     private String makeDateString(int day, int month, int year) {
         return year + "-" + month + "-" + day;
     }

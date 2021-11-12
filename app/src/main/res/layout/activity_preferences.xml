@@ -32,10 +32,9 @@
         android:layout_marginTop="150dp"
         android:layout_marginEnd="2dp"
         android:hint="Imię"
+        app:counterEnabled="true"
+        app:counterMaxLength="10"
         android:id="@+id/txtLayoutName"
-
-
-
         app:startIconDrawable="@drawable/baseline_badge_20">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -43,8 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#F10000"
-
-
+            android:maxLength="10"
             android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -56,7 +54,9 @@
         android:gravity="center_horizontal"
         android:text="@string/nameInfo"
         android:textColor="@color/colorGrey"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+
+        />
 
 
     <Button

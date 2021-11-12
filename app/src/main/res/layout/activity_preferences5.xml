@@ -24,13 +24,15 @@
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:id="@+id/txtLayoutHobbies"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="50dp"
         android:hint="Co robisz w wolnym czasie"
-
+        app:counterEnabled="true"
+        app:counterMaxLength="60"
         app:startIconDrawable="@drawable/baseline_badge_20">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -39,6 +41,7 @@
             android:lines="5"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
+            android:maxLength="60"
             />
 
     </com.google.android.material.textfield.TextInputLayout>

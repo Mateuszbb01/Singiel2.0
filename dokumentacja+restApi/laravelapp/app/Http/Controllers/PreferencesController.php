@@ -17,12 +17,12 @@ class PreferencesController extends Controller
 
         $preferences = new Preferences;
         $preferences->user_id = Auth::user()->id;
+        $preferences->name = $request->name;
         $preferences->bornDate = $request->bornDate;
         $preferences->gender = $request->gender;
         $preferences->city = $request->city;
         $preferences->interests = $request->interests;
         //sprawdza czy jest dodane zdjecie
-
 
         if ($request->photo != '') {
             $photo = time().'.jpeg';
@@ -34,6 +34,9 @@ class PreferencesController extends Controller
             //  $file->move('storage/photo/', $filename);
             // $preferences->photo = $filename;
         }
+
+
+
         $preferences->save();
         $preferences->user;
         return response()->json([
@@ -68,7 +71,7 @@ class PreferencesController extends Controller
             'gender' => 'nullable',
             'city' => 'nullable',
             'interests' => 'nullable',
-            'photo' => 'nullable|image'
+            
 
         ]);
 
@@ -78,27 +81,29 @@ class PreferencesController extends Controller
 
             $preferences = Preferences::where('user_id', Auth::user()->id)->firstOrFail();
 
-            $preferences->user->name = $request->name;
+            $preferences->name = $request->name;
             $preferences->bornDate = $request->bornDate;
             $preferences->gender = $request->gender;
             $preferences->city = $request->city;
             $preferences->interests = $request->interests;
 
-            // if ($request->photo != '') {
-            //     $storage = 'storage/photo' . $preferences->photo;
-            //     if (File::exists($storage)) {
-            //         File::delete($storage);
-            //     }
-            
+            if ($request->photo != '') {
+                $storage = 'storage/photo' . $preferences->photo;
+                if (File::exists($storage)) {
+                    File::delete($storage);
+                }
                 $photo = time().'.jpeg';
-                file_put_contents('storage/photo/'.$photo,base64_decode($request->photo));
+                file_put_contents('storage/photo'.$photo,base64_decode($request->photo));
                 $preferences->photo = $photo;
-            // }
 
-            
-        
+                // $file = $request->file('photo');
+                // $extension = $file->getClientOriginalExtension();
+                // $filename = time() . '.' . $extension;
+                // $file->move('storage/photo', $filename);
+                // $preferences->photo = $filename;
+            }
 
-            $preferences->push();
+            $preferences->update();
             return response()->json([
                 'success' => true,
                 'message' => 'Zaktualizowano preferencje',
