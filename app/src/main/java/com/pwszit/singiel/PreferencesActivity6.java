@@ -75,7 +75,7 @@ public class PreferencesActivity6 extends AppCompatActivity {
 
         save.setOnClickListener(v->{
             if(photoValidate()){
-            savePreferences();
+                savePreferences();
             }
         });
 
@@ -101,10 +101,6 @@ public class PreferencesActivity6 extends AppCompatActivity {
         if (requestCode==GALLERY_ADD_PROFILE && resultCode==RESULT_OK){
             Uri imgUri = data.getData();
             imageView.setImageURI(imgUri);
-
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("URI_PHOTO", imgUri.toString());
-            editor.apply();
 
             try {
                 if(Build.VERSION.SDK_INT < 28) {
@@ -136,9 +132,9 @@ public class PreferencesActivity6 extends AppCompatActivity {
             try {
                 JSONObject object = new JSONObject(response);
                 if (object.getBoolean("success")){
-                      // SharedPreferences.Editor editor = userPref.edit();
-                       //editor.putString("photo",object.getString("photo"));
-                      // editor.apply();
+                    // SharedPreferences.Editor editor = userPref.edit();
+                    //editor.putString("photo",object.getString("photo"));
+                    // editor.apply();
                     startActivity(new Intent(PreferencesActivity6.this,HomeActivity.class));
                     finish();
                 }

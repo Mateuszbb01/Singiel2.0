@@ -87,9 +87,9 @@ public class EditProfile extends AppCompatActivity {
         String hobbies = preferences.getString("HOBBIES", "");
         String city = preferences.getString("CITY", "");
 
-        String uriPhoto = preferences.getString("URI_PHOTO", "");
-        Uri imageUri = Uri.parse(uriPhoto);
-        imageView.setImageURI(imageUri);
+      //  String uriPhoto = preferences.getString("URI_PHOTO", "");
+       // Uri imageUri = Uri.parse(uriPhoto);
+      //  imageView.setImageURI(imageUri);
 
         txtName.setText(name);
         txtBirthDate.setText(date);
