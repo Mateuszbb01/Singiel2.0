@@ -14,8 +14,9 @@ class Preferences extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function preferences()
-    {
-        return $this->hasOne(Preferences::class);
-    }
+    // public function preferences()
+    // {
+    //     return $this->hasOne(Preferences::class);
+    // }
+
 }
