@@ -92,7 +92,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/LayoutBornDate"
 
-        app:startIconDrawable="@drawable/baseline_badge_20">
+        app:startIconDrawable="@drawable/baseline_cake_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtBirthDate"
@@ -125,7 +125,7 @@
         android:id="@+id/txtLayoutDescriptionEdit"
 
 
-        app:startIconDrawable="@drawable/baseline_badge_20">
+        app:startIconDrawable="@drawable/baseline_feed_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtNewDescription"
@@ -163,7 +163,7 @@
         android:id="@+id/txtLayoutCity"
 
 
-        app:startIconDrawable="@drawable/baseline_badge_20" >
+        app:startIconDrawable="@drawable/baseline_location_city_24" >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtNewCity"

@@ -33,7 +33,7 @@
         android:hint="Co robisz w wolnym czasie"
         app:counterEnabled="true"
         app:counterMaxLength="60"
-        app:startIconDrawable="@drawable/baseline_badge_20">
+        app:startIconDrawable="@drawable/baseline_fitness_center_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtHobbies"
