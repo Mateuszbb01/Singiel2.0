@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/czat"
+        android:enabled="true"
+        android:icon="@drawable/baseline_chat_24"
+        android:title="@string/Czat"/>
+    <item
+        android:id="@+id/home"
+        android:enabled="true"
+        android:icon="@drawable/baseline_home_20"
+        android:title="@string/Home"/>
+    <item
+        android:id="@+id/profile"
+        android:enabled="true"
+        android:icon="@drawable/baseline_account_circle_18"
+        android:title="@string/Profil"/>
+
+</menu>
