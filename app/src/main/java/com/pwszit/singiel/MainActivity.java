@@ -1,6 +1,7 @@
 package com.pwszit.singiel;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -25,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
                 if (isLoggedIn){
                     startActivity(new Intent(MainActivity.this, HomeActivity.class));
                     finish();
-                    isFirstTime();
 
                 }
                 else {
