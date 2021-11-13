@@ -87,7 +87,7 @@ class PreferencesController extends Controller
             $preferences->interests = $request->interests;
 
             if ($request->photo != '') {
-                $storage = 'storage/photo' . $preferences->photo;
+                $storage = 'storage/photo/' . $preferences->photo;
                 if (File::exists($storage)) {
                     File::delete($storage);
                 }
