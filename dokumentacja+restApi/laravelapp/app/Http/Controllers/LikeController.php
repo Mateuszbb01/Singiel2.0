@@ -32,10 +32,9 @@ class LikeController extends Controller
         //  ->whereNotIn('user_id', [$id])
         //  ->get();
 
-        $users = Preferences::with('user.likes')
+        $users = Preferences::with('user')
         ->whereNotIn('gender', [$gender])
         ->whereNotIn('user_id', [$id])
-        ->where('like', 1)
         ->get();
         return response()->json([
             'success' => true,
