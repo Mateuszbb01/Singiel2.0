@@ -108,5 +108,29 @@ class LikeController extends Controller
 
     }
 
+     //wyświetlenie sparowanych użytkowników 
+     public function showPaired()
+     {
+         $id = Auth::user()->id;
+ 
+         $users = Like::where('user_id', $id)->where('paired', 1)->get();
+ 
+   
+         if ($users->first()) {
+  
+                 return response()->json([
+                     'success' => true,
+                     'paired' => $users
+                 ]);
+             }
+ 
+ 
+         return response()->json([
+             'success' => false,
+             'paired' => $users
+         ]);
+         
+     }
+
 
 }
