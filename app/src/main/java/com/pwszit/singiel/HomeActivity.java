@@ -76,7 +76,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 Log.d(TAG, "onCardSwiped: p=" + manager.getTopPosition() + " d=" + direction);
                 if (direction == Direction.Right){
-                    Toast.makeText(HomeActivity.this, "Direction Right", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, "♥", Toast.LENGTH_SHORT).show();
 
                     sharedPreferences = getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
                     String userlikedid= sharedPreferences.getString("USERLIKEDID", "");
@@ -131,14 +131,12 @@ public class HomeActivity extends AppCompatActivity {
 
                 }
                 if (direction == Direction.Top){
-                    Toast.makeText(HomeActivity.this, "Direction Top", Toast.LENGTH_SHORT).show();
-                    TextView tv = view.findViewById(R.id.item_name);
-                    Log.d(TAG, " name: " + tv.getText());
+                    Toast.makeText(HomeActivity.this, "Zdecyduj później", Toast.LENGTH_SHORT).show();
 
 
                 }
                 if (direction == Direction.Left){
-                    Toast.makeText(HomeActivity.this, "Direction Left", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, "Odrzuciłeś użytkownika", Toast.LENGTH_SHORT).show();
 
 
                     sharedPreferences = getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
@@ -192,7 +190,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 }
                 if (direction == Direction.Bottom){
-                    Toast.makeText(HomeActivity.this, "Direction Bottom", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, "Zdecyduj później", Toast.LENGTH_SHORT).show();
                 }
 
                 // Paginating
@@ -289,19 +287,20 @@ public class HomeActivity extends AppCompatActivity {
 
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject usersObject = array.getJSONObject(i);
-                        JSONObject userObject = usersObject.getJSONObject("user");
+                        //JSONObject userObject = usersObject.getJSONObject("user");
 
                         String val1 = usersObject.getString("photo");
                         String val2 = usersObject.getString("name");
                         String val3 = usersObject.getString("bornDate");
                         String val4 = usersObject.getString("city");
                         String val5 = usersObject.getString("user_id");
+                        String val7 = usersObject.getString("interests");
 
                         LocalDate today = LocalDate.now();
                         LocalDate birthday = LocalDate.parse(val3);
                         int val6 =  Period.between(birthday, today).getYears();
                         String yearsold=String.valueOf(val6);
-                        items.add(new ItemModel(val1, val2, yearsold,val4, val5));
+                        items.add(new ItemModel(val1, val2, yearsold,val4, val5, val7));
                         // items.add(new ItemModel(val1, val2, val3,val4));
                         //  items.add(new ItemModel("1636651607.jpeg", "val2", "val3","val4"));
                         //items.add(new ItemModel(val1, val2, val3,val4));

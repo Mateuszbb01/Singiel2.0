@@ -167,7 +167,7 @@ public class SignInFragment extends Fragment {
         }, error -> {
             //błąd jesli nie ma połączenia
             error.printStackTrace();
-            dialog.show();
+            dialog.dismiss();
 
         }) {
             @Override
