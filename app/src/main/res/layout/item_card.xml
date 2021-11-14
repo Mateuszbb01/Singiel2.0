@@ -32,7 +32,6 @@
             android:textColor="@android:color/transparent"
             android:textSize="26sp"/>
         <TextView
-            android:fontFamily="@font/poppins_light"
             android:id="@+id/item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,7 +40,6 @@
             android:textSize="26sp"/>
 
         <TextView
-            android:fontFamily="@font/poppins_extralight"
             android:id="@+id/item_age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,7 +48,6 @@
             android:textSize="18sp"/>
 
         <TextView
-            android:fontFamily="@font/poppins_extralight"
             android:id="@+id/item_city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,7 +79,6 @@
         android:background="@drawable/overlay_black">
 
         <ImageView
-            android:id="@+id/serce"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/outline_favorite_border_24"

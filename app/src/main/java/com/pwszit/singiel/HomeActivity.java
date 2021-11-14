@@ -257,13 +257,13 @@ public class HomeActivity extends AppCompatActivity {
 
 
     }
-/*    private void send()
+    /*    private void send()
 
-    {
-       int position = manager.getTopPosition().toString();
-       mTextViewResult.append(position);
+        {
+           int position = manager.getTopPosition().toString();
+           mTextViewResult.append(position);
 
-    }*/
+        }*/
     private void paginate() {
         List<ItemModel> old = adapter.getItems();
         List<ItemModel> uptodate = new ArrayList<>(addList());
@@ -302,14 +302,14 @@ public class HomeActivity extends AppCompatActivity {
                         int val6 =  Period.between(birthday, today).getYears();
                         String yearsold=String.valueOf(val6);
                         items.add(new ItemModel(val1, val2, yearsold,val4, val5));
-                       // items.add(new ItemModel(val1, val2, val3,val4));
-                      //  items.add(new ItemModel("1636651607.jpeg", "val2", "val3","val4"));
+                        // items.add(new ItemModel(val1, val2, val3,val4));
+                        //  items.add(new ItemModel("1636651607.jpeg", "val2", "val3","val4"));
                         //items.add(new ItemModel(val1, val2, val3,val4));
 
 
-                    /*    String bornDate = usersObject.getString("photo");
-                     */
-                       mTextViewResult.append(val2);
+                        /*    String bornDate = usersObject.getString("photo");
+                         */
+                        mTextViewResult.append(val2);
 
 
                     }

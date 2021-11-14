@@ -9,13 +9,8 @@ class Like extends Model
 {
     use HasFactory;
 
-    public function user2()
+    public function user()
     {
-        return $this->belongsTo(User::class , 'id');
-    }
-
-    public function prefer()
-    {
-        return $this->belongsTo(Preferences::class);
+        return $this->belongsTo(User::class);
     }
 }
