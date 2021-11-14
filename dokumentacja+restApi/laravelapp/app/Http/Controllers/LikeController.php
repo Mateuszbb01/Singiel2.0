@@ -9,36 +9,33 @@ use App\Models\Preferences;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
+use function PHPUnit\Framework\isEmpty;
+use function PHPUnit\Framework\isNull;
 
 class LikeController extends Controller
 {
-    
-
-    //! wyszukać wszystkich użytkowników !oprócz siebie-ok i po przeciwnej płci ta ( powiązaniem paired?)
-    // i ich wyświetlić ze zdjeciem i miastem opisem i wiekiem 
-    // za pomocą user_id = Auth::user()->id; wyszukamy wiersze w których jest uzytkownik  
-
-//////////dołożyć wyswietlanie ze jesli juz kogos swipowal nie wyswietli sie 
 
     public function showUser()
     {
         $id = Auth::user()->id;
 
-        $pr = Preferences::find($id);
-        $gender =  $pr->gender;
-        
-        //  $users = Preferences::with('user')
-        //  ->whereNotIn('gender', [$gender])
-        //  ->whereNotIn('user_id', [$id])
-        //  ->get();
+       $pr = Preferences::find($id);
+       $gender =  $pr->gender;
 
-        $users = Preferences::with('user')
+
+        $find_like = Like::where('user_id', $id)->pluck('user_like_id');
+
+        $findd = Preferences::whereNotIn('user_id', $find_like)
         ->whereNotIn('gender', [$gender])
         ->whereNotIn('user_id', [$id])
         ->get();
+
+
         return response()->json([
             'success' => true,
-            'users' => $users
+            'users' => $findd
         ]);
     }
 
@@ -112,6 +109,30 @@ class LikeController extends Controller
             'like' => $like,
         ]);
 
+    }
+
+        //wyświetlenie sparowanych użytkowników 
+    public function showPaired()
+    {
+        $id = Auth::user()->id;
+
+        $users = Like::where('user_id', $id)->where('paired', 1)->get();
+
+  
+        if ($users->first()) {
+ 
+                return response()->json([
+                    'success' => true,
+                    'paired' => $users
+                ]);
+            }
+
+
+        return response()->json([
+            'success' => false,
+            'paired' => $users
+        ]);
+        
     }
 
 }
