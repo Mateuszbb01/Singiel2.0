@@ -13,5 +13,6 @@
     <color name="colorWhite">#FFFFFFFF</color>
     <color name="primaryLightColor">#f9a825</color>
     <color name="logo">#424242</color>
+    <color name="logo_back">#1A202C</color>
 
 </resources>
