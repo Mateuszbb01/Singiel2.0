@@ -148,4 +148,10 @@
     <string name="txtLayoutCity">txtLayoutCity</string>
     <string name="edycja_profilu">Edytuj profil</string>
     <string name="edit_photo">Zmień zdjęcie</string>
+
+
+
+    <string name="Home">Home</string>
+    <string name="Profil">Profil</string>
+    <string name="Czat">Czat</string>
 </resources>
