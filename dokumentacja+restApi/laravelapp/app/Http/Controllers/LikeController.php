@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+use function PHPUnit\Framework\isEmpty;
+use function PHPUnit\Framework\isNull;
+
 class LikeController extends Controller
 {
 
@@ -108,5 +111,28 @@ class LikeController extends Controller
 
     }
 
+        //wyświetlenie sparowanych użytkowników 
+    public function showPaired()
+    {
+        $id = Auth::user()->id;
+
+        $users = Like::where('user_id', $id)->where('paired', 1)->get();
+
+  
+        if ($users->first()) {
+ 
+                return response()->json([
+                    'success' => true,
+                    'paired' => $users
+                ]);
+            }
+
+
+        return response()->json([
+            'success' => false,
+            'paired' => $users
+        ]);
+        
+    }
 
 }
