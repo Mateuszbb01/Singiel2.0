@@ -14,9 +14,10 @@ class Preferences extends Model
     {
         return $this->belongsTo(User::class);
     }
-    // public function preferences()
-    // {
-    //     return $this->hasOne(Preferences::class);
-    // }
+    public function like()
+    {
+        //wyświetla wszystkie like którym zalogowany user dał like
+        return $this->hasMany(Like::class, 'user_id');
+    }
 
 }
