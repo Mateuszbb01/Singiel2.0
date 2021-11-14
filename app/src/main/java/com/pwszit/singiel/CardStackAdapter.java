@@ -1,5 +1,6 @@
 package com.pwszit.singiel;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import java.util.List;
 
 public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.ViewHolder> {
 
+    private Context context;
     private List<ItemModel> items;
 
     public CardStackAdapter(List<ItemModel> items) {
@@ -41,24 +43,26 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.View
 
     class ViewHolder extends RecyclerView.ViewHolder{
         ImageView image;
-        TextView name, age, city;
+        TextView name, age, city, userlikedid;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.item_image);
             name = itemView.findViewById(R.id.item_name);
             age = itemView.findViewById(R.id.item_age);
             city = itemView.findViewById(R.id.item_city);
+            userlikedid = itemView.findViewById(R.id.userlikedid);
         }
 
         void setData(ItemModel data) {
             Picasso.get()
-                    .load(data.getImage())
+                    .load(Constant.URL+"storage/photo/"+ data.getImage())
                     .fit()
                     .centerCrop()
                     .into(image);
             name.setText(data.getName());
             age.setText(data.getAge());
             city.setText(data.getCity());
+            userlikedid.setText(data.getUserlikedid());
         }
     }
 

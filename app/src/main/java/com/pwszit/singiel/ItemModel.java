@@ -1,20 +1,20 @@
 package com.pwszit.singiel;
 
 public class ItemModel {
-    private int image;
-    private String name, age, city;
+    //private int ;
+    private String name, age, city, image, userlikedid;
 
-    public ItemModel() {
-    }
 
-    public ItemModel(int image, String name, String age, String city) {
+
+    public ItemModel(String image, String name, String age, String city, String userlikedid) {
         this.image = image;
         this.name = name;
         this.age = age;
         this.city = city;
+        this.userlikedid = userlikedid;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
@@ -28,5 +28,9 @@ public class ItemModel {
 
     public String getCity() {
         return city;
+    }
+
+    public String getUserlikedid() {
+        return userlikedid;
     }
 }
