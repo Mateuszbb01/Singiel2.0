@@ -14,7 +14,6 @@ class Preferences extends Model
     {
         return $this->belongsTo(User::class);
     }
-    
     public function like()
     {
         //wyświetla wszystkie like którym zalogowany user dał like
