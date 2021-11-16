@@ -9,14 +9,19 @@
 
     <application
         android:allowBackup="true"
+        android:configChanges="orientation|screenSize"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Singiel"
-        android:configChanges="orientation|screenSize"
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name=".specificchat"
+            android:exported="false" />
+        <activity
+            android:name=".ChatActivity"
+            android:exported="false" />
         <activity
             android:name=".EditProfile"
             android:exported="false" />
