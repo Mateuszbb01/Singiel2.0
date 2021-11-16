@@ -3,50 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Singiel2.0/app/src/main/res/drawable/baseline_cake_24.xml" value="0.22552083333333334" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/drawable/baseline_chat_24.xml" value="0.22552083333333334" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.221875" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml" value="0.221875" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/drawable/messagebackgroun.xml" value="0.221875" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/drawable/recieverchatdrawble.xml" value="0.2515625" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/drawable/senderchatdrawable.xml" value="0.2515625" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/drawable/senderchatdrawble.xml" value="0.2515625" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/activity_auth.xml" value="0.20572916666666666" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/activity_chat.xml" value="0.2" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/activity_edit_profile.xml" value="0.20572916666666666" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/activity_home.xml" value="0.2" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/activity_main.xml" value="0.209375" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/activity_on_board.xml" value="0.209375" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/activity_preferences.xml" value="0.209375" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/activity_preferences2.xml" value="0.371875" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/activity_preferences3.xml" value="0.209375" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/activity_preferences4.xml" value="0.371875" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/activity_preferences5.xml" value="0.371875" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/activity_preferences6.xml" value="0.20572916666666666" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/activity_preferences7.xml" value="0.20572916666666666" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/activity_scrolling.xml" value="0.25" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/activity_specificchat.xml" value="0.25" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/chat_item_left.xml" value="0.25" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/chat_item_right.xml" value="0.25" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/chatfragment.xml" value="0.18" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/chatviewlayout.xml" value="0.20572916666666666" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/content_scrolling.xml" value="0.20208333333333334" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/fragment_sign_in.xml" value="0.20572916666666666" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/fragment_sign_up.xml" value="0.209375" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/item_card.xml" value="0.20572916666666666" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/layout_change_password.xml" value="0.209375" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/layout_chat.xml" value="0.25" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/layout_delete_account.xml" value="0.371875" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/layout_edit_profile.xml" value="0.20572916666666666" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/layout_pairing_users.xml" value="0.20572916666666666" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/layout_profile.xml" value="0.20572916666666666" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/layout_sign_in.xml" value="0.20572916666666666" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/layout_sign_up.xml" value="0.209375" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/recievierchatlayout.xml" value="0.23541666666666666" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/senderchatlayout.xml" value="0.23541666666666666" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/user1_message.xml" value="0.20572916666666666" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/user2_message.xml" value="0.20572916666666666" />
-        <entry key="..\:/Singiel2.0/app/src/main/res/layout/view_pager.xml" value="0.209375" />
+        <entry key="..\:/GitHub/Singiel2.0/app/src/main/res/layout/activity_edit_profile.xml" value="0.25" />
+        <entry key="..\:/GitHub/Singiel2.0/app/src/main/res/layout/activity_home.xml" value="0.3183876811594203" />
         <entry key="..\:/Users/Sromek/Desktop/singel222/Singiel2.0/app/src/main/res/layout/activity_auth.xml" value="0.2957427536231884" />
         <entry key="..\:/Users/Sromek/Desktop/singel222/Singiel2.0/app/src/main/res/layout/activity_edit_profile.xml" value="0.25" />
         <entry key="..\:/Users/Sromek/Desktop/singel222/Singiel2.0/app/src/main/res/layout/activity_home.xml" value="0.2957427536231884" />
@@ -70,7 +28,7 @@
     </option>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

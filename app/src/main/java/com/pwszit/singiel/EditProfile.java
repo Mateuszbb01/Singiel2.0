@@ -4,6 +4,7 @@ import static java.security.AccessController.getContext;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.app.ProgressDialog;
@@ -38,6 +39,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 
 import org.json.JSONArray;
@@ -47,6 +49,8 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,7 +62,11 @@ public class EditProfile extends AppCompatActivity {
     private TextView txtName;
     private TextView txtNewDescription;
     private TextView txtNewCity;
-    SharedPreferences preferences, userPref, sharedPreferences;
+    private TextView txtGender;
+    SharedPreferences preferences2, userPref, sharedPreferences;
+    private View view;
+    private androidx.recyclerview.widget.RecyclerView RecyclerView;
+    private ArrayList<ItemModel> arrayList;
     private Bitmap bitmap = null;
     private Button btnSaveProfile;
     private ProgressDialog dialog;
@@ -72,29 +80,33 @@ public class EditProfile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addList();
         setContentView(R.layout.activity_edit_profile);
+
+
 
         txtName = findViewById(R.id.txtName);
         txtBirthDate = findViewById(R.id.txtBirthDate);
         txtNewDescription = findViewById(R.id.txtNewDescription);
         txtNewCity = findViewById(R.id.txtNewCity);
+        txtGender = findViewById(R.id.txtNewCity);
 
 
 
-        preferences = getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
-        String name = preferences.getString("NAME", "");
-        String date = preferences.getString("BIRTHDATE", "");
-        String hobbies = preferences.getString("HOBBIES", "");
-        String city = preferences.getString("CITY", "");
-
-      //  String uriPhoto = preferences.getString("URI_PHOTO", "");
-       // Uri imageUri = Uri.parse(uriPhoto);
-      //  imageView.setImageURI(imageUri);
-
-        txtName.setText(name);
-        txtBirthDate.setText(date);
-        txtNewDescription.setText(hobbies);
-        txtNewCity.setText(city);
+//        preferences = getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
+//        String name = preferences.getString("NAME", "");
+//        String date = preferences.getString("BIRTHDATE", "");
+//        String hobbies = preferences.getString("HOBBIES", "");
+//        String city = preferences.getString("CITY", "");
+//
+//      //  String uriPhoto = preferences.getString("URI_PHOTO", "");
+//       // Uri imageUri = Uri.parse(uriPhoto);
+//      //  imageView.setImageURI(imageUri);
+//
+//        txtName.setText(name);
+//        txtBirthDate.setText(date);
+//        txtNewDescription.setText(hobbies);
+//        txtNewCity.setText(city);
 
 
 
@@ -156,18 +168,18 @@ public class EditProfile extends AppCompatActivity {
     private void updateProfile() {
         dialog.setMessage("Aktualizacja profilu");
         dialog.show();
-        preferences = getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
+        preferences2 = getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
 
 //wyciąganie wartosci z shared do zapisania
         String name = txtName.getText().toString();
         String date = txtBirthDate.getText().toString();
         String city = txtNewCity.getText().toString();
-        String gender = preferences.getString("GENDER", "");
+     //   String gender = txtGender.getString("GENDER", "");
         String hobbies = txtNewDescription.getText().toString();
 
 
 
-//Zapisywanie w shared NOWYCH wartosci
+/*//Zapisywanie w shared NOWYCH wartosci
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("NAME", name);
         editor.putString("BIRTHDATE", date);
@@ -176,7 +188,7 @@ public class EditProfile extends AppCompatActivity {
 
         // editor.putString("URI_PHOTO", imgUri.toString());
 
-        editor.apply();
+        editor.apply();*/
 
 
 
@@ -216,7 +228,7 @@ public class EditProfile extends AppCompatActivity {
                 map.put("name",name);
                 map.put("bornDate",date);
                 map.put("city",city);
-                map.put("gender",gender);
+              //  map.put("gender",gender);
                 map.put("interests",hobbies);
                 map.put("photo",bitmapToString(bitmap));
                 return map;
@@ -253,6 +265,110 @@ public class EditProfile extends AppCompatActivity {
             return Base64.encodeToString(array, Base64.DEFAULT);
         }
         return "";
+    }
+
+
+    private List<ItemModel> addList() {
+
+        List<ItemModel> items = new ArrayList<>();
+
+        userPref = getSharedPreferences("user", MODE_PRIVATE);
+
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.USER_PROFILE, response -> {
+
+
+            try {
+                JSONObject object = new JSONObject(response);
+                if (object.getBoolean("success")) {
+                    JSONArray array = new JSONArray(object.getString("preferences2"));
+
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject usersObject = array.getJSONObject(i);
+                        //JSONObject userObject = usersObject.getJSONObject("user");
+
+                        String val1 = usersObject.getString("photo");
+                        String val2 = usersObject.getString("name");
+                        String val3 = usersObject.getString("bornDate");
+                        String val4 = usersObject.getString("city");
+                        String val7 = usersObject.getString("interests");
+
+//                        LocalDate today = LocalDate.now();
+//                        LocalDate birthday = LocalDate.parse(val3);
+//                        int val6 =  Period.between(birthday, today).getYears();
+//                        String yearsold=String.valueOf(val6);
+                      //  items.add(new ItemModel(val1, val2, val3, val4, val5, val7));
+                        // items.add(new ItemModel(val1, val2, val3,val4));
+                        //  items.add(new ItemModel("1636651607.jpeg", "val2", "val3","val4"));
+                        //items.add(new ItemModel(val1, val2, val3,val4));
+
+
+                        /*    String bornDate = usersObject.getString("photo");
+                             //  String uriPhoto = preferences.getString("URI_PHOTO", "");
+       // Uri imageUri = Uri.parse(uriPhoto);
+      //  imageView.setImageURI(imageUri);
+
+        txtName.setText(name);
+        txtBirthDate.setText(date);
+        txtNewDescription.setText(hobbies);
+        txtNewCity.setText(city);
+                         */
+
+                    //    imageView.setImageURI(val1);
+                        txtName.setText(val2);
+                        txtBirthDate.setText(val3);
+                        txtNewCity.setText(val4);
+                        txtNewDescription.setText(val7);
+
+                        Picasso.get()
+                                .load(Constant.URL+"storage/photo/"+ val1)
+                                .fit()
+                                .centerCrop()
+                                .into(imageView);
+                    }
+
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        }, error -> {
+            error.printStackTrace();
+
+        }) {
+
+            //dodanie tokena do naglowka
+
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                String token = userPref.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
+                return map;
+            }
+        };
+        request.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 30000;
+            }
+
+            @Override
+            public int getCurrentRetryCount() {
+                return 1;
+            }
+
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+
+            }
+        });
+        RequestQueue queue = Volley.newRequestQueue(EditProfile.this);
+        queue.add(request);
+        return items;
+
     }
 
 

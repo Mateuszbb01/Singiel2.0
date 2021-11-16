@@ -49,15 +49,15 @@ class PreferencesController extends Controller
     public function mypreferences()
     {
 
-        $preferences = User::with('preferences')->where('id', Auth::user()->id)->get();
-        foreach ($preferences as $preferences) {
-            // użytkownik
-            $preferences->user;
-        }
+        $preferences = Preferences::with('user')->where('id', Auth::user()->id)->get();
+        // foreach ($preferences as $preferences) {
+        //     // użytkownik
+        //     $preferences->user;
+        // }
 
         return response()->json([
             'success' => true,
-            'preferences' => $preferences
+            'preferences2' => $preferences
         ]);
     }
 
@@ -68,7 +68,6 @@ class PreferencesController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'min:2|max:150',
             'bornDate' => 'nullable|date',
-            'gender' => 'nullable',
             'city' => 'nullable',
             'interests' => 'nullable',
 
@@ -82,12 +81,11 @@ class PreferencesController extends Controller
 
             $preferences->name = $request->name;
             $preferences->bornDate = $request->bornDate;
-            $preferences->gender = $request->gender;
             $preferences->city = $request->city;
             $preferences->interests = $request->interests;
 
             if ($request->photo != '') {
-                $storage = 'storage/photo' . $preferences->photo;
+                $storage = 'storage/photo/' . $preferences->photo;
                 if (File::exists($storage)) {
                     File::delete($storage);
                 }

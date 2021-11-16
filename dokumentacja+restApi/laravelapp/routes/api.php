@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PreferencesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,12 @@ Route::group([
     Route::get('/preferences/mypreferences', [PreferencesController::class, 'mypreferences'])->middleware('jwtAuth');
     Route::post('/preferences/create', [PreferencesController::class, 'create'])->middleware('jwtAuth');
     Route::post('/preferences/mypreferences/update', [PreferencesController::class, 'updatePreferences'])->middleware('jwtAuth');
+
+    Route::get('/showUser', [LikeController::class, 'showUser'])->middleware('jwtAuth');
+    Route::post('/likeUser', [LikeController::class, 'likeUser'])->middleware('jwtAuth');
+    Route::get('/showPairedUser', [LikeController::class, 'showPaired'])->middleware('jwtAuth');
+
+
 });
 
 
