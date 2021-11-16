@@ -369,7 +369,7 @@ public class HomeActivity extends AppCompatActivity {
                     switch (menuItem.getItemId()){
                         case R.id.czat:
                             startActivity(new Intent(getApplicationContext()
-                                    ,HomeActivity.class));
+                                    ,ChatActivity.class));
                             overridePendingTransition(0, 0);
                             return true;
                         case R.id.home:
