@@ -36,6 +36,7 @@ Route::group([
 
     Route::get('/showUser', [LikeController::class, 'showUser'])->middleware('jwtAuth');
     Route::post('/likeUser', [LikeController::class, 'likeUser'])->middleware('jwtAuth');
+    Route::get('/showPairedUser', [LikeController::class, 'showPaired'])->middleware('jwtAuth');
 
 
 });
