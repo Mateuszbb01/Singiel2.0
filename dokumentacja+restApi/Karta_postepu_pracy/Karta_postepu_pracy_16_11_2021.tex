@@ -1,0 +1,122 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[polish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+
+
+\addtolength{\hoffset}{-1.5cm}
+\addtolength{\marginparwidth}{-1.5cm}
+\addtolength{\textwidth}{3cm}
+\addtolength{\voffset}{-1cm}
+\addtolength{\textheight}{2.5cm}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0cm}
+
+\begin{document}
+
+\title{Karta postępu pracy}
+\date{5.11.2021 - 18.12.2021}
+
+\maketitle
+
+
+\section*{Tytuł aplikacji}
+SINGIEL 2.0
+\section*{Nazwa robocza aplikacji}
+Aplikacja randkowa z komunikatorem
+\section*{Cel}
+Stworzenie aplikacji do łączenia się w pary użytkowników z możliwością czatowania.
+\section*{Zespół}
+Bartłomiej Tokarczyk  (project menager), \\
+Wojciech Sułowski, \\
+Mateusz Sromek, \\
+Maciej Więcławek \\
+\newpage
+
+\section{Zaplanowane do zrealizowania zadania:}
+
+\begin{itemize}
+    \item [--] Rejestracja preferencji użytkownika - płeć, zainteresowania, zdjecie, opis. \textbf{(Maciej Więcławek)}
+
+    \item [--] Zakładka edycja profilu (aplikacji mobilna) - layout  \textbf{(Bartłomiej Tokarczyk)}
+
+    \item [--] Backend do edycji profilu usera \textbf{(Mateusz Sromek)}
+
+    \item [--] Obsługa zakładki przeglądania użytkowników (swipe right/left) z poziomu RestApi.  \textbf{(Mateusz Sromek)}
+    \item [--] Layout do strony głównej aplikacji; zakładka przeglądania użytkowników w android studio \textbf{(Maciej Więcławek)}
+    \item [--] Backend do zakładki przeglądania użytkowników. Obsługa połączenia pomiędzy zakładką a RestApi. \textbf{(Maciej Więcławek)}
+    \item [--] Implementacja technologii socketIO do obsługi czatowania - po stronie RestApi. {(Mateusz Sromek)}
+    \item [--] Przygotowanie bazy danych, utworzenie routingów/kontrolerów. Dodanie funkcjonalności szyfrowania wiadomości tekstowych. \textbf{(Bartłomiej Tokarczyk)}
+    \item [--] Przygotowanie layoutu pod czat użytkowników \textbf{(Wojciech Sułowski) }
+    \item [--] Backend do wyświetlania sparowanych użytkowników (zakładka czat) \textbf{(Wojciech Sułowski)}
+    \item [--] Backend do konwersacji ze sparowanym użytkownikiem. \textbf{(Bartłomiej Tokarczyk)}
+\end{itemize}
+
+\section{Zrealizowane założenia:}
+\begin{itemize}
+    \item [--] Obsługa zakładki przeglądania użytkowników (swipe right/left) z poziomu RestApi. (Mateusz Sromek)
+    \item [--] Zakładka edycja profilu (aplikacji mobilna) - layout (Bartłomiej Tokarczyk) 
+    \item [--] Layout do strony głównej aplikacji; zakładka przeglądania użytkowników w android studio (Maciej Więcławek)
+    \item [--] Backend do zakładki przeglądania użytkowników. Obsługa połączenia pomiędzy zakładką a RestApi. (Maciej Więcławek)
+    \item [--] Rejestracja preferencji użytkownika - płeć, zainteresowania, zdjecie, opis. (Maciej Więcławek)
+
+\end{itemize}
+
+\section{Poświęcony czas na realizację projektu:}
+\begin{itemize}
+    \item [--] Wojciech Sułowski - 8h (brak realizacji zaplanowanego zadania do 14.11) Realizacja 15.11-16.11 (planowany czas 14h)
+    \item [--] Mateusz Sromek  - 20h
+    \item [--] Maciej Więcławek - 35h
+    \item [--] Bartłomiej Tokarczyk - 7h
+\end{itemize}
+Zaplanowany czas na realizację wyznaczonych zadań: \textbf{30h}
+\section{Zadania zaplanowane na najbliższy sprint 19.11.2021 - 02.12.2021: }
+\begin{itemize}
+   \item [--] Obsługa przesyłania plików po stronie serwera
+ 
+
+ \item [--]Implementacja rozmów wideo w restapi (webRtc - firebase)
+
+  \item [--]Layout do rozmów wideo
+
+   \item [--]Layout do przesyłania plików
+    \item [--]Layout do przesyłania kontaktów
+
+     \item [--] Backend do rozmów wideo
+      \item [--]Backend do przesyłania plików
+      \item [--]Backend do przesyłania kontaktów NFC
+
+
+\end{itemize}
+
+Planowany, łączny czas realizacji zadań:\textbf{ 86h}
+
+\section{ Napotkane problemy podczas realizacji zadań}
+\begin{itemize}
+
+    \item [--]  Przekazywanie danych pomiędzy aktywnościami związanymi z rejestracją preferencji
+ \\
+\textbf{Rozwiązanie problemu:} Zapisywanie danych z poszczególnych formularzy poprzez SharedPreferences, a następnie wysyłanie skumulowanych danych do RestApi.
+ \item [--] Błąd przy wysyłaniu danych do RestApi spowodowany niepoprawnym wypełnieniem poszczególnych pól formularza rejestracji preferencji.
+\\
+ \textbf{Rozwiązanie problemu:} Implementacja walidacji przy użyciu biblioteki material design oraz walidacja danych przed wysłaniem do RestApi.
+
+
+  \item [--] Błędne wyświetlanie zdjęć w zakładce “swipe” \\
+\textbf{Rozwiązanie problemu:} Dodanie funkcji odpowiedzialnej za kompresję zdjęć.
+
+   \item [--] Problem z przekazywaniem danych o aktualnie swipe’owanym użytkowniku do RestApi \\
+\textbf{Rozwiązanie problemu:} Przekazanie danych o użytkowniku do SharedPreferences w momencie wyświetlania kafelka, a następnie w zależności od wykonanej akcji (swipe right, swipe left) wysłanie danych do RestApi.
+
+
+
+   \item [--] Kafelki nie wyświetlają się po zalogowaniu użytkownika \\
+\textbf{Rozwiązanie problemu:} Wywoływanie funkcji odpowiedzialnej za tworzenie tablicy z danymi za każdym razem gdy uruchamia się aktywność “HomeActivity”.
+
+    \end{itemize}
+    \\
+
+
+
+\end{document}

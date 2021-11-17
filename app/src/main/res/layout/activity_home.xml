@@ -12,16 +12,28 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="633dp">
+
         <com.yuyakaido.android.cardstackview.CardStackView
             android:id="@+id/card_stack_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:padding="8dp"
             android:clipToPadding="false"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:padding="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176dp"
+            android:layout_marginTop="416dp"
+            android:text="TextView"
+            android:textColor="@android:color/transparent"
+            app:layout_constraintStart_toStartOf="@+id/card_stack_view"
+            app:layout_constraintTop_toTopOf="@+id/card_stack_view" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -31,12 +43,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="30dp"
+        android:layout_margin="20dp"
         android:elevation="2dp"
         app:menu="@menu/menu"
         android:background="@drawable/round_corner"
         app:itemRippleColor="@android:color/transparent"
-        app:itemIconSize="30dp"
+        app:itemIconSize="25dp"
         app:labelVisibilityMode="unlabeled"
         app:itemIconTint="@drawable/tab_color">
 
