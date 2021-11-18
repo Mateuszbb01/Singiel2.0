@@ -1,8 +1,10 @@
 
     apply plugin: 'com.android.application'
     apply plugin: 'com.google.gms.google-services'
+    apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 
-android {
+
+    android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
