@@ -23,14 +23,14 @@ class gsmController extends Controller
     //Wyjaśniłem to już w poprzednich samouczkach 
     private function sendPushNotification($fields){
 
-        $accesstoken = env('GOOGLE_API_KEY');
+        //$accesstoken = env('GOOGLE_API_KEY');
 
  
         $url = 'https://android.googleapis.com/gcm/send';
  
         $headers = array();
         $headers[] = 'Content-type: application/json';
-        $headers[] = 'Authorization: ' . $accesstoken;
+        $headers[] = 'Authorization: AAAAhhYG7Wo:APA91bHxhX6-M9ej9Yd3U_23GyjgNwXXJCiLyKjjgakTQXtsZi9pCGspnbRGSlLbzZUpGmWhiuAb0ectQd7kKXJSmbcKqO_1aAob4jEwBostHN_gLuWV6BqtBCRpmWJ7h-ewiXqMemNm';
  
         $ch = curl_init();
  

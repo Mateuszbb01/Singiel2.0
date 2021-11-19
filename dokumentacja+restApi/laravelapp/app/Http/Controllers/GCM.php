@@ -122,7 +122,7 @@ public function send(Request $request){
         return response()->json([
             'success' => true,
             'message' => 'Dodano gcmToken',
-            'token' => [$response] //dodałem zeby było w array []
+            'token' => [$pushdata] //dodałem zeby było w array []
            ]);
         
     } else {

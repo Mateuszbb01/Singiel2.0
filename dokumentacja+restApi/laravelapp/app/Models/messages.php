@@ -20,4 +20,6 @@ class messages extends Model
     {
         return $this->belongsTo(User::class , 'id');
     }
+
+    public $timestamps = false;
 }
