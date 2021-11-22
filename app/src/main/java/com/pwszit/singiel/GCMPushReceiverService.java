@@ -1,35 +1,21 @@
 package com.pwszit.singiel;
-import android.app.ActivityManager;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.NotificationCompat;
-
-import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.android.gms.gcm.GcmListenerService;
 
+//import android.support.v4.content.LocalBroadcastManager;
+//import android.support.v4.app.NotificationCompat;
 //import net.simplifiedcoding.simplifiedcodingchat.R;
 //import net.simplifiedcoding.simplifiedcodingchat.helper.Constants;
 //import net.simplifiedcoding.simplifiedcodingchat.helper.Message;
 //import net.simplifiedcoding.simplifiedcodingchat.helper.NotificationHandler;
 
-import java.util.List;
 
-
-
-//public class GCMPushReceiverService extends GcmListenerService
-public class GCMPushReceiverService extends GCMTokenRefreshListenerService {
+//public class GCMPushReceiverService extends GCMTokenRefreshListenerService
+   public class GCMPushReceiverService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("message");

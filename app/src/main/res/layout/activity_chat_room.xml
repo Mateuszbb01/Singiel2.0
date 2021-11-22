@@ -3,34 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:windowSoftInputMode="adjustPan|adjustResize"
-    tools:context="net.simplifiedcoding.simplifiedcodingchat.activities.ChatRoomActivity">
+    android:windowSoftInputMode="adjustPan|adjustResize">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#2196F3"
-        android:minHeight="?attr/actionBarSize"></android.support.v7.widget.Toolbar>
+        android:minHeight="?attr/actionBarSize">
+
+    </androidx.appcompat.widget.Toolbar>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin">
+        android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="55dp"
-            android:scrollbars="vertical">
+            android:scrollbars="vertical"
 
-        </android.support.v7.widget.RecyclerView>
+        />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,6 +51,8 @@
                 android:layout_weight="3"
                 android:text="Send" />
         </LinearLayout>
+
+
 
     </RelativeLayout>
 

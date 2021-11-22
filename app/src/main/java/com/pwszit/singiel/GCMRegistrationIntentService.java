@@ -1,7 +1,7 @@
 package com.pwszit.singiel;
 import android.app.IntentService;
 import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
+//import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -13,7 +13,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
-import com.google.firebase.iid.InstanceIdResult;
+//import com.google.firebase.iid.InstanceIdResult;
 
 //import net.simplifiedcoding.simplifiedcodingchat.R;
 //import net.simplifiedcoding.simplifiedcodingchat.helper.AppController;
@@ -44,8 +44,8 @@ public class GCMRegistrationIntentService extends IntentService {
         Intent registrationComplete = null;
         String token = null;
         try {
-            //   InstanceID instanceID = InstanceID.getInstance(getApplicationContext());
-            InstanceIdResult instanceID = InstanceIdResult.getInstance(getApplicationContext());
+            InstanceID instanceID = InstanceID.getInstance(getApplicationContext());
+            //InstanceIdResult instanceID = InstanceIdResult.getInstance(getApplicationContext());
             token = instanceID.getToken(getString(R.string.gcm_defaultSenderId), GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
             Log.w("GCMRegIntentService", "token:" + token);
 

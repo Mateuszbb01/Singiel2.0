@@ -6,19 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -35,15 +28,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
-//import net.simplifiedcoding.simplifiedcodingchat.R;
-//import net.simplifiedcoding.simplifiedcodingchat.gcm.GCMRegistrationIntentService;
-//import net.simplifiedcoding.simplifiedcodingchat.helper.AppController;
-//import net.simplifiedcoding.simplifiedcodingchat.helper.Constant;
-//import net.simplifiedcoding.simplifiedcodingchat.helper.Message;
-//import net.simplifiedcoding.simplifiedcodingchat.helper.NotificationHandler;
-//import net.simplifiedcoding.simplifiedcodingchat.helper.ThreadAdapter;
-//import net.simplifiedcoding.simplifiedcodingchat.helper.URLs;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,6 +37,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+//import net.simplifiedcoding.simplifiedcodingchat.R;
+//import net.simplifiedcoding.simplifiedcodingchat.gcm.GCMRegistrationIntentService;
+//import net.simplifiedcoding.simplifiedcodingchat.helper.AppController;
+//import net.simplifiedcoding.simplifiedcodingchat.helper.Constant;
+//import net.simplifiedcoding.simplifiedcodingchat.helper.Message;
+//import net.simplifiedcoding.simplifiedcodingchat.helper.NotificationHandler;
+//import net.simplifiedcoding.simplifiedcodingchat.helper.ThreadAdapter;
+//import net.simplifiedcoding.simplifiedcodingchat.helper.URLs;
 
 public class ChatRoomActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -82,9 +75,9 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_chat_room);
 
         //Adding toolbar to activity
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(AppController.getInstance().getUserName());
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        toolbar.setTitle(AppController.getInstance().getUserName());
+//        setSupportActionBar(toolbar);
 
         //Displaying dialog while the chat room is being ready
         dialog = new ProgressDialog(this);
