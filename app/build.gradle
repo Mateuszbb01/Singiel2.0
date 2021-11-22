@@ -59,9 +59,14 @@ dependencies {
   //  implementation 'com.androidx.recyclerview:1.0.0'
      // implementation 'com.androidx.cardview:1.0.0'
 
-
+    apply plugin: 'com.android.application'
+    apply plugin: 'com.google.gms.google-services'
+    compile 'com.google.android.gms:play-services:7.5.0'
 
     implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
 
 }
-apply plugin: 'com.google.gms.google-services'
+
+
+
+

@@ -183,7 +183,7 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
                     }
                 });
 
-        AppController.getInstance().addToRequestQueue(stringRequest);
+//        AppController.getInstance().addToRequestQueue(stringRequest);
     }
 
     //Processing message to add on the thread

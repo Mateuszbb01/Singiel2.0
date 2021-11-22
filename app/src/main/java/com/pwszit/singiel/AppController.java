@@ -3,15 +3,11 @@ package com.pwszit.singiel;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.text.TextUtils;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-
-//import com.pwszit.singiel.activities.MainActivity;
 
 //Class extending application
 public class AppController extends Application {

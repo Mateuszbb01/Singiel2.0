@@ -1,7 +1,7 @@
 package com.pwszit.singiel;
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
-//import android.support.v4.content.LocalBroadcastManager;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -9,20 +9,24 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
+import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
-//import com.google.firebase.iid.InstanceIdResult;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+//import android.support.v4.content.LocalBroadcastManager;
+//import com.google.firebase.iid.InstanceIdResult;
 //import net.simplifiedcoding.simplifiedcodingchat.R;
 //import net.simplifiedcoding.simplifiedcodingchat.helper.AppController;
 //import net.simplifiedcoding.simplifiedcodingchat.helper.Constants;
 //import net.simplifiedcoding.simplifiedcodingchat.helper.URLs;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 
@@ -30,11 +34,11 @@ public class GCMRegistrationIntentService extends IntentService {
     public static final String REGISTRATION_SUCCESS = "RegistrationSuccess";
     public static final String REGISTRATION_ERROR = "RegistrationError";
     public static final String REGISTRATION_TOKEN_SENT = "RegistrationTokenSent";
+    private SharedPreferences userPref;
 
     public GCMRegistrationIntentService() {
         super("");
     }
-    private SharedPreferences userPref;
 
 
     @Override
@@ -64,22 +68,25 @@ public class GCMRegistrationIntentService extends IntentService {
     private void sendRegistrationTokenToServer(final String token) {
         //Getting the user id from shared preferences
         //We are storing gcm token for the user in our mysql database
-        final int id = AppController.getInstance().getUserId();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.STORAGE_TOKEN,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String s) {
-                        Intent registrationComplete = new Intent(REGISTRATION_TOKEN_SENT);
-                        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(registrationComplete);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
+        //final int id = AppController.getInstance().getUserId();
+        userPref = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
 
-                    }
-                }){
+        StringRequest request = new StringRequest(Request.Method.POST, Constant.STORAGE_TOKEN, response->{
 
+            try {
+                JSONObject object = new JSONObject(response);
+                if (object.getBoolean("success")){
+                    Intent registrationComplete = new Intent(REGISTRATION_TOKEN_SENT);
+                    LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(registrationComplete);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        },error ->{
+            error.printStackTrace();
+        } ){
             //dodanie tokena do naglowka
 
 
@@ -97,6 +104,7 @@ public class GCMRegistrationIntentService extends IntentService {
                 return params;
             }
         };
-        AppController.getInstance().addToRequestQueue(stringRequest);
+        RequestQueue queue = Volley.newRequestQueue(GCMRegistrationIntentService.this);
+        queue.add(request);
     }
 }
