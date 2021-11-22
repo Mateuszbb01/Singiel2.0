@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -21,10 +22,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
@@ -59,6 +62,7 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
+    private SharedPreferences preferences, userpref, userPref2;
 
     //ArrayList of messages to store the thread messages
     private ArrayList<Message> messages;
@@ -73,6 +77,8 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
+        preferences = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
+        userpref = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
 
         //Adding toolbar to activity
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -148,26 +154,29 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
 
     //This method will fetch all the messages of the thread
     private void fetchMessages() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_FETCH_MESSAGES,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        dialog.dismiss();
+        userPref2 = getSharedPreferences("user", MODE_PRIVATE);
+        preferences = getSharedPreferences("user", MODE_PRIVATE);
+        int userId = preferences.getInt("id", -1);
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.FETCH_MESSAGES,
+            new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    dialog.dismiss();
 
-                        try {
-                            JSONObject res = new JSONObject(response);
-                            JSONArray thread = res.getJSONArray("messages");
-                            for (int i = 0; i < thread.length(); i++) {
-                                JSONObject obj = thread.getJSONObject(i);
-                                int userId = obj.getInt("userid");
-                                String message = obj.getString("message");
-                                String name = obj.getString("name");
-                                String sentAt = obj.getString("sentat");
-                                Message messagObject = new Message(userId, message, sentAt, name);
-                                messages.add(messagObject);
+                    try {
+                        JSONObject res = new JSONObject(response);
+                        JSONArray thread = res.getJSONArray("Message");
+                        for (int i = 0; i < thread.length(); i++) {
+                            JSONObject obj = thread.getJSONObject(i);
+                            int userId = obj.getInt("user_from_id");
+                            String message = obj.getString("message");
+                            String name = "name";
+                            String sentAt = obj.getString("sentat");
+                            Message messagObject = new Message(userId, message, sentAt, name);
+                            messages.add(messagObject);
                             }
 
-                            adapter = new ThreadAdapter(ChatRoomActivity.this, messages, AppController.getInstance().getUserId());
+                            adapter = new ThreadAdapter(ChatRoomActivity.this, messages, userId);
                             recyclerView.setAdapter(adapter);
                             scrollToBottom();
 
@@ -175,15 +184,40 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
                             e.printStackTrace();
                         }
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                },error -> {
+            error.printStackTrace();
 
-                    }
-                });
+        }) {
 
-//        AppController.getInstance().addToRequestQueue(stringRequest);
+            //dodanie tokena do naglowka
+
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                String token = userPref2.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
+                return map;
+            }
+        };
+        request.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 30000;
+            }
+
+            @Override
+            public int getCurrentRetryCount() {
+                return 1;
+            }
+
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+
+            }
+        });
+        RequestQueue queue = Volley.newRequestQueue(ChatRoomActivity.this);
+        queue.add(request);
     }
 
     //Processing message to add on the thread
@@ -198,8 +232,11 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
         final String message = editTextMessage.getText().toString().trim();
         if (message.equalsIgnoreCase(""))
             return;
-        int userId = AppController.getInstance().getUserId();
-        String name = AppController.getInstance().getUserName();
+
+        preferences = getSharedPreferences("user", MODE_PRIVATE);
+        int userId = preferences.getInt("id", -1);
+        userpref = getSharedPreferences("vCard", MODE_PRIVATE);
+        String name = preferences.getString("nameV", "");
         String sentAt = getTimeStamp();
 
         Message m = new Message(userId, message, sentAt, name);
