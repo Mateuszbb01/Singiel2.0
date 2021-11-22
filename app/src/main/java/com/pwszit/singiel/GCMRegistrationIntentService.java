@@ -2,6 +2,7 @@ package com.pwszit.singiel;
 import android.app.IntentService;
 import android.content.Intent;
 //import android.support.v4.content.LocalBroadcastManager;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -33,6 +34,7 @@ public class GCMRegistrationIntentService extends IntentService {
     public GCMRegistrationIntentService() {
         super("");
     }
+    private SharedPreferences userPref;
 
 
     @Override
@@ -63,7 +65,7 @@ public class GCMRegistrationIntentService extends IntentService {
         //Getting the user id from shared preferences
         //We are storing gcm token for the user in our mysql database
         final int id = AppController.getInstance().getUserId();
-        StringRequest stringRequest = new StringRequest(Request.Method.PUT, URLs.URL_STORE_TOKEN + id,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.STORAGE_TOKEN,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
@@ -76,7 +78,18 @@ public class GCMRegistrationIntentService extends IntentService {
                     public void onErrorResponse(VolleyError volleyError) {
 
                     }
-                }) {
+                }){
+
+            //dodanie tokena do naglowka
+
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                String token = userPref.getString("token","");
+                HashMap<String,String> map = new HashMap<>();
+                map.put("Authorization","Bearer "+token);
+                return map;
+            }
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();

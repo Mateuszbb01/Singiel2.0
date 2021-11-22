@@ -69,42 +69,59 @@ public class AppController extends Application {
     //Method to get sharedpreferences
     public SharedPreferences getSharedPreferences() {
         if (sharedPreferences == null)
-            sharedPreferences = getSharedPreferences(Constant.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+            sharedPreferences = getSharedPreferences("userPref", Context.MODE_PRIVATE);
         return sharedPreferences;
     }
 
     //This method will clear the sharedpreference
     //It will be called on logout
-    public void logout() {
-        SharedPreferences.Editor editor = getSharedPreferences().edit();
-        editor.clear();
-        editor.apply();
-    }
+//    public void logout() {
+//        SharedPreferences.Editor editor = getSharedPreferences().edit();
+//        editor.clear();
+//        editor.apply();
+//    }
 
-    //This method will store the user data on sharedpreferences
-    //It will be called on login
-    public void loginUser(int id, String name, String email) {
-        SharedPreferences.Editor editor = getSharedPreferences().edit();
-        editor.putInt(Constant.USER_ID, id);
-        editor.putString(Constant.USER_EMAIL, email);
-        editor.putString(Constant.USER_NAME, name);
-        editor.putBoolean(Constant.IS_LOGGED_IN, true);
-        editor.apply();
-    }
+//    //This method will store the user data on sharedpreferences
+//    //It will be called on login
+//    public void loginUser(int id, String name, String email) {
+//        SharedPreferences.Editor editor = getSharedPreferences().edit();
+//        editor.putInt(Constant.USER_ID, id);
+//        editor.putString(Constant.USER_EMAIL, email);
+//        editor.putString(Constant.USER_NAME, name);
+//        editor.putBoolean(Constant.IS_LOGGED_IN, true);
+//        editor.apply();
+//    }
 
     //This method will check whether the user is logged in or not
     public boolean isLoggedIn() {
-        return getSharedPreferences().getBoolean(Constant.IS_LOGGED_IN, false);
+        return getSharedPreferences().getBoolean("isLoggedIn", false);
     }
 
 
+    //////
+    // 2 Method to get sharedpreferences
+    public SharedPreferences getSharedPreferences3() {
+        if (sharedPreferences == null)
+            sharedPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
+        return sharedPreferences;
+    }
     //This method will return the user id of logged in user
     public int getUserId() {
-        return getSharedPreferences().getInt(Constant.USER_ID, -1);
+        return getSharedPreferences3().getInt("id", -1);
     }
 
+
+
+    //////
+    // 2 Method to get sharedpreferences
+    public SharedPreferences getSharedPreferences2() {
+        if (sharedPreferences == null)
+            sharedPreferences = getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE);
+        return sharedPreferences;
+    }
     //This method will return the username of logged in user
+    //daje z sharedpreferences registration
     public String getUserName() {
-        return getSharedPreferences().getString(Constant.USER_NAME, null);
+        return getSharedPreferences2().getString("NAME", "");
     }
 }

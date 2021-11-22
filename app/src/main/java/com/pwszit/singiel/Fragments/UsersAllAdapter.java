@@ -47,8 +47,8 @@ public class UsersAllAdapter extends RecyclerView.Adapter<UsersAllAdapter.MyView
         this.dataSet = data;
         this.mActivity = activity;
 
-        imageLoader = CustomVolleyRequest.getInstance(mActivity.getApplicationContext())
-                .getImageLoader();
+     //   imageLoader = CustomVolleyRequest.getInstance(mActivity.getApplicationContext())
+      //          .getImageLoader();
 
     }
 
@@ -74,11 +74,11 @@ public class UsersAllAdapter extends RecyclerView.Adapter<UsersAllAdapter.MyView
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int listPosition) {
         TextView name = holder.name;
-        NetworkImageView imageView = holder.imageView;
-        imageLoader.get(dataSet.get(listPosition).getPhoto(), ImageLoader.getImageListener(imageView
-                ,0,android.R.drawable
-                        .ic_dialog_alert));
-        imageView.setImageUrl(dataSet.get(listPosition).getPhoto(), imageLoader);
+      //  NetworkImageView imageView = holder.imageView;
+      //  imageLoader.get(dataSet.get(listPosition).getPhoto(), ImageLoader.getImageListener(imageView
+      //          ,0,android.R.drawable
+       //                 .ic_dialog_alert));
+       // imageView.setImageUrl(dataSet.get(listPosition).getPhoto(), imageLoader);
         name.setText(dataSet.get(listPosition).getName());
     }
 

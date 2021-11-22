@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
                 if (isLoggedIn){
                     startActivity(new Intent(MainActivity.this, HomeActivity.class));
                     finish();
-                   isFirstTime();
+               //    isFirstTime();
 
                 }
                 else {
