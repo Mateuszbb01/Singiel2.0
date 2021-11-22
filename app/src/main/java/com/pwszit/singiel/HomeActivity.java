@@ -1,12 +1,5 @@
 package com.pwszit.singiel;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,11 +7,15 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
-import android.widget.Adapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -367,10 +364,13 @@ public class HomeActivity extends AppCompatActivity {
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                     Intent intent;
                     switch (menuItem.getItemId()){
-                        case R.id.czat:
+                        case R.id.share:
                             startActivity(new Intent(getApplicationContext()
-                                    ,ChatActivity.class));
+                                    ,NfcActivity.class));
                             overridePendingTransition(0, 0);
+                            return true;
+                        case R.id.czat:
+
                             return true;
                         case R.id.home:
                             startActivity(new Intent(getApplicationContext()
@@ -381,7 +381,7 @@ public class HomeActivity extends AppCompatActivity {
                             startActivity(new Intent(getApplicationContext()
                                     ,EditProfile.class));
                             overridePendingTransition(0, 0);
-                            return true;
+
 
                     }
 
