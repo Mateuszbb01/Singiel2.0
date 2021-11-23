@@ -6,25 +6,20 @@ use Illuminate\Http\Request;
 
 class gsmController extends Controller
 {
-    //Ta funkcja wyśle wiadomość na podane identyfikatory rejestracji
-    //Przekazujemy również wiadomość, która w rzeczywistości jest tablicą zawierającą wiadomość 
+    //funkcja wysyłająca wiadomość na podane identyfikatory rejestracji
+    //Przekazanie również wiadomości, w tablicy zawierającą wiadomość 
     public function sendMessage($tokens, $message) {
         $fields = array(
             'registration_ids' => $tokens,
             'data' => $message,
         );
-        //W tej funkcji wywołujemy główną metodę odpowiedzialną za wysyłanie powiadomień push
-        //to jest sendPushNotification
+        //funkcja wywołująca główną metodę odpowiedzialną za wysyłanie powiadomień push
         return $this->sendPushNotification($fields);
     }
     
  
-    //Jest to główna metoda odpowiedzialna za wysyłanie powiadomień push
-    //Wyjaśniłem to już w poprzednich samouczkach 
+    //Metoda odpowiedzialna za wysyłanie powiadomień push
     private function sendPushNotification($fields){
-
-        //$accesstoken = env('GOOGLE_API_KEY');
-
  
         $url = 'https://android.googleapis.com/gcm/send';
  

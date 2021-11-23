@@ -27,12 +27,12 @@ public class MainActivity extends AppCompatActivity {
 
                 if (isLoggedIn){
                     finish();
-                    startActivity(new Intent(MainActivity.this, ChatRoomActivity.class));
+                    startActivity(new Intent(MainActivity.this, ChatMessagingActivity.class));
 
 
                 }
                 else {
-                    isFirstTime();
+                   //isFirstTime();
                 }
             }
         } ,1500);

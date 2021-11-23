@@ -18,13 +18,13 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello how are you?" />
+            android:text="Uzytkownik 2" />
 
         <TextView
             android:id="@+id/textViewTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Belal Khan, 2016-05-29 16:02:00?"
+            android:text="User2, 2021-11-22 19:00:00"
             android:textSize="12dp"
             />
 

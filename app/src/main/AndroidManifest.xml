@@ -81,7 +81,7 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".ChatRoomActivity"></activity>
+        <activity android:name=".ChatMessagingActivity"></activity>
     </application>
 
 </manifest>

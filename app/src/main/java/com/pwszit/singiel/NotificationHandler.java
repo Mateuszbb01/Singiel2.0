@@ -28,7 +28,7 @@ public class NotificationHandler {
     public void showNotificationMessage(final String title, final String message) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext);
         builder.setSmallIcon(R.mipmap.ic_launcher);
-        Intent intent = new Intent(mContext, ChatRoomActivity.class);
+        Intent intent = new Intent(mContext, ChatMessagingActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, intent, 0);
         builder.setContentIntent(pendingIntent);
         builder.setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher));

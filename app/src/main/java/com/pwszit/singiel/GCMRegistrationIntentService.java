@@ -21,15 +21,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-//import android.support.v4.content.LocalBroadcastManager;
-//import com.google.firebase.iid.InstanceIdResult;
-//import net.simplifiedcoding.simplifiedcodingchat.R;
-//import net.simplifiedcoding.simplifiedcodingchat.helper.AppController;
-//import net.simplifiedcoding.simplifiedcodingchat.helper.Constants;
-//import net.simplifiedcoding.simplifiedcodingchat.helper.URLs;
-
-
-
 public class GCMRegistrationIntentService extends IntentService {
     public static final String REGISTRATION_SUCCESS = "RegistrationSuccess";
     public static final String REGISTRATION_ERROR = "RegistrationError";

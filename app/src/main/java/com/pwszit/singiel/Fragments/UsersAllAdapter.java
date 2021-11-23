@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.pwszit.singiel.ChatRoomActivity;
+import com.pwszit.singiel.ChatMessagingActivity;
 import com.pwszit.singiel.R;
 
 import java.util.ArrayList;
@@ -62,7 +62,7 @@ public class UsersAllAdapter extends RecyclerView.Adapter<UsersAllAdapter.MyView
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mActivity, ChatRoomActivity.class);
+                Intent intent = new Intent(mActivity, ChatMessagingActivity.class);
                 intent.putExtra("to_id",dataSet.get(myViewHolder.getAdapterPosition()).getId());
                 mActivity.startActivity(intent);
             }
