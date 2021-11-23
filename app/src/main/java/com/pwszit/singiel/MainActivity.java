@@ -1,13 +1,13 @@
 package com.pwszit.singiel;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,9 +26,9 @@ public class MainActivity extends AppCompatActivity {
                 boolean isLoggedIn = infoUser.getBoolean("isLoggedIn", false);
 
                 if (isLoggedIn){
-                    startActivity(new Intent(MainActivity.this, HomeActivity.class));
                     finish();
-                   isFirstTime();
+                    startActivity(new Intent(MainActivity.this, ChatRoomActivity.class));
+
 
                 }
                 else {
