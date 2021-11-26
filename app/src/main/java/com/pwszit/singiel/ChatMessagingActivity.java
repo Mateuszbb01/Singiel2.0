@@ -284,8 +284,22 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 
-       // stringRequest.setRetryPolicy(policy);
-        //AppController.getInstance().addToRequestQueue(stringRequest);
+        stringRequest.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 30000;
+            }
+
+            @Override
+            public int getCurrentRetryCount() {
+                return 1;
+            }
+
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+
+            }
+        });
         RequestQueue queue = Volley.newRequestQueue(ChatMessagingActivity.this);
         queue.add(stringRequest);
     }
