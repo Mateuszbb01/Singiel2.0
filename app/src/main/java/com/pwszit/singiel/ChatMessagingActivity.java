@@ -55,7 +55,7 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
-    private SharedPreferences preferences, userpref, userPref2;
+    private SharedPreferences preferences, userpref, userPref2, usertoid, pref;
 
     //ArrayList messages to store messages
     private ArrayList<Message> messages;
@@ -218,6 +218,7 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
 
     //Ta metoda wyśle nową wiadomość do wątku
     private void sendMessage() {
+
         final String message = editTextMessage.getText().toString().trim();
         if (message.equalsIgnoreCase(""))
             return;
@@ -227,6 +228,12 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
         userpref = getSharedPreferences("vCard", MODE_PRIVATE);
         String name = preferences.getString("nameV", "");
         String sentAt = getTimeStamp();
+
+        String user_id_string = String.valueOf(userId);
+
+// zapis do bazy wiadomosci
+        usertoid = getSharedPreferences("usertoid", MODE_PRIVATE);
+        String userToId = usertoid.getString("user_to_id", "");
 
         Message m = new Message(userId, message, sentAt, name);
         messages.add(m);
@@ -263,9 +270,10 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", String.valueOf(AppController.getInstance().getUserId()));
+                params.put("id", user_id_string);
                 params.put("message", message);
-                params.put("name", AppController.getInstance().getUserName());
+                //params.put("name", AppController.getInstance().getUserName());
+                params.put("user_to_id", "2");
                 return params;
             }
         };
@@ -276,8 +284,10 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 
-        stringRequest.setRetryPolicy(policy);
-        AppController.getInstance().addToRequestQueue(stringRequest);
+       // stringRequest.setRetryPolicy(policy);
+        //AppController.getInstance().addToRequestQueue(stringRequest);
+        RequestQueue queue = Volley.newRequestQueue(ChatMessagingActivity.this);
+        queue.add(stringRequest);
     }
 
     //metoda przewijania widoku recyclerview  na dół

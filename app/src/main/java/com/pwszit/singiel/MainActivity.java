@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 else {
-                   //isFirstTime();
+                   isFirstTime();
                 }
             }
         } ,1500);
