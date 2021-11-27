@@ -253,11 +253,9 @@ public class HomeActivity extends AppCompatActivity {
 
     }
     /*    private void send()
-
         {
            int position = manager.getTopPosition().toString();
            mTextViewResult.append(position);
-
         }*/
     private void paginate() {
         List<ItemModel> old = adapter.getItems();
@@ -370,7 +368,9 @@ public class HomeActivity extends AppCompatActivity {
                             overridePendingTransition(0, 0);
                             return true;
                         case R.id.czat:
-
+                            startActivity(new Intent(getApplicationContext()
+                                    ,ChatMessagingActivity.class));
+                            overridePendingTransition(0, 0);
                             return true;
                         case R.id.home:
                             startActivity(new Intent(getApplicationContext()

@@ -21,6 +21,9 @@
         android:theme="@style/Theme.Singiel"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".NfcActivity"
+            android:launchMode="singleTop" />
+        <activity
             android:name=".specificchat"
             android:exported="false" />
         <activity

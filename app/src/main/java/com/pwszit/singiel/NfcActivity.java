@@ -168,9 +168,9 @@ public class NfcActivity extends AppCompatActivity {
         mPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()), 0);
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-//        if (mNfcAdapter == null) {
-//            nonSupport();
-//        }
+        if (mNfcAdapter == null) {
+           nonSupport();
+        }
 
         description();
     }
@@ -251,16 +251,16 @@ public class NfcActivity extends AppCompatActivity {
 
     private void writeData() {
         AlertDialog.Builder writeDataDialog = new AlertDialog.Builder(NfcActivity.this);
-                  LayoutInflater factory = LayoutInflater.from(NfcActivity.this);
-                final View view = factory.inflate(R.layout.sample, null);
-                writeDataDialog.setTitle("Info");
-                writeDataDialog.setMessage("Przyłóż tag NFC do tyłu urządzenia");
-                writeDataDialog.setCancelable(false);
-                writeDataDialog.setPositiveButton("Anuluj", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                })
+        LayoutInflater factory = LayoutInflater.from(NfcActivity.this);
+        final View view = factory.inflate(R.layout.sample, null);
+        writeDataDialog.setTitle("Info");
+        writeDataDialog.setMessage("Przyłóż tag NFC do tyłu urządzenia");
+        writeDataDialog.setCancelable(false);
+        writeDataDialog.setPositiveButton("Anuluj", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        })
                 .create();
 
         writeDataDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
