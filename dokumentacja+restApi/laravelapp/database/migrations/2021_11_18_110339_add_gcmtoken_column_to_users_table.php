@@ -14,7 +14,7 @@ class AddGcmtokenColumnToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->text('gcmtoken')->after('password');
+            $table->text('gcmtoken')->after('password')->nullable();
         });
     }
 

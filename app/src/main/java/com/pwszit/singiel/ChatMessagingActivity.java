@@ -273,7 +273,7 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
                 params.put("id", user_id_string);
                 params.put("message", message);
                 //params.put("name", AppController.getInstance().getUserName());
-                params.put("user_to_id", "2");
+                params.put("user_to_id", "3");
                 return params;
             }
         };

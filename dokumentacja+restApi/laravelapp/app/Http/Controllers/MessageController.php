@@ -14,22 +14,22 @@ class MessageController extends Controller
 
    //Funkcja przechowywania tokenu rejestracji gcm w bazie danych
    //BEZPOŚREDNIO użyłem w GCM
-   public function storeGCMToken(Request $token)
-   {
+//    public function storeGCMToken(Request $token)
+//    {
 
-    $stmt = User::where('id', Auth::user()->id)->firstOrFail();
+//     $stmt = User::where('id', Auth::user()->id)->firstOrFail();
 
-    $stmt->gcmtoken = $token->token;
+//     $stmt->gcmtoken = $token->token;
 
-    $stmt->update();
+//     $stmt->update();
 
-    return response()->json([
-        'success' => true,
-        'message' => 'Dodano token',
-        'token' => $stmt
-    ]);
+//     return response()->json([
+//         'success' => true,
+//         'message' => 'Dodano token',
+//         'token' => $stmt
+//     ]);
 
-   }
+   //}
 
     //Pobieranie tokena rejestracyjnego z bazy
     //Id to osoba, która wysyła wiadomość

@@ -6,12 +6,16 @@ use Illuminate\Http\Request;
 
 class gsmController extends Controller
 {
+
+
+
+
     //funkcja wysyłająca wiadomość na podane identyfikatory rejestracji
     //Przekazanie również wiadomości, w tablicy zawierającą wiadomość 
-    public function sendMessage($tokens, $message) {
+    public function sendMessage($token, $pushdata) {
         $fields = array(
-            'registration_ids' => $tokens,
-            'data' => $message,
+            'registration_ids' => $token,
+            'notification' => $pushdata
         );
         //funkcja wywołująca główną metodę odpowiedzialną za wysyłanie powiadomień push
         return $this->sendPushNotification($fields);
@@ -19,13 +23,23 @@ class gsmController extends Controller
     
  
     //Metoda odpowiedzialna za wysyłanie powiadomień push
-    private function sendPushNotification($fields){
+    private function sendPushNotification($fields)
+    {
  
-        $url = 'https://android.googleapis.com/gcm/send';
- 
-        $headers = array();
-        $headers[] = 'Content-type: application/json';
-        $headers[] = 'Authorization: AAAAhhYG7Wo:APA91bHxhX6-M9ej9Yd3U_23GyjgNwXXJCiLyKjjgakTQXtsZi9pCGspnbRGSlLbzZUpGmWhiuAb0ectQd7kKXJSmbcKqO_1aAob4jEwBostHN_gLuWV6BqtBCRpmWJ7h-ewiXqMemNm';
+        $url = 'https://fcm.googleapis.com/fcm/send';
+
+
+    $headers = array(
+        'Authorization: key= AAAAhhYG7Wo:APA91bHxhX6-M9ej9Yd3U_23GyjgNwXXJCiLyKjjgakTQXtsZi9pCGspnbRGSlLbzZUpGmWhiuAb0ectQd7kKXJSmbcKqO_1aAob4jEwBostHN_gLuWV6BqtBCRpmWJ7h-ewiXqMemNm',
+        'Content-Type: application/json'
+    );
+        // $headers = array(
+        //     'Authorization: key=AAAAhhYG7Wo:APA91bHxhX6-M9ej9Yd3U_23GyjgNwXXJCiLyKjjgakTQXtsZi9pCGspnbRGSlLbzZUpGmWhiuAb0ectQd7kKXJSmbcKqO_1aAob4jEwBostHN_gLuWV6BqtBCRpmWJ7h-ewiXqMemNm',
+        //     'Content-Type: application/json'
+        // );
+        // $headers = array();
+        // $headers[] = 'Authorization: key=AIzaSyC55P9tdL91PHTwe7d7KvJ_1BwfjPtWOuQ';
+        // $headers[] = 'Content-type: application/json';
  
         $ch = curl_init();
  
