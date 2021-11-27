@@ -2,15 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pwszit.singiel">
 
-    <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <uses-feature
-        android:name="android.hardware.nfc"
-        android:required="true" />
+
+
+
 
     <application
         android:allowBackup="true"
@@ -21,9 +20,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Singiel"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".NfcActivity"
-            android:launchMode="singleTop" />
         <activity
             android:name=".specificchat"
             android:exported="false" />
@@ -54,6 +50,36 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="com.gnirt69.gcmexample" />
+            </intent-filter>
+        </receiver>
+
+        <!--             GCM Receiver Service -->
+        <service
+            android:name=".GCMPushReceiverService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+
+        <!--             GCM Registration Intent Service -->
+        <service
+            android:name=".GCMRegistrationIntentService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".ChatMessagingActivity"></activity>
     </application>
 
 </manifest>

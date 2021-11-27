@@ -23,6 +23,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         'name',
         'email',
         'password',
+        'gcmtoken',
     ];
 
     /**
@@ -71,5 +72,10 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     public function likes()
     {
         return $this->hasMany(Like::class);
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(messages::class);
     }
 }

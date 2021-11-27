@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GCM;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PreferencesController;
 use Illuminate\Http\Request;
@@ -37,6 +38,13 @@ Route::group([
     Route::get('/showUser', [LikeController::class, 'showUser'])->middleware('jwtAuth');
     Route::post('/likeUser', [LikeController::class, 'likeUser'])->middleware('jwtAuth');
     Route::get('/showPairedUser', [LikeController::class, 'showPaired'])->middleware('jwtAuth');
+
+    ///
+    Route::post('/send', [GCM::class, 'send'])->middleware('jwtAuth');
+    Route::post('/storegcmtoken', [GCM::class, 'storegcmtoken'])->middleware('jwtAuth');
+    Route::get('/messages', [GCM::class, 'messages'])->middleware('jwtAuth');
+
+
 
 
 });

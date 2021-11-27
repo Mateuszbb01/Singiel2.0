@@ -116,8 +116,10 @@ class LikeController extends Controller
     {
         $id = Auth::user()->id;
 
-        $users = Like::where('user_id', $id)->where('paired', 1)->get();
-
+        
+        
+        $users = Like::with('prefer')->where('user_id', $id)->where('paired', 1)->get();
+   
   
         if ($users->first()) {
  

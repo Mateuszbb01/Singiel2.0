@@ -14,8 +14,9 @@ class Like extends Model
         return $this->belongsTo(User::class , 'id');
     }
 
+
     public function prefer()
     {
-        return $this->belongsTo(Preferences::class);
+        return $this->belongsTo(Preferences::class, 'user_like_id', 'user_id');
     }
 }
