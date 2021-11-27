@@ -26,13 +26,15 @@ public class MainActivity extends AppCompatActivity {
                 boolean isLoggedIn = infoUser.getBoolean("isLoggedIn", false);
 
                 if (isLoggedIn){
+                    startActivity(new Intent(MainActivity.this, HomeActivity.class));
                     finish();
-                    startActivity(new Intent(MainActivity.this, ChatMessagingActivity.class));
-
+                    //isFirstTime();
 
                 }
+
+
                 else {
-                   isFirstTime();
+                    isFirstTime();
                 }
             }
         } ,1500);
