@@ -18,10 +18,15 @@ import com.google.android.gms.gcm.GcmListenerService;
    public class GCMPushReceiverService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
-        String message = data.getString("message");
+
+        String message = data.getString("body");
         String title = data.getString("title");
-        String id = data.getString("id");
+        String id = data.getString("user_to_id");
+
+
+
         sendNotification(message, title, id);
+
     }
 
     private void sendNotification(String message, String title, String id) {

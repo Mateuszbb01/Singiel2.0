@@ -68,6 +68,7 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_messaging);
         preferences = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
@@ -113,9 +114,11 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
                     //Kiedy otrzymaliśmy powiadomienie, gdy aplikacja jest na pierwszym planie
                 } else if (intent.getAction().equals(Constant.PUSH_NOTIFICATION)) {
                     //Getting message data
-                    String name = intent.getStringExtra("name");
-                    String message = intent.getStringExtra("message");
-                    String id = intent.getStringExtra("id");
+                    String name = intent.getStringExtra("title");
+                    //String message = intent.getStringExtra("message");
+                    String message = "elloooososoos";
+                    String id = "3";
+//                    String id = intent.getStringExtra("id");
 
                     //processing the message to add it in current thread
                     processMessage(name, message, id);
@@ -208,7 +211,14 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
     }
 
 
+//    //Przetwarzanie wiadomości do dodania w wątku
+//    private void processMessage(String name, String message, String id) {
+//        Message m = new Message(Integer.parseInt(id), message, getTimeStamp(), name);
+//        messages.add(m);
+//        scrollToBottom();
+//    }
     //Przetwarzanie wiadomości do dodania w wątku
+
     private void processMessage(String name, String message, String id) {
         Message m = new Message(Integer.parseInt(id), message, getTimeStamp(), name);
         messages.add(m);

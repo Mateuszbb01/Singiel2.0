@@ -56,7 +56,8 @@
         android:layout_marginEnd="50dp"
         android:id="@+id/txtLayoutPasswordSignUp"
         android:hint="HASŁO"
-
+        app:passwordToggleDrawable="@drawable/outline_visibility_24"
+        app:passwordToggleEnabled="true"
         app:startIconDrawable="@drawable/baseline_password_24">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -78,7 +79,8 @@
         android:layout_marginEnd="50dp"
         android:id="@+id/txtLayoutConfirmSignUp"
         android:hint="POTWIERDŹ HASŁO"
-
+        app:passwordToggleDrawable="@drawable/outline_visibility_24"
+        app:passwordToggleEnabled="true"
         app:startIconDrawable="@drawable/baseline_password_24">
 
         <com.google.android.material.textfield.TextInputEditText

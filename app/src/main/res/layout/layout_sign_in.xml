@@ -72,6 +72,8 @@
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="20dp"
             android:hint="@string/haslo"
+            app:passwordToggleDrawable="@drawable/outline_visibility_24"
+            app:passwordToggleEnabled="true"
             app:startIconDrawable="@drawable/baseline_password_24">
 
             <com.google.android.material.textfield.TextInputEditText

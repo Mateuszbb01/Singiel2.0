@@ -330,7 +330,9 @@ public class NfcActivity extends AppCompatActivity {
                             overridePendingTransition(0, 0);
                             return true;
                         case R.id.czat:
-
+                            startActivity(new Intent(getApplicationContext()
+                                    ,ChatMessagingActivity.class));
+                            overridePendingTransition(0, 0);
                             return true;
                         case R.id.home:
                             startActivity(new Intent(getApplicationContext()
