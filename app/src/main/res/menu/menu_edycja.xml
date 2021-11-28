@@ -6,15 +6,21 @@
 
     <item
         android:id="@+id/action_edit"
-        android:icon="@drawable/ic_baseline_library_add_24"
+        android:icon="@drawable/baseline_password_24"
         android:orderInCategory="1"
-        android:title="@string/delete_account_btn"
+        android:title="@string/edit_password"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_delete"
-        android:icon="@drawable/ic_baseline_library_add_24"
+        android:icon="@drawable/outline_delete_forever_24"
         android:orderInCategory="1"
-        android:title="@string/change_passw_btn"
+        android:title="@string/delete_info"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_logout"
+        android:icon="@drawable/outline_logout_24"
+        android:orderInCategory="1"
+        android:title="@string/logout"
         app:showAsAction="ifRoom" />
 
 </menu>

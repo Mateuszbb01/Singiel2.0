@@ -1,12 +1,5 @@
 package com.pwszit.singiel;
 
-import static java.security.AccessController.getContext;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -17,40 +10,35 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-
 import android.util.Base64;
-
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-
-import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -63,7 +51,7 @@ public class EditProfile extends AppCompatActivity {
     private TextView txtNewDescription;
     private TextView txtNewCity;
     private TextView txtGender;
-    SharedPreferences preferences2, userPref, sharedPreferences;
+    SharedPreferences preferences2, userPref;
     private View view;
     private androidx.recyclerview.widget.RecyclerView RecyclerView;
     private ArrayList<ItemModel> arrayList;
@@ -83,7 +71,10 @@ public class EditProfile extends AppCompatActivity {
         addList();
         setContentView(R.layout.activity_edit_profile);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Edycja profilu");
 
+        setSupportActionBar(toolbar);
 
         txtName = findViewById(R.id.txtName);
         txtBirthDate = findViewById(R.id.txtBirthDate);
@@ -111,17 +102,45 @@ public class EditProfile extends AppCompatActivity {
 
 
         //sharedPreferences = getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
-
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.profile);
+        bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
         init();
     }
 
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_edycja, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_edit:
+                startActivity(new Intent(getApplicationContext()
+                        ,EditPassword.class));
+                overridePendingTransition(0, 0);
+                return true;
+            case R.id.action_delete:
+                startActivity(new Intent(getApplicationContext()
+                        ,DeleteAccount.class));
+                overridePendingTransition(0, 0);
+                return true;
+            case R.id.action_logout:
+                logoutUser();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     private void init() {
         dialog = new ProgressDialog(this);
         dialog.setCancelable(false);
 
         btnSaveProfile = findViewById(R.id.btnSaveProfile);
+
+
         userPref = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
 
         imageView = findViewById(R.id.addPhoto);
@@ -140,6 +159,7 @@ public class EditProfile extends AppCompatActivity {
 
             updateProfile();
         });
+
 
     }
 
@@ -257,6 +277,79 @@ public class EditProfile extends AppCompatActivity {
         queue.add(request);
     }
 
+    //////////////////
+    private void logoutUser() {
+        dialog.setMessage("Wylogowywanie");
+        dialog.show();
+        SharedPreferences preferences = getApplication().getSharedPreferences("user", Context.MODE_PRIVATE);
+
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.LOGOUT, response -> {
+            try {
+                JSONObject object = new JSONObject(response);
+                if (object.getBoolean("success")){
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putBoolean("isLoggedIn",false);
+                    editor.apply();
+
+
+                    startActivity(new Intent(EditProfile.this, MainActivity.class));
+                    finish();
+
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            dialog.dismiss();
+        }, error -> {
+            error.printStackTrace();
+            dialog.dismiss();
+        }){
+            //dodanie tokena do naglowka
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                String token = userPref.getString("token","");
+                HashMap<String,String> map = new HashMap<>();
+                map.put("Authorization","Bearer "+token);
+                return map;
+            }
+
+
+        };
+
+        request.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 30000;
+            }
+
+            @Override
+            public int getCurrentRetryCount() {
+                return 1;
+            }
+
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+
+            }
+        });
+
+
+        RequestQueue queue = Volley.newRequestQueue(EditProfile.this);
+        queue.add(request);
+    }
+    ///////////////
+
+
+
+
+
+
+
+
+
+
     private String bitmapToString(Bitmap bitmap) {
         if (bitmap != null) {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -370,7 +463,38 @@ public class EditProfile extends AppCompatActivity {
         return items;
 
     }
+    private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = new
+            BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    Intent intent;
+                    switch (menuItem.getItemId()){
+                        case R.id.share:
+                            startActivity(new Intent(getApplicationContext()
+                                    ,NfcActivity.class));
+                            overridePendingTransition(0, 0);
+                            return true;
+                        case R.id.czat:
+                            startActivity(new Intent(getApplicationContext()
+                                    ,ChatMessagingActivity.class));
+                            overridePendingTransition(0, 0);
+                            return true;
+                        case R.id.home:
+                            startActivity(new Intent(getApplicationContext()
+                                    ,HomeActivity.class));
+                            overridePendingTransition(0, 0);
+                            return true;
+                        case R.id.profile:
+                            startActivity(new Intent(getApplicationContext()
+                                    ,EditProfile.class));
+                            overridePendingTransition(0, 0);
 
+
+                    }
+
+                    return false;
+                }
+            };
 
 
 }

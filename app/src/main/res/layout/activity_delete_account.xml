@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="50dp"
+    android:layout_height="match_parent"
+    android:background="#1A202C"
+    android:gravity="center|top"
+    android:fontFamily="@font/poppins_extralight">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingTop="24dp"
+        android:background="@drawable/grid_background"
+        android:paddingEnd="24dp"
+        android:paddingBottom="16dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center_horizontal"
+            android:text="@string/delete_account_btn"
+            android:textColor="@color/colorBlack"
+            android:textSize="20sp" />
+
+    <!--PHOTO EDIT-->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="3dp"
+        android:gravity="center_horizontal"
+        android:text="@string/delete_password"
+        android:textColor="@color/colorBlack"
+        android:textSize="15sp"
+        android:fontFamily="@font/poppins_light"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="10dp"
+        android:hint="@string/delete_password"
+        android:id="@+id/txtLayoutNameEdit"
+        app:passwordToggleDrawable="@drawable/outline_visibility_24"
+        app:passwordToggleEnabled="true"
+
+        app:startIconDrawable="@drawable/baseline_password_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordHere"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:fontFamily="@font/poppins_extralight"
+            android:textColor="#000000"
+            tools:ignore="DuplicateSpeakableTextCheck" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <!--    -->
+
+    <!-- Data urodzenia  -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="3dp"
+        android:gravity="center_horizontal"
+        android:text="@string/delete_passwordconfirm"
+        android:textColor="@color/colorBlack"
+        android:textSize="15sp"
+        android:fontFamily="@font/poppins_light" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/delete_password"
+        app:passwordToggleDrawable="@drawable/outline_visibility_24"
+        app:passwordToggleEnabled="true"
+        app:startIconDrawable="@drawable/baseline_password_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordConfirmation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:textColor="#000000"
+            tools:ignore="DuplicateSpeakableTextCheck"
+            android:fontFamily="@font/poppins_extralight"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <!--    -->
+
+
+    <Button
+        android:id="@+id/btnDeleteAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_round"
+        android:text="@string/btn_city"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        tools:ignore="TextContrastCheck"
+        android:layout_marginTop="20dp"/>
+
+    </LinearLayout>
+</LinearLayout>

@@ -9,6 +9,8 @@
 
     <string name="zarejestruj_sie">Zarejestruj się</string>
     <string name="zaloguj_sie">zaloguj</string>
+    <string name="logout">Wyloguj</string>
+    <string name="edit_password">Zmień hasło</string>
 
     <string name="potwierdz_haslo">Potweirdź hasło</string>
 
@@ -119,6 +121,8 @@
 
     <string name="confirm_new_password">Potwierdź nowe hasło</string>
 
+    <string name="confirm_old_password">Potwierdź stare hasło</string>
+
     <string name="change_passw_btn">Zmień</string>
     <!-- delete_account layout-->
     <string name="delete_info">Usuń konto</string>
@@ -127,7 +131,7 @@
 
     <string name="delete_passwordconfirm">Potwierdź hasło</string>
 
-    <string name="delete_account_btn">Usuń</string>
+    <string name="delete_account_btn">USUŃ KONTO</string>
 
     <!-- profile layout-->
     <string name="profile_info">Witaj, xyz!</string>
