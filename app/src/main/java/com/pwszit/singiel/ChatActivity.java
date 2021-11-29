@@ -60,6 +60,7 @@ public class ChatActivity extends AppCompatActivity {
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject pairedObject = array.getJSONObject(i);
                         JSONObject preferObject = pairedObject.getJSONObject("prefer");
+                        dataModel = new DataModel();
                             dataModel.setName(preferObject.getString("name"));
                             dataModel.setId(preferObject.getString("id"));
                             dataModel.setPhoto(preferObject.getString("photo"));
@@ -72,7 +73,6 @@ public class ChatActivity extends AppCompatActivity {
                     adapterData = new AdapterData(ChatActivity.this, listData);
                     recyclerView.setAdapter(adapterData);
                     adapterData.notifyDataSetChanged();
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();

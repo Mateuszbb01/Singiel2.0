@@ -28,5 +28,4 @@ public class DataModel {
         this.photo = photo;
     }
 
-
 }

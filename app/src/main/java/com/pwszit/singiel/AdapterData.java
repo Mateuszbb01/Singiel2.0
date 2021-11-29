@@ -61,4 +61,5 @@ public class AdapterData extends RecyclerView.Adapter<AdapterData.HolderData> {
             photo = itemView.findViewById(R.id.photo);
         }
     }
+
 }
