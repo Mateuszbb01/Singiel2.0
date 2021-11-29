@@ -63,13 +63,27 @@
                 <category android:name="com.gnirt69.gcmexample" />
             </intent-filter>
         </receiver> <!-- GCM Receiver Service -->
+
         <service
-            android:name=".GCMPushReceiverService"
-            android:exported="false">
+            android:name=".GCMPushReceiverService">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-        </service> <!-- GCM Registration Intent Service -->
+        </service>
+
+<!--        <service-->
+<!--            android:name=".GCMPushReceiverService"-->
+<!--            android:exported="false">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="com.google.android.c2dm.intent.RECEIVE" />-->
+<!--            </intent-filter>-->
+<!--        </service>-->
+
+
+
+
+
+        <!-- GCM Registration Intent Service -->
         <service
             android:name=".GCMRegistrationIntentService"
             android:exported="false">
