@@ -25,7 +25,7 @@ public class NotificationHandler {
 
 
     //This method would display the notification
-    public void showNotificationMessage(final String title, final String message) {
+    public void showNotificationMessage(final String title, final String body) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext);
         builder.setSmallIcon(R.mipmap.ic_launcher);
         Intent intent = new Intent(mContext, ChatMessagingActivity.class);
@@ -33,7 +33,7 @@ public class NotificationHandler {
         builder.setContentIntent(pendingIntent);
         builder.setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher));
         builder.setContentTitle(title);
-        builder.setContentText(message);
+        builder.setContentText(body);
         builder.setAutoCancel(true);
         NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(mContext.NOTIFICATION_SERVICE);
         notificationManager.notify(Constant.NOTIFICATION_ID, builder.build());
