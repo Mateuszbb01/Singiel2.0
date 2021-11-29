@@ -1,16 +1,16 @@
-package com.pwszit.singiel.Adapters;
+package com.pwszit.singiel;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.pwszit.singiel.DataModel;
-import com.pwszit.singiel.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -24,9 +24,6 @@ public class AdapterData extends RecyclerView.Adapter<AdapterData.HolderData> {
         this.inflater = LayoutInflater.from(context);
     }
 
-
-
-
     @NonNull
     @Override
     public HolderData onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,7 +34,12 @@ public class AdapterData extends RecyclerView.Adapter<AdapterData.HolderData> {
     @Override
     public void onBindViewHolder(@NonNull AdapterData.HolderData holder, int position) {
         holder.name.setText(listData.get(position).getName());
-        holder.photo.setText(listData.get(position).getPhoto());
+        Picasso.get()
+                .load(Constant.URL+"storage/photo/"+ listData.get(position).getPhoto())
+                .fit()
+                .centerCrop()
+                .into(holder.photo);
+      //  holder.photo.setText(listData.get(position).getPhoto());
     }
 
     @Override
@@ -48,14 +50,15 @@ public class AdapterData extends RecyclerView.Adapter<AdapterData.HolderData> {
 
     public class HolderData extends RecyclerView.ViewHolder {
         TextView name;
-        TextView photo;
+        ImageView photo;
 
         public HolderData(@NonNull View itemView) {
             super(itemView);
-            photo = itemView.findViewById(R.id.photo);
+            //photo = itemView.findViewById(R.id.photo);
 
 
             name = itemView.findViewById(R.id.name);
+            photo = itemView.findViewById(R.id.photo);
         }
     }
 }

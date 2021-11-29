@@ -2,7 +2,8 @@ package com.pwszit.singiel;
 
 public class DataModel {
     private String id;
-
+    private String name;
+    private String photo;
     public String getId() {
         return id;
     }
@@ -27,6 +28,5 @@ public class DataModel {
         this.photo = photo;
     }
 
-    private String name;
-    private String photo;
+
 }

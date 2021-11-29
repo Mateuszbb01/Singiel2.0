@@ -15,7 +15,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.pwszit.singiel.Adapters.AdapterData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,15 +55,16 @@ public class ChatActivity extends AppCompatActivity {
                 dataModel = new DataModel();
                 listData = new ArrayList<>();
                 try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    JSONArray jsonArray = jsonObject.getJSONArray("success");
+                    JSONObject object = new JSONObject(response);
+                    JSONArray array = new JSONArray(object.getString("paired"));
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject pairedObject = array.getJSONObject(i);
+                        JSONObject preferObject = pairedObject.getJSONObject("prefer");
+                            dataModel.setName(preferObject.getString("name"));
+                            dataModel.setId(preferObject.getString("id"));
+                            dataModel.setPhoto(preferObject.getString("photo"));
+                            listData.add(dataModel);
 
-                    for (int i=0; i<jsonArray.length(); i++) {
-                        JSONObject data = jsonArray.getJSONObject(i);
-                        dataModel.setName(data.getString("name"));
-                        dataModel.setId(data.getString("id"));
-                        dataModel.setPhoto(data.getString("photo"));
-                        listData.add(dataModel);
                     }
                     linearLayoutManager = new LinearLayoutManager(ChatActivity.this, LinearLayoutManager.VERTICAL, false);
                     recyclerView.setLayoutManager(linearLayoutManager);

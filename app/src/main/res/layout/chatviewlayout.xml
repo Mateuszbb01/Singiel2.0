@@ -23,7 +23,7 @@
             android:layout_toRightOf="@id/cardviewofuser"
             android:text="Użytkownik"
             android:textColor="#0b0b0b"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textStyle="bold">
 
         </TextView>
