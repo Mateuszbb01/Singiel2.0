@@ -1,10 +1,6 @@
 package com.pwszit.singiel.Fragments;
 
 
-/**
- * Created by ABC on 02-09-2016.
- */
-
 
 import android.app.Activity;
 import android.content.Intent;

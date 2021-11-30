@@ -1,9 +1,8 @@
 package com.pwszit.singiel.Fragments;
 
 
-/**
- * Created by ABC on 02-09-2016.
- */public class UsersAllObject {
+
+public class UsersAllObject {
 
     String  id,name,photo;
 
