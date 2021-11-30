@@ -55,7 +55,7 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
-    private SharedPreferences preferences, userpref, userPref2, usertoid, pref;
+    private SharedPreferences preferences,sharedPreferences, userPref2, usertoid, userpref;
 
     //ArrayList messages to store messages
     private ArrayList<Message> messages;
@@ -65,6 +65,7 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
 
     //EditText to send new message
     private EditText editTextMessage;
+    String name, id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,7 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_chat_messaging);
         preferences = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
         userpref = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
+        getAndSetIntentData();
 
         //Wyświetlanie okna dialogowego, gdy czat jest gotowy
         dialog = new ProgressDialog(this);
@@ -142,13 +144,37 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
             startService(itent);
         }
     }
+    void getAndSetIntentData() {
+        if (getIntent().hasExtra("name")
+             && getIntent().hasExtra("id"))
+            //                && getIntent().hasExtra("cena_l") &&
+//                getIntent().hasExtra("koszt") && getIntent().hasExtra("litry"))
+        {
+            //Zbieranie danych z Intent
+            name = getIntent().getStringExtra("name");
+            id = getIntent().getStringExtra("id");
+            sharedPreferences = getSharedPreferences("store_pared", MODE_PRIVATE);
 
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("name", name);
+            editor.putString("id", id);
+            editor.apply();
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @androidx.annotation.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1){
+            recreate();
+        }
+    }
     //Metoda pobierania wszystkich wiadomości z wątku
     private void fetchMessages() {
+        String id2 = getIntent().getStringExtra("id");
         userPref2 = getSharedPreferences("user", MODE_PRIVATE);
         preferences = getSharedPreferences("user", MODE_PRIVATE);
         int userId = preferences.getInt("id", -1);
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.FETCH_MESSAGES,
+        StringRequest request = new StringRequest(Request.Method.POST, Constant.FETCH_MESSAGES,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -184,29 +210,26 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = userPref2.getString("token", "");
-                HashMap<String, String> map = new HashMap<>();
-                map.put("Authorization", "Bearer " + token);
+                String token = userPref2.getString("token","");
+                HashMap<String,String> map = new HashMap<>();
+                map.put("Authorization","Bearer "+token);
                 return map;
             }
+
+            //dodanie parametrow
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map = new HashMap<>();
+                map.put("user_to_id", id);
+
+                return map;
+            }
+
         };
-        request.setRetryPolicy(new RetryPolicy() {
-            @Override
-            public int getCurrentTimeout() {
-                return 30000;
-            }
 
-            @Override
-            public int getCurrentRetryCount() {
-                return 1;
-            }
-
-            @Override
-            public void retry(VolleyError error) throws VolleyError {
-
-            }
-        });
         RequestQueue queue = Volley.newRequestQueue(ChatMessagingActivity.this);
+        queue.getCache().clear();
+
         queue.add(request);
     }
 
@@ -283,7 +306,7 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
                 params.put("id", user_id_string);
                 params.put("message", message);
                 //params.put("name", AppController.getInstance().getUserName());
-                params.put("user_to_id", "3");
+                params.put("user_to_id", id);
                 return params;
             }
         };
