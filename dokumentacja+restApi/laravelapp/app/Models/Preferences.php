@@ -20,4 +20,9 @@ class Preferences extends Model
         return $this->hasMany(Like::class, 'user_id');
     }
 
+    public function preferr()
+    {
+        return $this->hasMany(messages::class);
+    }
+
 }
