@@ -36,6 +36,7 @@ import com.google.firebase.messaging.RemoteMessage;
         //getting the title and the body
         String title = remoteMessage.getNotification().getTitle();
         String body = remoteMessage.getNotification().getBody();
+        String id = remoteMessage.getData().get("id").toString();
 
         //then here we can use the title and body to build a notification
 
@@ -43,9 +44,9 @@ import com.google.firebase.messaging.RemoteMessage;
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("title", title);
         editor.putString("body", body);
-        editor.putString("id", "saa");
+        editor.putString("id", id);
         editor.apply();
-        String id = "3";
+    //    String id = "3";
         sendNotification(body, title, id);
 
 

@@ -32,6 +32,8 @@ public function send(Request $request){
     $pushdata['title'] = $nn;
     //dodanie wiadomości do tablicy
     $pushdata['body'] = $message;
+    $pushid = array();
+    $pushid['id'] = $id;
 
  
     $token = User::where('id', $user_to_id)->pluck('gcmtoken');
@@ -40,10 +42,11 @@ public function send(Request $request){
     if ($db->addMessage( $message, $user_to_id)) {
         //Wysyłanie powiadomień push z obiektem gcm
   
-        $gcm->sendMessage($token, $pushdata);
+        $gcm->sendMessage($token, $pushdata, $pushid);
 
         return response()->json([
             'success' => true,
+           
        //     'token' => $token,
          //   'message' => [$pushdata] //dodałem zeby było w array []
            ]);
@@ -96,7 +99,7 @@ public function messages(Request $request)
     $user_from_id = Auth::user()->id;
     $user_to_id = $request->user_to_id;
 
-    $stmt = messages::with('user')
+    $stmt = messages::with('preferences')
     ->where('user_from_id', $user_from_id)
     ->where('user_to_id', $user_to_id)
     ->orWhere('user_from_id', $user_to_id)

@@ -7,15 +7,13 @@ use Illuminate\Http\Request;
 class gsmController extends Controller
 {
 
-
-
-
     //funkcja wysyłająca wiadomość na podane identyfikatory rejestracji
     //Przekazanie również wiadomości, w tablicy zawierającą wiadomość 
-    public function sendMessage($token, $pushdata) {
+    public function sendMessage($token, $pushdata, $pushid) {
         $fields = array(
             'registration_ids' => $token,
-            'notification' => $pushdata
+            'notification' => $pushdata,
+            'data' => $pushid
         );
         //funkcja wywołująca główną metodę odpowiedzialną za wysyłanie powiadomień push
         return $this->sendPushNotification($fields);

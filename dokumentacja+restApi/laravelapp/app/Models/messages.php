@@ -20,6 +20,11 @@ class messages extends Model
     {
         return $this->belongsTo(User::class , 'id');
     }
+        
+    public function preferences()
+    {
+        return $this->hasMany(Preferences::class , 'user_id', 'user_from_id');
+    }
 
     public $timestamps = false;
 }
