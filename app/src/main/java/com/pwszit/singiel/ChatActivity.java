@@ -1,6 +1,7 @@
 package com.pwszit.singiel;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -47,6 +48,13 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @androidx.annotation.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1){
+            recreate();
+        }
+    }
     private void getData(){
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Constant.SHOW_PAIRED_USER, new Response.Listener<String>() {
@@ -60,7 +68,7 @@ public class ChatActivity extends AppCompatActivity {
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject pairedObject = array.getJSONObject(i);
                         JSONObject preferObject = pairedObject.getJSONObject("prefer");
-                        dataModel = new DataModel();
+                            dataModel = new DataModel();
                             dataModel.setName(preferObject.getString("name"));
                             dataModel.setId(preferObject.getString("id"));
                             dataModel.setPhoto(preferObject.getString("photo"));
@@ -102,7 +110,6 @@ public class ChatActivity extends AppCompatActivity {
 
 
     }
-
 
 
 

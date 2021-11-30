@@ -42,11 +42,7 @@ Route::group([
     ///
     Route::post('/send', [GCM::class, 'send'])->middleware('jwtAuth');
     Route::post('/storegcmtoken', [GCM::class, 'storegcmtoken'])->middleware('jwtAuth');
-    Route::get('/messages', [GCM::class, 'messages'])->middleware('jwtAuth');
-
-
-
-
+    Route::post('/messages', [GCM::class, 'messages'])->middleware('jwtAuth');
 });
 
 
