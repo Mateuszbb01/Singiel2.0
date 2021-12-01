@@ -118,12 +118,16 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
                     //Getting message data
                     String title = intent.getStringExtra("title");
                     String body = intent.getStringExtra("body");
+                    String user_from_id_notification = intent.getStringExtra("id");
                     //String message = "elloooososoos";
-                    String id = "3";
+
+                    if(user_from_id_notification.equals(id)){
+                        processMessage(title, body, user_from_id_notification);
+
+                    }
 //                    String id = intent.getStringExtra("id");
 
                     //processing the message to add it in current thread
-                    processMessage(title, body, id);
                 }
             }
         };
@@ -181,14 +185,18 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
                         dialog.dismiss();
 
                         try {
-                            JSONObject res = new JSONObject(response);
-                            JSONArray thread = res.getJSONArray("Message");
-                            for (int i = 0; i < thread.length(); i++) {
-                                JSONObject obj = thread.getJSONObject(i);
-                                int userId = obj.getInt("user_from_id");
-                                String message = obj.getString("message");
-                                String name = "name";
-                                String sentAt = obj.getString("sentat");
+                            JSONObject object = new JSONObject(response);
+                            JSONArray array = new JSONArray(object.getString("Message"));
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject messageObject = array.getJSONObject(i);
+                                JSONObject preferObject = messageObject.getJSONObject("preferences");
+
+                                int userId = messageObject.getInt("user_from_id");
+                                String message = messageObject.getString("message");
+                                //String name = "name";
+                                String name = preferObject.getString("name");
+
+                                String sentAt = messageObject.getString("sentat");
                                 Message messagObject = new Message(userId, message, sentAt, name);
                                 messages.add(messagObject);
                             }
@@ -259,7 +267,7 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
         preferences = getSharedPreferences("user", MODE_PRIVATE);
         int userId = preferences.getInt("id", -1);
         userpref = getSharedPreferences("vCard", MODE_PRIVATE);
-        String name = preferences.getString("nameV", "");
+        String name = "ja";
         String sentAt = getTimeStamp();
 
         String user_id_string = String.valueOf(userId);

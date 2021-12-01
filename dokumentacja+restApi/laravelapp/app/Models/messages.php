@@ -18,12 +18,12 @@ class messages extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class , 'id');
+        return $this->belongsTo(User::class, 'id');
     }
-        
+
     public function preferences()
     {
-        return $this->hasMany(Preferences::class , 'user_id', 'user_from_id');
+        return $this->hasOne(Preferences::class, 'user_id', 'user_from_id');
     }
 
     public $timestamps = false;
