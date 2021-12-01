@@ -24,5 +24,4 @@ class Preferences extends Model
     {
         return $this->hasMany(messages::class);
     }
-
 }

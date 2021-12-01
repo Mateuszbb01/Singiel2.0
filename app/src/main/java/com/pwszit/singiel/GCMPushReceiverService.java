@@ -36,7 +36,7 @@ import com.google.firebase.messaging.RemoteMessage;
         //getting the title and the body
         String title = remoteMessage.getNotification().getTitle();
         String body = remoteMessage.getNotification().getBody();
-        String id = remoteMessage.getData().get("id").toString();
+        String id = remoteMessage.getData().get("id");
 
         //then here we can use the title and body to build a notification
 

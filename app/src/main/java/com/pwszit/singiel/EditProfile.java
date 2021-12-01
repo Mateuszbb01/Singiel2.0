@@ -476,7 +476,7 @@ public class EditProfile extends AppCompatActivity {
                             return true;
                         case R.id.czat:
                             startActivity(new Intent(getApplicationContext()
-                                    ,ChatMessagingActivity.class));
+                                    ,ChatActivity.class));
                             overridePendingTransition(0, 0);
                             return true;
                         case R.id.home:
