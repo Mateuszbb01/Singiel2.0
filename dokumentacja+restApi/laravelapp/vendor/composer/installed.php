@@ -19,6 +19,15 @@
             'reference' => '9cb795bf30988e8c96dd3c40623c48a877bc6714',
             'dev_requirement' => false,
         ),
+        'behat/transliterator' => array(
+            'pretty_version' => 'v1.3.0',
+            'version' => '1.3.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../behat/transliterator',
+            'aliases' => array(),
+            'reference' => '3c4ec1d77c3d05caa1f0bf8fb3aae4845005c7fc',
+            'dev_requirement' => false,
+        ),
         'brick/math' => array(
             'pretty_version' => '0.9.3',
             'version' => '0.9.3.0',
@@ -378,6 +387,17 @@
             'replaced' => array(
                 0 => 'v8.72.0',
             ),
+        ),
+        'jeroendesloovere/vcard' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../jeroendesloovere/vcard',
+            'aliases' => array(
+                0 => '9999999-dev',
+            ),
+            'reference' => '2b8b6190c613d368b8cb6552e59cf6e6e7d0aea9',
+            'dev_requirement' => false,
         ),
         'kodova/hamcrest-php' => array(
             'dev_requirement' => true,

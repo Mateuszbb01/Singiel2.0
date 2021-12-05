@@ -62,6 +62,7 @@ public class HomeActivity extends AppCompatActivity {
         mTextViewResult = findViewById(R.id.textView);
         userPref = getSharedPreferences("user", MODE_PRIVATE);
         CardStackView cardStackView = findViewById(R.id.card_stack_view);
+
         manager = new CardStackLayoutManager(this, new CardStackListener() {
             @Override
             public void onCardDragging(Direction direction, float ratio) {
@@ -381,6 +382,7 @@ public class HomeActivity extends AppCompatActivity {
                             startActivity(new Intent(getApplicationContext()
                                     ,EditProfile.class));
                             overridePendingTransition(0, 0);
+                            return true;
 
 
                     }

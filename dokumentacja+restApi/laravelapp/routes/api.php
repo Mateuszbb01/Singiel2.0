@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GCM;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PreferencesController;
+use App\Http\Controllers\VcardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,7 @@ Route::group([
     Route::get('/preferences/mypreferences', [PreferencesController::class, 'mypreferences'])->middleware('jwtAuth');
     Route::post('/preferences/create', [PreferencesController::class, 'create'])->middleware('jwtAuth');
     Route::post('/preferences/mypreferences/update', [PreferencesController::class, 'updatePreferences'])->middleware('jwtAuth');
+    Route::post('/preferences/mypreferences/update-vcard', [PreferencesController::class, 'updateVcard'])->middleware('jwtAuth');
 
     Route::get('/showUser', [LikeController::class, 'showUser'])->middleware('jwtAuth');
     Route::post('/likeUser', [LikeController::class, 'likeUser'])->middleware('jwtAuth');
@@ -41,8 +43,10 @@ Route::group([
 
     ///
     Route::post('/send', [GCM::class, 'send'])->middleware('jwtAuth');
+    Route::post('/send-vcard', [GCM::class, 'sendVcard'])->middleware('jwtAuth');
     Route::post('/storegcmtoken', [GCM::class, 'storegcmtoken'])->middleware('jwtAuth');
     Route::post('/messages', [GCM::class, 'messages'])->middleware('jwtAuth');
+    Route::get('/dsds', [VcardController::class, 'create']);
 });
 
 

@@ -33,8 +33,8 @@ class GCM extends Controller
         $pushdata['title'] = $nn;
         //dodanie wiadomości do tablicy
         $pushdata['body'] = $message;
-        $pushid = array();
-        $pushid['id'] = $id;
+        //$pushid = array();
+        $pushdata['id'] = $id;
 
 
         $token = User::where('id', $user_to_id)->pluck('gcmtoken');
@@ -43,7 +43,7 @@ class GCM extends Controller
         if ($db->addMessage($message, $user_to_id)) {
             //Wysyłanie powiadomień push z obiektem gcm
 
-            $gcm->sendMessage($token, $pushdata, $pushid);
+            $gcm->sendMessage($token, $pushdata);
 
             return response()->json([
                 'success' => true,
@@ -61,6 +61,52 @@ class GCM extends Controller
         //     'success' => true,
         //     'tokena1' => [$response] //dodałem zeby było w array []
         //    ]);
+    }
+
+    public function sendVcard(Request $request)
+    {
+
+        $id = Auth::user()->id;
+        $user_to_id = $request->user_to_id;
+
+        $gcm = new gsmController();
+
+        $preferences = Preferences::where('user_id', $id)->firstOrFail();
+
+        $vard_path = $preferences->vcard;
+        $name = $preferences->name;
+        $fullpath = 'http://192.168.1.70:8080/storage/photo/' . $vard_path;
+
+
+        //Tworzenie tablicy zawierającej dane wiadomości
+        $pushdata = array();
+        //dodanie tytułu do wiadomości
+        $pushdata['title'] = $name;
+        //dodanie wiadomości do tablicy
+        $pushdata['body'] = "Kliknij, aby dodać nowy kontakt";
+        $pushdata['url'] = $fullpath;
+
+
+        $token = User::where('id', $user_to_id)->pluck('gcmtoken');
+        //echo $token;
+        //poprawnie dodanie do bazy
+
+
+        $gcm->sendMessage($token, $pushdata);
+
+        return response()->json([
+            'success' => true,
+
+            //     'token' => $token,
+            //   'message' => [$pushdata] //dodałem zeby było w array []
+        ]);
+
+
+        //  return response()->json([
+        //     'success' => true,
+        //     'tokena1' => [$response] //dodałem zeby było w array []
+        //    ]);
+
     }
 
 
