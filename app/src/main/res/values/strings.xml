@@ -12,8 +12,6 @@
     <string name="logout">Wyloguj</string>
     <string name="edit_password">Zmień hasło</string>
 
-    <string name="send_via_nfc">Zapisz na tagu NFC</string>
-
     <string name="potwierdz_haslo">Potweirdź hasło</string>
 
     <string name="haslo">Hasło</string>

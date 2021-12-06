@@ -1,8 +1,6 @@
 package com.pwszit.singiel;
 
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,8 +13,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -27,24 +23,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.RetryPolicy;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import net.glxn.qrgen.android.QRCode;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import it.auron.library.vcard.VCard;
 import it.auron.library.vcard.VCardParser;
@@ -54,28 +36,22 @@ public class NfcActivity extends AppCompatActivity {
     private NfcAdapter mNfcAdapter;
     private PendingIntent mPendingIntent;
 
-
+    private EditText et_name;
+    private EditText et_company;
+    private EditText et_address;
     private EditText et_phone;
     private EditText et_email;
-    private EditText et_insta;
-    private EditText et_facebook;
-    private EditText et_tiktok;
+    private EditText et_website;
 
     private String name;
     private String company;
     private String address;
     private String phone;
     private String email;
-    private String insta;
-    private String facebook;
-    private String tiktok;
-    private String idUser;
+    private String website;
     private ImageView imageView;
-    SharedPreferences  userPref, userIdPref;
-    private ProgressDialog dialog;
 
-
-    SharedPreferences preferences2,sharedPreferences;
+    SharedPreferences sharedPreferences;
 
     private StringBuilder stringBuilder = new StringBuilder();
     private AlertDialog writeDataDialog;
@@ -84,58 +60,49 @@ public class NfcActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc);
-        userPref = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
-        dialog = new ProgressDialog(this);
-        dialog.setCancelable(false);
+
+        et_name = findViewById(R.id.et_name);
+        et_company = findViewById(R.id.et_company);
+        et_address = findViewById(R.id.et_address);
         et_phone = findViewById(R.id.et_phone);
         et_email = findViewById(R.id.et_email);
-        et_insta = findViewById(R.id.et_insta);
-        et_facebook = findViewById(R.id.et_facebook);
-        et_tiktok = findViewById(R.id.et_tiktok);
-        //Button btn = findViewById(R.id.btn);
-        Button btnSave = findViewById(R.id.btnSaveIt);
+        et_website = findViewById(R.id.et_website);
+        Button btn = findViewById(R.id.btn);
         imageView = findViewById(R.id.qrcod3e);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Dane kontaktowe");
-
-        setSupportActionBar(toolbar);
 
         sharedPreferences = getSharedPreferences("vCard", MODE_PRIVATE);
+        String nameV = sharedPreferences.getString("nameV", "");
         String phoneV = sharedPreferences.getString("phoneV", "");
-        String mailV = sharedPreferences.getString("mailV", "");
-        String instaV = sharedPreferences.getString("instaV", "");
-        String facebookV = sharedPreferences.getString("facebookV", "");
-        String tiktokV = sharedPreferences.getString("tiktokV", "");
-        userIdPref = getSharedPreferences("user", MODE_PRIVATE);
-        int userId = userIdPref.getInt("id", -1);
-        String user_id_string = String.valueOf(userId);
+        String emailV = sharedPreferences.getString("emailV", "");
+        String addressV = sharedPreferences.getString("addressV", "");
+        String companyV = sharedPreferences.getString("companyV", "");
+        String websiteV = sharedPreferences.getString("websiteV", "");
 
-
+        et_name.setText(nameV);
+        et_company.setText(companyV);
+        et_address.setText(addressV);
         et_phone.setText(phoneV);
-        et_email.setText(mailV);
-        et_insta.setText(instaV);
-        et_facebook.setText(facebookV);
-        et_tiktok.setText(tiktokV);
+        et_email.setText(emailV);
+        et_website.setText(websiteV);
 
 
 
         stringBuilder.setLength(0);
         stringBuilder.append("BEGIN:VCARD\n")
                 .append("VERSION:3.0\n")
-               // .append("FN:").append(nameV).append("\n")
+                .append("FN:").append(nameV).append("\n")
                 .append("TEL;TYPE=CELL:").append(phoneV).append("\n")
-                .append("EMAIL;TYPE=HOME,INTERNET:").append(mailV).append("\n")
-               // .append("ADR;TYPE=HOME:;;").append(addressV).append(";;;;\n")
-                //.append("ORG:").append(companyV).append("\n")
-                .append("URL:https://www.instagram.com/").append(instaV).append("\n")
-//                .append("URL:").append(facebookV).append("\n")
-//                .append("URL:").append(tiktokV).append("\n")
+                .append("EMAIL;TYPE=HOME,INTERNET:").append(emailV).append("\n")
+                .append("ADR;TYPE=HOME:;;").append(addressV).append(";;;;\n")
+                .append("ORG:").append(companyV).append("\n")
+                .append("URL:").append(websiteV).append("\n")
                 .append("END:VCARD");
+
         VCard vCard = VCardParser.parse(stringBuilder.toString());
-        //vCard.setAddress(addressV);
+        vCard.setAddress(addressV);
         vCard.addTelephone(phoneV);
-        vCard.addEmail(mailV);
+        vCard.addEmail(emailV);
         String vCardcontent = vCard.buildString();
 
         imageView.setImageBitmap(QRCode.from(vCardcontent).withSize(250, 250).bitmap());
@@ -143,168 +110,71 @@ public class NfcActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.share);
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
-        btnSave.setOnClickListener(new View.OnClickListener() {
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 
-
-                //name = et_name.getText().toString().trim();
-                //company = et_company.getText().toString().trim();
-                //address = et_address.getText().toString().trim();
+                name = et_name.getText().toString().trim();
+                company = et_company.getText().toString().trim();
+                address = et_address.getText().toString().trim();
                 phone = et_phone.getText().toString().trim();
                 email = et_email.getText().toString().trim();
-                insta = et_insta.getText().toString().trim();
-                facebook = et_facebook.getText().toString().trim();
-                tiktok = et_tiktok.getText().toString().trim();
+                website = et_website.getText().toString().trim();
 
-                if (TextUtils.isEmpty(email)) {
-                    email = "brak";
-                }
-                if (TextUtils.isEmpty(insta)) {
-                    insta = "brak";
-                }
-                if (TextUtils.isEmpty(facebook)) {
-                    facebook = "brak";
-                }
-                if (TextUtils.isEmpty(tiktok)) {
-                    tiktok = "brak";
-                }
-
-
-                if (TextUtils.isEmpty(phone)) {
+                if (TextUtils.isEmpty(name) || TextUtils.isEmpty(phone)) {
                     dataLack();
                     return;
-                }else{
-                    dialog.setMessage("Aktualizacja danych kontaktowych");
-                    dialog.show();
-
-                    stringBuilder.append("BEGIN:VCARD\n")
-                            .append("VERSION:3.0\n")
-                            // .append("FN:").append(nameV).append("\n")
-                            .append("TEL;TYPE=CELL:").append(phone).append("\n")
-                            .append("EMAIL;TYPE=HOME,INTERNET:").append(email).append("\n")
-                            // .append("ADR;TYPE=HOME:;;").append(addressV).append(";;;;\n")
-                            //.append("ORG:").append(companyV).append("\n")
-                            .append("URL:https://www.instagram.com/").append(insta).append("\n")
-//                            .append("item1.URL:").append(insta).append("\n")
-//                            .append("item1.X-ABLabel:Instagram").append("\n")
-//                            .append("URL:").append(facebook).append("\n")
-//                            .append("URL:").append(tiktok).append("\n")
-                            .append("END:VCARD");
-
-
-                    VCard vCard = VCardParser.parse(stringBuilder.toString());
-                    //vCard.setAddress(address);
-                    vCard.addTelephone(phone);
-                    vCard.addEmail(email);
-                    String vCardcontent = vCard.buildString();
-
-                    imageView.setImageBitmap(QRCode.from(vCardcontent).withSize(250, 250).bitmap());
-
-                    sharedPreferences = getSharedPreferences("vCard", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-
-
-
-                    editor.putString("useridV", user_id_string);
-                    editor.putString("phoneV", phone);
-                    editor.putString("mailV", email);
-                    editor.putString("instaV", insta);
-                    editor.putString("facebookV", facebook);
-                    editor.putString("tiktokV", tiktok);
-
-                    editor.apply();
-
-                    StringRequest request = new StringRequest(Request.Method.POST, Constant.VCARD, response -> {
-                        try {
-                            JSONObject object = new JSONObject(response);
-                            if (object.getBoolean("success")){
-                                dialog.dismiss();
-                                Toast.makeText(NfcActivity.this, "Zauktalizowano dane kontaktowe", Toast.LENGTH_SHORT).show();
-                                return;
-
-
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        dialog.dismiss();
-
-                    }, error -> {
-                        error.printStackTrace();
-                        dialog.dismiss();
-
-                    }){
-                        //dodanie tokena do naglowka
-
-                        @Override
-                        public Map<String, String> getHeaders() throws AuthFailureError {
-                            String token = userPref.getString("token","");
-                            HashMap<String,String> map = new HashMap<>();
-                            map.put("Authorization","Bearer "+token);
-                            return map;
-                        }
-
-                        //dodanie parametrow
-
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            HashMap<String,String> map = new HashMap<>();
-                            map.put("phone_no",phone);
-                            map.put("mail",email);
-                            map.put("address",insta);
-                            map.put("company",facebook);
-                            map.put("website",tiktok);
-
-                            return map;
-                        }
-                    };
-
-                    request.setRetryPolicy(new RetryPolicy() {
-                        @Override
-                        public int getCurrentTimeout() {
-                            return 30000;
-                        }
-
-                        @Override
-                        public int getCurrentRetryCount() {
-                            return 1;
-                        }
-
-                        @Override
-                        public void retry(VolleyError error) throws VolleyError {
-
-                        }
-                    });
-
-
-                    RequestQueue queue = Volley.newRequestQueue(NfcActivity.this);
-                    queue.add(request);
-
                 }
 
+                if (mNfcAdapter != null && !mNfcAdapter.isEnabled()) {
+                    hintOpenNfc();
+                    return;
+                }
 
+                stringBuilder.setLength(0);
+                stringBuilder.append("BEGIN:VCARD\n")
+                        .append("VERSION:3.0\n")
+                        .append("FN:").append(name).append("\n")
+                        .append("TEL;TYPE=CELL:").append(phone).append("\n")
+                        .append("EMAIL;TYPE=HOME,INTERNET:").append(email).append("\n")
+                        .append("ADR;TYPE=HOME:;;").append(address).append(";;;;\n")
+                        .append("ORG:").append(company).append("\n")
+                        .append("URL:").append(website).append("\n")
+                        .append("END:VCARD");
+
+                writeData();
+
+                VCard vCard = VCardParser.parse(stringBuilder.toString());
+                vCard.setAddress(address);
+                vCard.addTelephone(phone);
+                vCard.addEmail(email);
+                String vCardcontent = vCard.buildString();
+
+                imageView.setImageBitmap(QRCode.from(vCardcontent).withSize(250, 250).bitmap());
+
+                sharedPreferences = getSharedPreferences("vCard", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("nameV", name);
+                editor.putString("phoneV", phone);
+                editor.putString("emailV", email);
+                editor.putString("addressV", address);
+                editor.putString("companyV", company);
+                editor.putString("websiteV", website);
+                editor.apply();
             }
         });
-
 
         mPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()), 0);
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-
-    }
-    public void send_via_nfc(){
         if (mNfcAdapter == null) {
            nonSupport();
-        }else {
-
-            description();
-
-
         }
+
+        description();
     }
+
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
@@ -349,60 +219,6 @@ public class NfcActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         if (mNfcAdapter != null && !mNfcAdapter.isEnabled()) {
                             hintOpenNfc();
-                        }
-                        else{
-
-                            phone = et_phone.getText().toString().trim();
-                            email = et_email.getText().toString().trim();
-                            insta = et_insta.getText().toString().trim();
-                            facebook = et_facebook.getText().toString().trim();
-                            tiktok = et_tiktok.getText().toString().trim();
-
-                            if (TextUtils.isEmpty(phone)) {
-                                dataLack();
-                                return;
-                            }
-
-                            if (mNfcAdapter != null && !mNfcAdapter.isEnabled()) {
-                                hintOpenNfc();
-                                return;
-                            }
-
-                            stringBuilder.setLength(0);
-                            stringBuilder.append("BEGIN:VCARD\n")
-                                    .append("VERSION:3.0\n")
-                                    // .append("FN:").append(nameV).append("\n")
-                                    .append("TEL;TYPE=CELL:").append(phone).append("\n")
-                                    //.append("EMAIL;TYPE=HOME,INTERNET:").append(email).append("\n")
-                                    // .append("ADR;TYPE=HOME:;;").append(addressV).append(";;;;\n")
-                                    //.append("ORG:").append(companyV).append("\n")
-                                    .append("URL:IG|").append(insta).append("\n")
-                                    .append("URL:FB|").append(facebook).append("\n")
-                                    .append("URL:TikTok|").append(tiktok).append("\n")
-                                    .append("END:VCARD");
-
-
-                            VCard vCard = VCardParser.parse(stringBuilder.toString());
-                            //vCard.setAddress(address);
-                            vCard.addTelephone(phone);
-                            vCard.addEmail(email);
-                            String vCardcontent = vCard.buildString();
-
-                            writeData();
-
-
-                            imageView.setImageBitmap(QRCode.from(vCardcontent).withSize(250, 250).bitmap());
-
-                            sharedPreferences = getSharedPreferences("vCard", MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("phoneV", phone);
-                            editor.putString("mailV", email);
-                            editor.putString("instaV", insta);
-                            editor.putString("facebookV", facebook);
-                            editor.putString("tiktokV", tiktok);
-                            preferences2 = getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
-
-                            editor.apply();
                         }
                     }
                 }).create();
@@ -491,7 +307,7 @@ public class NfcActivity extends AppCompatActivity {
         AlertDialog dataLackDialog = new AlertDialog.Builder(this)
                 .setTitle("Info")
                 .setMessage("\n" +
-                        "Musisz podać numer telefonu")
+                        "Musisz podać przynajmniej imię i numer telefonu")
                 .setCancelable(false)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
@@ -534,20 +350,5 @@ public class NfcActivity extends AppCompatActivity {
                     return false;
                 }
             };
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_nfc, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
 
-            case R.id.action_send_nfc:
-                send_via_nfc();
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 }

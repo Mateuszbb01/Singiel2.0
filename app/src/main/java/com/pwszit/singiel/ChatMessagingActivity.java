@@ -3,12 +3,10 @@ package com.pwszit.singiel;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -16,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,6 +28,8 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 
 
 public class ChatMessagingActivity extends AppCompatActivity implements View.OnClickListener {
@@ -55,13 +55,13 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
-    private SharedPreferences preferences,sharedPreferences, userPref2, usertoid, userpref, userpref2;
+    private SharedPreferences preferences,sharedPreferences, userPref2, usertoid, userpref;
 
     //ArrayList messages to store messages
     private ArrayList<Message> messages;
 
     //Button to send new message
-    private Button buttonSend, sendVCard;
+    private Button buttonSend;
 
     //EditText to send new message
     private EditText editTextMessage;
@@ -74,7 +74,6 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_chat_messaging);
         preferences = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
         userpref = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
-        userpref2 = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
         getAndSetIntentData();
 
         //Wyświetlanie okna dialogowego, gdy czat jest gotowy
@@ -96,7 +95,6 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
 
         //initializing button and edittext
         buttonSend = (Button) findViewById(R.id.buttonSend);
-        sendVCard = (Button) findViewById(R.id.sendVCard);
         editTextMessage = (EditText) findViewById(R.id.editTextMessage);
 
         //Adding listener to button
@@ -135,124 +133,20 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
         };
 
         // jeśli usługa Google Play nie znajduje się w aplikacji urządzenia, nie będzie działać
-//        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
-//
-//        if (ConnectionResult.SUCCESS != resultCode) {
-//            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-//                Toast.makeText(getApplicationContext(), "Google Play Service is not install/enabled in this device!", Toast.LENGTH_LONG).show();
-//                GooglePlayServicesUtil.showErrorNotification(resultCode, getApplicationContext());
-//
-//            } else {
-//                Toast.makeText(getApplicationContext(), "This device does not support for Google Play Service!", Toast.LENGTH_LONG).show();
-//            }
-//        } else {
-//            Intent itent = new Intent(this, GCMRegistrationIntentService.class);
-//            startService(itent);
-//        }
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
 
-        sendVCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                preferences = getSharedPreferences("vCard", MODE_PRIVATE);
-                String user_id_vcard = preferences.getString("useridV", "");
+        if (ConnectionResult.SUCCESS != resultCode) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                Toast.makeText(getApplicationContext(), "Google Play Service is not install/enabled in this device!", Toast.LENGTH_LONG).show();
+                GooglePlayServicesUtil.showErrorNotification(resultCode, getApplicationContext());
 
-                //String user_id_string = String.valueOf(user_id_vcard);
-
-                preferences = getSharedPreferences("user", MODE_PRIVATE);
-                int user_logged_id = preferences.getInt("id", -1);
-                String user_logged_string = String.valueOf(user_logged_id);
-                if (TextUtils.isEmpty(user_id_vcard)) {
-                    user_id_vcard = "brak";
-                }
-                if (user_id_vcard.equals(user_logged_string)) {
-
-
-                    dialog.setMessage("Wysyłanie kontaktu");
-                    dialog.show();
-
-
-                    StringRequest request = new StringRequest(Request.Method.POST, Constant.SEND_VCARD, response -> {
-                        try {
-                            JSONObject object = new JSONObject(response);
-                            if (object.getBoolean("success")) {
-
-
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        dialog.dismiss();
-
-                    }, error -> {
-                        error.printStackTrace();
-                        dialog.dismiss();
-
-                    }) {
-                        //dodanie tokena do naglowka
-
-                        @Override
-                        public Map<String, String> getHeaders() throws AuthFailureError {
-                            String token = userpref2.getString("token", "");
-                            HashMap<String, String> map = new HashMap<>();
-                            map.put("Authorization", "Bearer " + token);
-                            return map;
-                        }
-
-                        //dodanie parametrow
-
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            HashMap<String, String> map = new HashMap<>();
-                            map.put("user_to_id", id);
-
-                            return map;
-                        }
-                    };
-
-                    request.setRetryPolicy(new RetryPolicy() {
-                        @Override
-                        public int getCurrentTimeout() {
-                            return 30000;
-                        }
-
-                        @Override
-                        public int getCurrentRetryCount() {
-                            return 1;
-                        }
-
-                        @Override
-                        public void retry(VolleyError error) throws VolleyError {
-
-                        }
-                    });
-
-
-                    RequestQueue queue = Volley.newRequestQueue(ChatMessagingActivity.this);
-                    queue.add(request);
-
-                } else
-                {
-                    AlertDialog descriptionDialog = new AlertDialog.Builder(ChatMessagingActivity.this)
-                            .setTitle("Info")
-                            .setMessage("Musisz podać swoje dane kontaktowe")
-                            .setCancelable(false)
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    startActivity(new Intent(getApplicationContext()
-                                            , NfcActivity.class));
-                                }
-                            }).create();
-
-                    descriptionDialog.show();
-                }
-
-
-
+            } else {
+                Toast.makeText(getApplicationContext(), "This device does not support for Google Play Service!", Toast.LENGTH_LONG).show();
             }
-        });
-
+        } else {
+            Intent itent = new Intent(this, GCMRegistrationIntentService.class);
+            startService(itent);
+        }
     }
     void getAndSetIntentData() {
         if (getIntent().hasExtra("name")
@@ -372,12 +266,11 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
 
         preferences = getSharedPreferences("user", MODE_PRIVATE);
         int userId = preferences.getInt("id", -1);
-        String user_id_string = String.valueOf(userId);
         userpref = getSharedPreferences("vCard", MODE_PRIVATE);
         String name = "ja";
         String sentAt = getTimeStamp();
 
-
+        String user_id_string = String.valueOf(userId);
 
 // zapis do bazy wiadomosci
         usertoid = getSharedPreferences("usertoid", MODE_PRIVATE);
