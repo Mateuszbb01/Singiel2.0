@@ -14,6 +14,24 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.AlgorithmParameterSpec;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.PBEParameterSpec;
+
 //import android.support.v4.content.LocalBroadcastManager;
 //import android.support.v4.app.NotificationCompat;
 //import net.simplifiedcoding.simplifiedcodingchat.R;
@@ -25,9 +43,71 @@ import com.google.firebase.messaging.RemoteMessage;
 //public class GCMPushReceiverService extends GCMTokenRefreshListenerService
    public class GCMPushReceiverService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMsgService";
-
+    Cipher ecipher;
+    Cipher dcipher;
+    // 8-byte Salt
+    byte[] salt = {
+            (byte) 0xA9, (byte) 0x9B, (byte) 0xC8, (byte) 0x32,
+            (byte) 0x56, (byte) 0x35, (byte) 0xE3, (byte) 0x03
+    };
     SharedPreferences sharedPreferences;
+    int iterationCount = 19;
 
+    public String encrypt(String secretKey, String plainText)
+            throws NoSuchAlgorithmException,
+            InvalidKeySpecException,
+            NoSuchPaddingException,
+            InvalidKeyException,
+            InvalidAlgorithmParameterException,
+            UnsupportedEncodingException,
+            IllegalBlockSizeException,
+            BadPaddingException {
+        //Key generation for enc and desc
+        KeySpec keySpec = new PBEKeySpec(secretKey.toCharArray(), salt, iterationCount);
+        SecretKey key = SecretKeyFactory.getInstance("PBEWithMD5AndDES").generateSecret(keySpec);
+        // Prepare the parameter to the ciphers
+        AlgorithmParameterSpec paramSpec = new PBEParameterSpec(salt, iterationCount);
+
+        //Enc process
+        ecipher = Cipher.getInstance(key.getAlgorithm());
+        ecipher.init(Cipher.ENCRYPT_MODE, key, paramSpec);
+        String charSet="UTF-8";
+        byte[] in = plainText.getBytes(charSet);
+        byte[] out = ecipher.doFinal(in);
+        String encStr=new BASE64Encoder().encode(out);
+        return encStr;
+    }
+    /**
+     * @param secretKey Key used to decrypt data
+     * @param encryptedText encrypted text input to decrypt
+     * @return Returns plain text after decryption
+     */
+    public String decrypt (String secretKey, String encryptedText)
+            throws NoSuchAlgorithmException,
+            InvalidKeySpecException,
+            NoSuchPaddingException,
+            InvalidKeyException,
+            InvalidAlgorithmParameterException,
+            UnsupportedEncodingException,
+            IllegalBlockSizeException,
+            BadPaddingException,
+            IOException
+
+    {
+        //Key generation for enc and desc
+        KeySpec keySpec = new PBEKeySpec(secretKey.toCharArray(), salt, iterationCount);
+        SecretKey key = SecretKeyFactory.getInstance("PBEWithMD5AndDES").generateSecret(keySpec);
+        // Prepare the parameter to the ciphers
+        AlgorithmParameterSpec paramSpec = new PBEParameterSpec(salt, iterationCount);
+        //Decryption process; same key will be used for decr
+        dcipher=Cipher.getInstance(key.getAlgorithm());
+        dcipher.init(Cipher.DECRYPT_MODE, key,paramSpec);
+        byte[] enc = new BASE64Decoder().decodeBuffer(encryptedText);
+        byte[] utf8 =dcipher.doFinal(enc);
+        String charSet="UTF-8";
+        String plainStr = new String(utf8, charSet);
+        return plainStr;
+    }
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage){
         super.onMessageReceived(remoteMessage);
@@ -41,9 +121,30 @@ import com.google.firebase.messaging.RemoteMessage;
 
         //getting the title and the body
         String title = remoteMessage.getData().get("title");
-        String body = remoteMessage.getData().get("body");
+        //String message = remoteMessage.getData().get("body");
         String uri = remoteMessage.getData().get("url");
         String id = remoteMessage.getData().get("id");
+        String body = null;
+
+        try {
+            body = decrypt("ciezkiemaslo", remoteMessage.getData().get("body"));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         //then here we can use the title and body to build a notification
 
