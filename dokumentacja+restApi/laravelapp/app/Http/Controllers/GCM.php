@@ -83,7 +83,7 @@ class GCM extends Controller
         //dodanie tytułu do wiadomości
         $pushdata['title'] = $name;
         //dodanie wiadomości do tablicy
-        $pushdata['body'] = "Kliknij, aby dodać nowy kontakt";
+        $pushdata['body'] = "eRjpvF+lNNqxJ2wwxFWNYEvaP1quaA47LUhU9WZQDKz6y29xiZb5+g==";
         $pushdata['url'] = $fullpath;
 
 
