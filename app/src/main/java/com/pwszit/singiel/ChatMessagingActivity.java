@@ -35,12 +35,28 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.AlgorithmParameterSpec;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.PBEParameterSpec;
 
 
 public class ChatMessagingActivity extends AppCompatActivity implements View.OnClickListener {
@@ -48,6 +64,14 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
     //Broadcast receiver to receive broadcasts
     private BroadcastReceiver mRegistrationBroadcastReceiver;
 
+    //Recyclerview objects
+    Cipher ecipher;
+    Cipher dcipher;
+    // 8-byte Salt
+    byte[] salt = {
+            (byte) 0xA9, (byte) 0x9B, (byte) 0xC8, (byte) 0x32,
+            (byte) 0x56, (byte) 0x35, (byte) 0xE3, (byte) 0x03
+    };
     //Progress dialog
     private ProgressDialog dialog;
 
@@ -66,6 +90,67 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
     //EditText to send new message
     private EditText editTextMessage;
     String name, id;
+
+    // Iteration count
+    int iterationCount = 19;
+
+    public String encrypt(String secretKey, String plainText)
+            throws NoSuchAlgorithmException,
+            InvalidKeySpecException,
+            NoSuchPaddingException,
+            InvalidKeyException,
+            InvalidAlgorithmParameterException,
+            UnsupportedEncodingException,
+            IllegalBlockSizeException,
+            BadPaddingException {
+        //Key generation for enc and desc
+        KeySpec keySpec = new PBEKeySpec(secretKey.toCharArray(), salt, iterationCount);
+        SecretKey key = SecretKeyFactory.getInstance("PBEWithMD5AndDES").generateSecret(keySpec);
+        // Prepare the parameter to the ciphers
+        AlgorithmParameterSpec paramSpec = new PBEParameterSpec(salt, iterationCount);
+
+        //Enc process
+        ecipher = Cipher.getInstance(key.getAlgorithm());
+        ecipher.init(Cipher.ENCRYPT_MODE, key, paramSpec);
+        String charSet="UTF-8";
+        byte[] in = plainText.getBytes(charSet);
+        byte[] out = ecipher.doFinal(in);
+        String encStr=new BASE64Encoder().encode(out);
+        return encStr;
+    }
+    /**
+     * @param secretKey Key used to decrypt data
+     * @param encryptedText encrypted text input to decrypt
+     * @return Returns plain text after decryption
+     */
+    public String decrypt (String secretKey, String encryptedText)
+            throws NoSuchAlgorithmException,
+            InvalidKeySpecException,
+            NoSuchPaddingException,
+            InvalidKeyException,
+            InvalidAlgorithmParameterException,
+            UnsupportedEncodingException,
+            IllegalBlockSizeException,
+            BadPaddingException,
+            IOException
+
+    {
+        //Key generation for enc and desc
+        KeySpec keySpec = new PBEKeySpec(secretKey.toCharArray(), salt, iterationCount);
+        SecretKey key = SecretKeyFactory.getInstance("PBEWithMD5AndDES").generateSecret(keySpec);
+        // Prepare the parameter to the ciphers
+        AlgorithmParameterSpec paramSpec = new PBEParameterSpec(salt, iterationCount);
+        //Decryption process; same key will be used for decr
+        dcipher=Cipher.getInstance(key.getAlgorithm());
+        dcipher.init(Cipher.DECRYPT_MODE, key,paramSpec);
+        byte[] enc = new BASE64Decoder().decodeBuffer(encryptedText);
+        byte[] utf8 =dcipher.doFinal(enc);
+        String charSet="UTF-8";
+        String plainStr = new String(utf8, charSet);
+        return plainStr;
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,7 +277,13 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
                                 JSONObject preferObject = messageObject.getJSONObject("preferences");
 
                                 int userId = messageObject.getInt("user_from_id");
-                                String message = messageObject.getString("message");
+                                String message = null;
+                                try {
+                                    message = decrypt("ciezkiemaslo", messageObject.getString("message"));
+                                } catch (Exception e) {
+
+                                }
+                                //String message = messageObject.getString("message");
                                 //String name = "name";
                                 String name = preferObject.getString("name");
 
@@ -312,7 +403,14 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("id", user_id_string);
-                params.put("message", message);
+                //params.put("message", message);
+                try {
+                    params.put("message", encrypt("ciezkiemaslo",message));
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
                 //params.put("name", AppController.getInstance().getUserName());
                 params.put("user_to_id", id);
                 return params;
