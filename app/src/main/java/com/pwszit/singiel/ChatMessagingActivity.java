@@ -431,7 +431,22 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
             }
 
         };
+        request.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 30000;
+            }
 
+            @Override
+            public int getCurrentRetryCount() {
+                return 1;
+            }
+
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+
+            }
+        });
         RequestQueue queue = Volley.newRequestQueue(ChatMessagingActivity.this);
         queue.getCache().clear();
 

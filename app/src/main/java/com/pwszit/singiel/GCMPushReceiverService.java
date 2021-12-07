@@ -52,7 +52,7 @@ import javax.crypto.spec.PBEParameterSpec;
     };
     SharedPreferences sharedPreferences;
     int iterationCount = 19;
-
+    String uri;
     public String encrypt(String secretKey, String plainText)
             throws NoSuchAlgorithmException,
             InvalidKeySpecException,
@@ -122,8 +122,12 @@ import javax.crypto.spec.PBEParameterSpec;
         //getting the title and the body
         String title = remoteMessage.getData().get("title");
         //String message = remoteMessage.getData().get("body");
-        String uri = remoteMessage.getData().get("url");
+        String path = remoteMessage.getData().get("url");
         String id = remoteMessage.getData().get("id");
+        if (path != null) {
+           uri = Constant.URL + path;
+
+        }
         String body = null;
 
         try {

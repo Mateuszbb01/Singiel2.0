@@ -75,7 +75,7 @@ class GCM extends Controller
 
         $vard_path = $preferences->vcard;
         $name = $preferences->name;
-        $fullpath = 'http://192.168.1.70:8080/storage/photo/' . $vard_path;
+        $fullpath = 'storage/photo/' . $vard_path;
 
 
         //Tworzenie tablicy zawierającej dane wiadomości
