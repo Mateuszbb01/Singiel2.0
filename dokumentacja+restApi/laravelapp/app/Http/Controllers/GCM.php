@@ -75,7 +75,7 @@ class GCM extends Controller
 
         $vard_path = $preferences->vcard;
         $name = $preferences->name;
-        $fullpath = 'http://192.168.1.70:8080/storage/photo/' . $vard_path;
+        $fullpath = 'storage/photo/' . $vard_path;
 
 
         //Tworzenie tablicy zawierającej dane wiadomości
@@ -83,7 +83,7 @@ class GCM extends Controller
         //dodanie tytułu do wiadomości
         $pushdata['title'] = $name;
         //dodanie wiadomości do tablicy
-        $pushdata['body'] = "Kliknij, aby dodać nowy kontakt";
+        $pushdata['body'] = "eRjpvF+lNNqxJ2wwxFWNYEvaP1quaA47LUhU9WZQDKz6y29xiZb5+g==";
         $pushdata['url'] = $fullpath;
 
 

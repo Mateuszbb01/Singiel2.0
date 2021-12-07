@@ -3,10 +3,12 @@ package com.pwszit.singiel;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,26 +31,47 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.AlgorithmParameterSpec;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.PBEParameterSpec;
 
 public class ChatMessagingActivity extends AppCompatActivity implements View.OnClickListener {
 
     //Broadcast receiver to receive broadcasts
     private BroadcastReceiver mRegistrationBroadcastReceiver;
 
+    //Recyclerview objects
+    Cipher ecipher;
+    Cipher dcipher;
+    // 8-byte Salt
+    byte[] salt = {
+            (byte) 0xA9, (byte) 0x9B, (byte) 0xC8, (byte) 0x32,
+            (byte) 0x56, (byte) 0x35, (byte) 0xE3, (byte) 0x03
+    };
     //Progress dialog
     private ProgressDialog dialog;
 
@@ -55,17 +79,78 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
-    private SharedPreferences preferences,sharedPreferences, userPref2, usertoid, userpref;
+    private SharedPreferences preferences,sharedPreferences, userPref2, usertoid, userpref, userpref2;
 
     //ArrayList messages to store messages
     private ArrayList<Message> messages;
 
     //Button to send new message
-    private Button buttonSend;
+    private Button buttonSend, sendVCard;
 
     //EditText to send new message
     private EditText editTextMessage;
     String name, id;
+
+    // Iteration count
+    int iterationCount = 19;
+
+    public String encrypt(String secretKey, String plainText)
+            throws NoSuchAlgorithmException,
+            InvalidKeySpecException,
+            NoSuchPaddingException,
+            InvalidKeyException,
+            InvalidAlgorithmParameterException,
+            UnsupportedEncodingException,
+            IllegalBlockSizeException,
+            BadPaddingException {
+        //Key generation for enc and desc
+        KeySpec keySpec = new PBEKeySpec(secretKey.toCharArray(), salt, iterationCount);
+        SecretKey key = SecretKeyFactory.getInstance("PBEWithMD5AndDES").generateSecret(keySpec);
+        // Prepare the parameter to the ciphers
+        AlgorithmParameterSpec paramSpec = new PBEParameterSpec(salt, iterationCount);
+
+        //Enc process
+        ecipher = Cipher.getInstance(key.getAlgorithm());
+        ecipher.init(Cipher.ENCRYPT_MODE, key, paramSpec);
+        String charSet="UTF-8";
+        byte[] in = plainText.getBytes(charSet);
+        byte[] out = ecipher.doFinal(in);
+        String encStr=new BASE64Encoder().encode(out);
+        return encStr;
+    }
+    /**
+     * @param secretKey Key used to decrypt data
+     * @param encryptedText encrypted text input to decrypt
+     * @return Returns plain text after decryption
+     */
+    public String decrypt (String secretKey, String encryptedText)
+            throws NoSuchAlgorithmException,
+            InvalidKeySpecException,
+            NoSuchPaddingException,
+            InvalidKeyException,
+            InvalidAlgorithmParameterException,
+            UnsupportedEncodingException,
+            IllegalBlockSizeException,
+            BadPaddingException,
+            IOException
+
+    {
+        //Key generation for enc and desc
+        KeySpec keySpec = new PBEKeySpec(secretKey.toCharArray(), salt, iterationCount);
+        SecretKey key = SecretKeyFactory.getInstance("PBEWithMD5AndDES").generateSecret(keySpec);
+        // Prepare the parameter to the ciphers
+        AlgorithmParameterSpec paramSpec = new PBEParameterSpec(salt, iterationCount);
+        //Decryption process; same key will be used for decr
+        dcipher=Cipher.getInstance(key.getAlgorithm());
+        dcipher.init(Cipher.DECRYPT_MODE, key,paramSpec);
+        byte[] enc = new BASE64Decoder().decodeBuffer(encryptedText);
+        byte[] utf8 =dcipher.doFinal(enc);
+        String charSet="UTF-8";
+        String plainStr = new String(utf8, charSet);
+        return plainStr;
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +159,7 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_chat_messaging);
         preferences = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
         userpref = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
+        userpref2 = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
         getAndSetIntentData();
 
         //Wyświetlanie okna dialogowego, gdy czat jest gotowy
@@ -95,6 +181,7 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
 
         //initializing button and edittext
         buttonSend = (Button) findViewById(R.id.buttonSend);
+        sendVCard = (Button) findViewById(R.id.sendVCard);
         editTextMessage = (EditText) findViewById(R.id.editTextMessage);
 
         //Adding listener to button
@@ -133,20 +220,124 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
         };
 
         // jeśli usługa Google Play nie znajduje się w aplikacji urządzenia, nie będzie działać
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
+//        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
+//
+//        if (ConnectionResult.SUCCESS != resultCode) {
+//            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+//                Toast.makeText(getApplicationContext(), "Google Play Service is not install/enabled in this device!", Toast.LENGTH_LONG).show();
+//                GooglePlayServicesUtil.showErrorNotification(resultCode, getApplicationContext());
+//
+//            } else {
+//                Toast.makeText(getApplicationContext(), "This device does not support for Google Play Service!", Toast.LENGTH_LONG).show();
+//            }
+//        } else {
+//            Intent itent = new Intent(this, GCMRegistrationIntentService.class);
+//            startService(itent);
+//        }
 
-        if (ConnectionResult.SUCCESS != resultCode) {
-            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                Toast.makeText(getApplicationContext(), "Google Play Service is not install/enabled in this device!", Toast.LENGTH_LONG).show();
-                GooglePlayServicesUtil.showErrorNotification(resultCode, getApplicationContext());
+        sendVCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                preferences = getSharedPreferences("vCard", MODE_PRIVATE);
+                String user_id_vcard = preferences.getString("useridV", "");
 
-            } else {
-                Toast.makeText(getApplicationContext(), "This device does not support for Google Play Service!", Toast.LENGTH_LONG).show();
+                //String user_id_string = String.valueOf(user_id_vcard);
+
+                preferences = getSharedPreferences("user", MODE_PRIVATE);
+                int user_logged_id = preferences.getInt("id", -1);
+                String user_logged_string = String.valueOf(user_logged_id);
+                if (TextUtils.isEmpty(user_id_vcard)) {
+                    user_id_vcard = "brak";
+                }
+                if (user_id_vcard.equals(user_logged_string)) {
+
+
+                    dialog.setMessage("Wysyłanie kontaktu");
+                    dialog.show();
+
+
+                    StringRequest request = new StringRequest(Request.Method.POST, Constant.SEND_VCARD, response -> {
+                        try {
+                            JSONObject object = new JSONObject(response);
+                            if (object.getBoolean("success")) {
+
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        dialog.dismiss();
+
+                    }, error -> {
+                        error.printStackTrace();
+                        dialog.dismiss();
+
+                    }) {
+                        //dodanie tokena do naglowka
+
+                        @Override
+                        public Map<String, String> getHeaders() throws AuthFailureError {
+                            String token = userpref2.getString("token", "");
+                            HashMap<String, String> map = new HashMap<>();
+                            map.put("Authorization", "Bearer " + token);
+                            return map;
+                        }
+
+                        //dodanie parametrow
+
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            HashMap<String, String> map = new HashMap<>();
+                            map.put("user_to_id", id);
+
+                            return map;
+                        }
+                    };
+
+                    request.setRetryPolicy(new RetryPolicy() {
+                        @Override
+                        public int getCurrentTimeout() {
+                            return 30000;
+                        }
+
+                        @Override
+                        public int getCurrentRetryCount() {
+                            return 1;
+                        }
+
+                        @Override
+                        public void retry(VolleyError error) throws VolleyError {
+
+                        }
+                    });
+
+
+                    RequestQueue queue = Volley.newRequestQueue(ChatMessagingActivity.this);
+                    queue.add(request);
+
+                } else
+                {
+                    AlertDialog descriptionDialog = new AlertDialog.Builder(ChatMessagingActivity.this)
+                            .setTitle("Info")
+                            .setMessage("Musisz podać swoje dane kontaktowe")
+                            .setCancelable(false)
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    startActivity(new Intent(getApplicationContext()
+                                            , NfcActivity.class));
+                                }
+                            }).create();
+
+                    descriptionDialog.show();
+                }
+
+
+
             }
-        } else {
-            Intent itent = new Intent(this, GCMRegistrationIntentService.class);
-            startService(itent);
-        }
+        });
+
     }
     void getAndSetIntentData() {
         if (getIntent().hasExtra("name")
@@ -192,7 +383,13 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
                                 JSONObject preferObject = messageObject.getJSONObject("preferences");
 
                                 int userId = messageObject.getInt("user_from_id");
-                                String message = messageObject.getString("message");
+                                String message = null;
+                                try {
+                                    message = decrypt("ciezkiemaslo", messageObject.getString("message"));
+                                } catch (Exception e) {
+
+                                }
+                                //String message = messageObject.getString("message");
                                 //String name = "name";
                                 String name = preferObject.getString("name");
 
@@ -234,7 +431,22 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
             }
 
         };
+        request.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 30000;
+            }
 
+            @Override
+            public int getCurrentRetryCount() {
+                return 1;
+            }
+
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+
+            }
+        });
         RequestQueue queue = Volley.newRequestQueue(ChatMessagingActivity.this);
         queue.getCache().clear();
 
@@ -266,11 +478,12 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
 
         preferences = getSharedPreferences("user", MODE_PRIVATE);
         int userId = preferences.getInt("id", -1);
+        String user_id_string = String.valueOf(userId);
         userpref = getSharedPreferences("vCard", MODE_PRIVATE);
         String name = "ja";
         String sentAt = getTimeStamp();
 
-        String user_id_string = String.valueOf(userId);
+
 
 // zapis do bazy wiadomosci
         usertoid = getSharedPreferences("usertoid", MODE_PRIVATE);
@@ -312,7 +525,14 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("id", user_id_string);
-                params.put("message", message);
+                //params.put("message", message);
+                try {
+                    params.put("message", encrypt("ciezkiemaslo",message));
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
                 //params.put("name", AppController.getInstance().getUserName());
                 params.put("user_to_id", id);
                 return params;
