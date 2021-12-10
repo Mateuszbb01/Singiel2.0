@@ -36,42 +36,26 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.AlgorithmParameterSpec;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.PBEParameterSpec;
 
 public class ChatMessagingActivity extends AppCompatActivity implements View.OnClickListener {
 
     //Broadcast receiver to receive broadcasts
     private BroadcastReceiver mRegistrationBroadcastReceiver;
 
-    //Recyclerview objects
-    Cipher ecipher;
-    Cipher dcipher;
-    // 8-byte Salt
-    byte[] salt = {
-            (byte) 0xA9, (byte) 0x9B, (byte) 0xC8, (byte) 0x32,
-            (byte) 0x56, (byte) 0x35, (byte) 0xE3, (byte) 0x03
-    };
+//    //Recyclerview objects
+//    Cipher ecipher;
+//    Cipher dcipher;
+//    // 8-byte Salt
+//    byte[] salt = {
+//            (byte) 0xA9, (byte) 0x9B, (byte) 0xC8, (byte) 0x32,
+//            (byte) 0x56, (byte) 0x35, (byte) 0xE3, (byte) 0x03
+//    };
     //Progress dialog
     private ProgressDialog dialog;
 
@@ -91,64 +75,104 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
     private EditText editTextMessage;
     String name, id;
 
+//
+//    private PrivateKey privateKey;
+//    private PublicKey publicKey;
+//
+//    public void RSA() {
+//        try {
+//            KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
+//            generator.initialize(1024);
+//            KeyPair pair = generator.generateKeyPair();
+//            privateKey = pair.getPrivate();
+//            publicKey = pair.getPublic();
+//        } catch (Exception ignored) {
+//        }
+//    }
+//
+//    public String encrypt(String message) throws Exception{
+//        byte[] messageToBytes = message.getBytes();
+//        Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+//        cipher.init(Cipher.ENCRYPT_MODE,publicKey);
+//        byte[] encryptedBytes = cipher.doFinal(messageToBytes);
+//        return encode(encryptedBytes);
+//    }
+//    private String encode(byte[] data){
+//        return Base64.getEncoder().encodeToString(data);
+//    }
+//
+//    public String decrypt(String encryptedMessage) throws Exception{
+//        byte[] encryptedBytes = decode(encryptedMessage);
+//        Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+//        cipher.init(Cipher.DECRYPT_MODE,privateKey);
+//        byte[] decryptedMessage = cipher.doFinal(encryptedBytes);
+//        return new String(decryptedMessage,"UTF8");
+//    }
+//    private byte[] decode(String data){
+//        return Base64.getDecoder().decode(data);
+//    }
+
+
+
+
     // Iteration count
-    int iterationCount = 19;
+    //int iterationCount = 19;
 
-    public String encrypt(String secretKey, String plainText)
-            throws NoSuchAlgorithmException,
-            InvalidKeySpecException,
-            NoSuchPaddingException,
-            InvalidKeyException,
-            InvalidAlgorithmParameterException,
-            UnsupportedEncodingException,
-            IllegalBlockSizeException,
-            BadPaddingException {
-        //Key generation for enc and desc
-        KeySpec keySpec = new PBEKeySpec(secretKey.toCharArray(), salt, iterationCount);
-        SecretKey key = SecretKeyFactory.getInstance("PBEWithMD5AndDES").generateSecret(keySpec);
-        // Prepare the parameter to the ciphers
-        AlgorithmParameterSpec paramSpec = new PBEParameterSpec(salt, iterationCount);
-
-        //Enc process
-        ecipher = Cipher.getInstance(key.getAlgorithm());
-        ecipher.init(Cipher.ENCRYPT_MODE, key, paramSpec);
-        String charSet="UTF-8";
-        byte[] in = plainText.getBytes(charSet);
-        byte[] out = ecipher.doFinal(in);
-        String encStr=new BASE64Encoder().encode(out);
-        return encStr;
-    }
-    /**
-     * @param secretKey Key used to decrypt data
-     * @param encryptedText encrypted text input to decrypt
-     * @return Returns plain text after decryption
-     */
-    public String decrypt (String secretKey, String encryptedText)
-            throws NoSuchAlgorithmException,
-            InvalidKeySpecException,
-            NoSuchPaddingException,
-            InvalidKeyException,
-            InvalidAlgorithmParameterException,
-            UnsupportedEncodingException,
-            IllegalBlockSizeException,
-            BadPaddingException,
-            IOException
-
-    {
-        //Key generation for enc and desc
-        KeySpec keySpec = new PBEKeySpec(secretKey.toCharArray(), salt, iterationCount);
-        SecretKey key = SecretKeyFactory.getInstance("PBEWithMD5AndDES").generateSecret(keySpec);
-        // Prepare the parameter to the ciphers
-        AlgorithmParameterSpec paramSpec = new PBEParameterSpec(salt, iterationCount);
-        //Decryption process; same key will be used for decr
-        dcipher=Cipher.getInstance(key.getAlgorithm());
-        dcipher.init(Cipher.DECRYPT_MODE, key,paramSpec);
-        byte[] enc = new BASE64Decoder().decodeBuffer(encryptedText);
-        byte[] utf8 =dcipher.doFinal(enc);
-        String charSet="UTF-8";
-        String plainStr = new String(utf8, charSet);
-        return plainStr;
-    }
+//    public String encrypt(String secretKey, String plainText)
+//            throws NoSuchAlgorithmException,
+//            InvalidKeySpecException,
+//            NoSuchPaddingException,
+//            InvalidKeyException,
+//            InvalidAlgorithmParameterException,
+//            UnsupportedEncodingException,
+//            IllegalBlockSizeException,
+//            BadPaddingException {
+//        //Key generation for enc and desc
+//        KeySpec keySpec = new PBEKeySpec(secretKey.toCharArray(), salt, iterationCount);
+//        SecretKey key = SecretKeyFactory.getInstance("PBEWithMD5AndDES").generateSecret(keySpec);
+//        // Prepare the parameter to the ciphers
+//        AlgorithmParameterSpec paramSpec = new PBEParameterSpec(salt, iterationCount);
+//
+//        //Enc process
+//        ecipher = Cipher.getInstance(key.getAlgorithm());
+//        ecipher.init(Cipher.ENCRYPT_MODE, key, paramSpec);
+//        String charSet="UTF-8";
+//        byte[] in = plainText.getBytes(charSet);
+//        byte[] out = ecipher.doFinal(in);
+//        String encStr=new BASE64Encoder().encode(out);
+//        return encStr;
+//    }
+//    /**
+//     * @param secretKey Key used to decrypt data
+//     * @param encryptedText encrypted text input to decrypt
+//     * @return Returns plain text after decryption
+//     */
+//    public String decrypt (String secretKey, String encryptedText)
+//            throws NoSuchAlgorithmException,
+//            InvalidKeySpecException,
+//            NoSuchPaddingException,
+//            InvalidKeyException,
+//            InvalidAlgorithmParameterException,
+//            UnsupportedEncodingException,
+//            IllegalBlockSizeException,
+//            BadPaddingException,
+//            IOException
+//
+//    {
+//        //Key generation for enc and desc
+//        KeySpec keySpec = new PBEKeySpec(secretKey.toCharArray(), salt, iterationCount);
+//        SecretKey key = SecretKeyFactory.getInstance("PBEWithMD5AndDES").generateSecret(keySpec);
+//        // Prepare the parameter to the ciphers
+//        AlgorithmParameterSpec paramSpec = new PBEParameterSpec(salt, iterationCount);
+//        //Decryption process; same key will be used for decr
+//        dcipher=Cipher.getInstance(key.getAlgorithm());
+//        dcipher.init(Cipher.DECRYPT_MODE, key,paramSpec);
+//        byte[] enc = new BASE64Decoder().decodeBuffer(encryptedText);
+//        byte[] utf8 =dcipher.doFinal(enc);
+//        String charSet="UTF-8";
+//        String plainStr = new String(utf8, charSet);
+//        return plainStr;
+//    }
 
 
 
@@ -157,6 +181,7 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_messaging);
+        //new RSA();
         preferences = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
         userpref = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
         userpref2 = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
@@ -384,11 +409,21 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
 
                                 int userId = messageObject.getInt("user_from_id");
                                 String message = null;
-                                try {
-                                    message = decrypt("ciezkiemaslo", messageObject.getString("message"));
-                                } catch (Exception e) {
+//                                try {
+//                                    message = decrypt("ciezkiemaslo", messageObject.getString("message"));
+//                                } catch (Exception e) {
+//
+//                                }
 
-                                }
+                                RSA rsa = new RSA();
+                                try{
+                                    //String encryptedMessage = rsa.encrypt("Hello World");
+                                    message = rsa.decrypt(messageObject.getString("message"));
+
+                                    //System.err.println("Encrypted:\n"+encryptedMessage);
+                                    //System.err.println("Decrypted:\n"+decryptedMessage);
+                                }catch (Exception ingored){}
+
                                 //String message = messageObject.getString("message");
                                 //String name = "name";
                                 String name = preferObject.getString("name");
@@ -526,13 +561,24 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
                 Map<String, String> params = new HashMap<>();
                 params.put("id", user_id_string);
                 //params.put("message", message);
-                try {
-                    params.put("message", encrypt("ciezkiemaslo",message));
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
+//                try {
+//                    params.put("message", encrypt("ciezkiemaslo",message));
+//                }
+//                catch (Exception e)
+//                {
+//                    e.printStackTrace();
+//                }
+
+                RSA rsa = new RSA();
+                try{
+                    params.put("message", rsa.encrypt(message));
+                    //params.put(me) = rsa.encrypt("Hello World");
+                    //message = rsa.decrypt(messageObject.getString("message"));
+
+                    //System.err.println("Encrypted:\n"+encryptedMessage);
+                    //System.err.println("Decrypted:\n"+decryptedMessage);
+                }catch (Exception ingored){}
+
                 //params.put("name", AppController.getInstance().getUserName());
                 params.put("user_to_id", id);
                 return params;
