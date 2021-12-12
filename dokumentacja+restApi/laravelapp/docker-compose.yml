@@ -6,7 +6,7 @@ services:
       dockerfile: ./Dockerfile
     image: 'laravelapp'
     ports:
-      - 8080:80
+      - 8081:80
     volumes:
       - ./:/var/www/html
   db:
