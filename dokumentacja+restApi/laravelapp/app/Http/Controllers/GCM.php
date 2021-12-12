@@ -141,23 +141,39 @@ class GCM extends Controller
         $user_from_id = Auth::user()->id;
         $user_to_id = $request->user_to_id;
 
-        $stmt = messages::with('preferences')
+
+        $inserted_by_firebase = messages::with('preferences')
             ->where('user_from_id', $user_from_id)
             ->where('user_to_id', $user_to_id)
             ->orWhere('user_from_id', $user_to_id)
             ->where('user_to_id',  $user_from_id)
-            ->orderBy('sentat', 'ASC')->get();
+            ->orderBy('sentat', 'DESC')
+            ->limit($request->count_notification)
+            ->pluck('messages.id')->toArray();
+
+        $stmt = messages::with('preferences')
+
+            ->where('user_from_id', $user_from_id)
+            ->where('user_to_id', $user_to_id)
+            ->whereNotIn('messages.id', $inserted_by_firebase)
+            ->orWhere('user_from_id', $user_to_id)
+            ->where('user_to_id',  $user_from_id)
+            ->whereNotIn('messages.id', $inserted_by_firebase)
+            ->orderBy('sentat', 'DESC')
+            ->paginate(10);
+
         if ($stmt->first()) {
 
             return response()->json([
                 'success' => true,
-                'Message' => $stmt
+                'Message' => $stmt,
+                'wiadomosc' => $inserted_by_firebase
             ]);
         }
 
 
         return response()->json([
-            'success' => true,
+            'success' => false,
             'Message' => $stmt
         ]);
     }

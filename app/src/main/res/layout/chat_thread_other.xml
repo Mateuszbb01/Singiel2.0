@@ -13,6 +13,7 @@
         android:orientation="vertical"
         android:padding="15dp">
 
+
         <TextView
             android:id="@+id/textViewMessage"
             android:textAppearance="?android:attr/textAppearanceLarge"

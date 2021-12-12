@@ -46,7 +46,6 @@ public class ChatActivity extends AppCompatActivity {
         userPref = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
 
 
-
     }
 
     @Override
