@@ -74,7 +74,6 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
         holder.textViewTime.setText(message.getName()+", "+message.getSentAt());
     }
 
-
     @Override
     public int getItemCount() {
         return messages.size();

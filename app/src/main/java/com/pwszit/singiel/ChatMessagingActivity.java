@@ -12,10 +12,13 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -46,6 +49,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,6 +62,8 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
+
+import static com.pwszit.singiel.AppController.TAG;
 
 public class ChatMessagingActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -75,9 +81,10 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
     //Progress dialog
     private ProgressDialog dialog;
 
+
     //Recyclerview objects
     private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
+    private LinearLayoutManager  layoutManager;
     private RecyclerView.Adapter adapter;
     private SharedPreferences preferences,sharedPreferences, userPref2, usertoid, userpref, userpref2;
 
@@ -89,11 +96,20 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
 
     //EditText to send new message
     private EditText editTextMessage;
-    String name, id;
-
+    private TextView username;
+    String name, id, namewritingto;
+    String FETCH_MESSAGES;
     // Iteration count
     int iterationCount = 19;
+    private int page = 1;
+    private int notificationordsend = 0;
 
+    private int totalItemCount;
+    private int firstVisibleItem;
+    private int visibleItemCount;
+    private int previousTotal;
+    private boolean load = true;
+    private boolean added = false;
     public String encrypt(String secretKey, String plainText)
             throws NoSuchAlgorithmException,
             InvalidKeySpecException,
@@ -183,6 +199,7 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
         buttonSend = (Button) findViewById(R.id.buttonSend);
         sendVCard = (Button) findViewById(R.id.sendVCard);
         editTextMessage = (EditText) findViewById(R.id.editTextMessage);
+        username = (TextView) findViewById(R.id.username);
 
         //Adding listener to button
         buttonSend.setOnClickListener(this);
@@ -346,7 +363,8 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
 //                getIntent().hasExtra("koszt") && getIntent().hasExtra("litry"))
         {
             //Zbieranie danych z Intent
-            name = getIntent().getStringExtra("name");
+            namewritingto = getIntent().getStringExtra("name");
+
             id = getIntent().getStringExtra("id");
             sharedPreferences = getSharedPreferences("store_pared", MODE_PRIVATE);
 
@@ -369,6 +387,8 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
         userPref2 = getSharedPreferences("user", MODE_PRIVATE);
         preferences = getSharedPreferences("user", MODE_PRIVATE);
         int userId = preferences.getInt("id", -1);
+
+              //   ?page="+page
         StringRequest request = new StringRequest(Request.Method.POST, Constant.FETCH_MESSAGES,
                 new Response.Listener<String>() {
                     @Override
@@ -377,11 +397,11 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
 
                         try {
                             JSONObject object = new JSONObject(response);
-                            JSONArray array = new JSONArray(object.getString("Message"));
+                            JSONObject jsonObj = object.optJSONObject("Message");
+                            JSONArray array = jsonObj.getJSONArray("data");
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject messageObject = array.getJSONObject(i);
                                 JSONObject preferObject = messageObject.getJSONObject("preferences");
-
                                 int userId = messageObject.getInt("user_from_id");
                                 String message = null;
                                 try {
@@ -395,7 +415,9 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
 
                                 String sentAt = messageObject.getString("sentat");
                                 Message messagObject = new Message(userId, message, sentAt, name);
-                                messages.add(messagObject);
+                                messages.add(0, messagObject);
+                                username.setText(namewritingto);
+
                             }
 
                             adapter = new ThreadAdapter(ChatMessagingActivity.this, messages, userId);
@@ -426,7 +448,8 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
                 map.put("user_to_id", id);
-
+                map.put("page", "1");
+                map.put("count_notification", "0");
                 return map;
             }
 
@@ -451,6 +474,139 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
         queue.getCache().clear();
 
         queue.add(request);
+
+      pagination();
+
+    }
+
+    private void pagination() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                visibleItemCount = layoutManager.getChildCount();
+                totalItemCount = layoutManager.getItemCount();
+                firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
+                if(added) {
+                    if (totalItemCount > previousTotal) {
+                        previousTotal = totalItemCount;
+                        added = false;
+                    }
+                }
+                if(load){
+                    if(totalItemCount>previousTotal){
+                        previousTotal = totalItemCount;
+                        page++;
+                        load=false;
+                    }
+                }
+                if (!load && (firstVisibleItem == 0)){
+                    getNext();
+                    load=true;
+
+                    Log.v(TAG, "page number: "+page);
+                }
+            }
+        });
+    }
+
+
+    private void getNext() {
+        String strPage = String.valueOf(page);
+        String strNotificationordsend = String.valueOf(notificationordsend);
+
+        preferences = getSharedPreferences("user", MODE_PRIVATE);
+        int userId = preferences.getInt("id", -1);
+        StringRequest request = new StringRequest(Request.Method.POST, Constant.FETCH_MESSAGES,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        dialog.dismiss();
+
+                        try {
+                            JSONObject object = new JSONObject(response);
+                            JSONObject jsonObj = object.optJSONObject("Message");
+                            JSONArray array = jsonObj.getJSONArray("data");
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject messageObject = array.getJSONObject(i);
+                                JSONObject preferObject = messageObject.getJSONObject("preferences");
+                                int userId = messageObject.getInt("user_from_id");
+                                String message = null;
+                                try {
+                                    message = decrypt("ciezkiemaslo", messageObject.getString("message"));
+                                } catch (Exception e) {
+
+                                }
+                                //String message = messageObject.getString("message");
+                                //String name = "name";
+                                String name = preferObject.getString("name");
+
+                                String sentAt = messageObject.getString("sentat");
+                                Message messagObject = new Message(userId, message, sentAt, name);
+                                messages.add(0,messagObject);
+
+                            }
+                            adapter = new ThreadAdapter(ChatMessagingActivity.this, messages, userId);
+                            adapter.notifyDataSetChanged();
+                            recyclerView.setAdapter(adapter);
+
+                            scrollToLastInserted();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, error -> {
+            error.printStackTrace();
+
+        }) {
+
+            //dodanie tokena do naglowka
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                String token = userPref2.getString("token","");
+                HashMap<String,String> map = new HashMap<>();
+                map.put("Authorization","Bearer "+token);
+                return map;
+            }
+
+            //dodanie parametrow
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map = new HashMap<>();
+                map.put("user_to_id", id);
+                map.put("page", strPage);
+                map.put("count_notification", strNotificationordsend);
+                return map;
+            }
+
+        };
+        request.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 30000;
+            }
+
+            @Override
+            public int getCurrentRetryCount() {
+                return 1;
+            }
+
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+
+            }
+        });
+        RequestQueue queue = Volley.newRequestQueue(ChatMessagingActivity.this);
+        queue.getCache().clear();
+
+        queue.add(request);
+
     }
 
 
@@ -466,6 +622,11 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
         Message m = new Message(Integer.parseInt(id), body, getTimeStamp(), title);
         messages.add(m);
         scrollToBottom();
+        added=true;
+        pagination();
+        notificationordsend++;
+
+
     }
 
 
@@ -492,8 +653,10 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
         Message m = new Message(userId, message, sentAt, name);
         messages.add(m);
         adapter.notifyDataSetChanged();
-
         scrollToBottom();
+        added=true;
+        pagination();
+        notificationordsend++;
 
         editTextMessage.setText("");
 
@@ -563,13 +726,19 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
         });
         RequestQueue queue = Volley.newRequestQueue(ChatMessagingActivity.this);
         queue.add(stringRequest);
+
     }
 
     //metoda przewijania widoku recyclerview  na dół
     private void scrollToBottom() {
         adapter.notifyDataSetChanged();
         if (adapter.getItemCount() > 1)
-            recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, adapter.getItemCount() - 1);
+            recyclerView.getLayoutManager().scrollToPosition(adapter.getItemCount() - 1);
+    }
+    private void scrollToLastInserted() {
+        adapter.notifyDataSetChanged();
+        if (adapter.getItemCount() > 1)
+            recyclerView.getLayoutManager().scrollToPosition(9);
     }
 
     //Ta metoda zwróci aktualny znacznik czasu
