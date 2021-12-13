@@ -1,5 +1,7 @@
 package com.pwszit.singiel;
 
+import android.content.SharedPreferences;
+
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
@@ -13,6 +15,7 @@ public class RSA {
 
     private PrivateKey privateKey;
     private PublicKey publicKey;
+    SharedPreferences sharedPreferences;
 
     public RSA() {
         try {
@@ -20,10 +23,16 @@ public class RSA {
             generator.initialize(1024);
             KeyPair pair = generator.generateKeyPair();
             privateKey = pair.getPrivate();
+            //sharedPreferences = getSharedPreferences("PRIVATE", MODE_PRIVATE);
+           // SharedPreferences.Editor editor = sharedPreferences.edit();
+            //editor.putString("PRIVATE_KEY", String.valueOf(privateKey));
+            //editor.apply();
             publicKey = pair.getPublic();
         } catch (Exception ignored) {
         }
     }
+
+
 
     public String encrypt(String message) throws Exception{
         byte[] messageToBytes = message.getBytes();
@@ -38,6 +47,7 @@ public class RSA {
 
     public String decrypt(String encryptedMessage) throws Exception{
         byte[] encryptedBytes = decode(encryptedMessage);
+
         Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
         cipher.init(Cipher.DECRYPT_MODE,privateKey);
         byte[] decryptedMessage = cipher.doFinal(encryptedBytes);

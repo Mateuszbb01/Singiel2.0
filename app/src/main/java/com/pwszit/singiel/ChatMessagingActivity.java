@@ -403,6 +403,7 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
                         try {
                             JSONObject object = new JSONObject(response);
                             JSONArray array = new JSONArray(object.getString("Message"));
+                            //sharedPreferences = getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject messageObject = array.getJSONObject(i);
                                 JSONObject preferObject = messageObject.getJSONObject("preferences");
@@ -572,6 +573,7 @@ public class ChatMessagingActivity extends AppCompatActivity implements View.OnC
                 RSA rsa = new RSA();
                 try{
                     params.put("message", rsa.encrypt(message));
+
                     //params.put(me) = rsa.encrypt("Hello World");
                     //message = rsa.decrypt(messageObject.getString("message"));
 
