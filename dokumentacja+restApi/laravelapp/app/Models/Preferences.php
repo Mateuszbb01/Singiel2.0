@@ -10,6 +10,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Preferences extends Model
 {
+    protected $fillable = [
+        'id',
+        'user_id',
+        'gender',
+    ];
     public function user()
     {
         return $this->belongsTo(User::class);

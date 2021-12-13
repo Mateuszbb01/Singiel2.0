@@ -21,7 +21,7 @@ class LikeController extends Controller
     {
         $id = Auth::user()->id;
 
-        $pr = Preferences::find($id);
+        $pr = Preferences::where('user_id', $id)->first();
         $gender =  $pr->gender;
 
 
@@ -38,6 +38,7 @@ class LikeController extends Controller
             'users' => $findd
         ]);
     }
+
 
 
 
