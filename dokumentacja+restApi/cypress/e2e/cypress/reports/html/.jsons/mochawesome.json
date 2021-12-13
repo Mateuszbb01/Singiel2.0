@@ -1,0 +1,106 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2021-12-12T17:23:05.828Z",
+    "end": "2021-12-12T17:23:07.084Z",
+    "duration": 1256,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "9495108b-5fa2-4612-a3a5-486a202766d5",
+      "title": "",
+      "fullFile": "cypress/integration/demo.js",
+      "file": "cypress/integration/demo.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "9a070a4b-825a-4b5b-bd60-db910d29c833",
+          "title": "HTTP Example",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "GET",
+              "fullTitle": "HTTP Example GET",
+              "timedOut": null,
+              "duration": 1146,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: 'GET',\n  url: 'https://httpbin.org/get'\n}).then(function (response) {\n  expect(response.body).have.property('url');\n});",
+              "err": {},
+              "uuid": "ecae133e-a728-4c42-b489-c1d018397ffb",
+              "parentUUID": "9a070a4b-825a-4b5b-bd60-db910d29c833",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "ecae133e-a728-4c42-b489-c1d018397ffb"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 1146,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.3.1"
+    },
+    "marge": {
+      "options": {
+        "mochaFile": "cypress/results/output.xml",
+        "overwrite": false,
+        "html": false,
+        "json": true,
+        "reportDir": "cypress/reports/html/.jsons"
+      },
+      "version": "5.2.0"
+    }
+  }
+}

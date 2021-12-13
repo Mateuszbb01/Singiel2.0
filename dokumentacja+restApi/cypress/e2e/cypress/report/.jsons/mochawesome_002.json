@@ -1,0 +1,129 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2021-12-12T17:07:30.262Z",
+    "end": "2021-12-12T17:07:31.395Z",
+    "duration": 1133,
+    "testsRegistered": 2,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "22f88df3-9452-495b-be81-a7c7c8e2de72",
+      "title": "",
+      "fullFile": "cypress/integration/demo.js",
+      "file": "cypress/integration/demo.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [
+        {
+          "title": "POST",
+          "fullTitle": "POST",
+          "timedOut": null,
+          "duration": 818,
+          "state": "passed",
+          "speed": "fast",
+          "pass": true,
+          "fail": false,
+          "pending": false,
+          "context": null,
+          "code": "cy.request({\n  method: 'POST',\n  url: 'https://httpbin.org/post',\n  body: {\n    'name': 'Whoami',\n    'age': 23\n  },\n  headers: {\n    'content-type': 'application/json'\n  }\n}).then(function (response) {\n  expect(response.body).have.property('json');\n  expect(response.body.json).to.deep.equal({\n    \"name\": \"Whoami\",\n    \"age\": 23\n  });\n});",
+          "err": {},
+          "uuid": "e4172a70-bf95-4884-89c2-02d247255a87",
+          "parentUUID": "22f88df3-9452-495b-be81-a7c7c8e2de72",
+          "isHook": false,
+          "skipped": false
+        }
+      ],
+      "suites": [
+        {
+          "uuid": "091b5a51-b506-4c7e-98ea-515b0bc1daa8",
+          "title": "HTTP Example",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "GET",
+              "fullTitle": "HTTP Example GET",
+              "timedOut": null,
+              "duration": 262,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: 'GET',\n  url: 'https://httpbin.org/get'\n}).then(function (response) {\n  expect(response.body).have.property('url');\n});",
+              "err": {},
+              "uuid": "192da921-0228-45b0-aa78-ebbb9704c6dd",
+              "parentUUID": "091b5a51-b506-4c7e-98ea-515b0bc1daa8",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "192da921-0228-45b0-aa78-ebbb9704c6dd"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 262,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [
+        "e4172a70-bf95-4884-89c2-02d247255a87"
+      ],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 818,
+      "root": true,
+      "rootEmpty": false,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.3.1"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/report/.jsons",
+        "charts": true,
+        "reportPageTitle": "Joan Media Demo Report",
+        "embeddedScreenshots": true,
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "5.2.0"
+    }
+  }
+}
